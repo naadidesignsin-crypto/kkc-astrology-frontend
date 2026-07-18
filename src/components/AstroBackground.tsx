@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+
 import galaxyBg from "../assets/galaxy-bg.png";
 
 type Star = {
@@ -28,6 +29,9 @@ function AstroBackground() {
       return;
     }
 
+    const ctx = context;
+    const canvasElement = canvas;
+
     let animationFrame = 0;
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -43,15 +47,19 @@ function AstroBackground() {
     function resizeCanvas() {
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      context.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+
+      const pixelRatio = window.devicePixelRatio || 1;
+
+      canvasElement.width = width * pixelRatio;
+      canvasElement.height = height * pixelRatio;
+      canvasElement.style.width = `${width}px`;
+      canvasElement.style.height = `${height}px`;
+
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     }
 
     function draw() {
-      context.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
 
       stars.forEach((star) => {
         star.x += star.vx;
@@ -65,10 +73,10 @@ function AstroBackground() {
           star.vy *= -1;
         }
 
-        context.beginPath();
-        context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        context.fillStyle = "rgba(255, 235, 184, 0.88)";
-        context.fill();
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+        ctx.fill();
       });
 
       for (let i = 0; i < stars.length; i += 1) {
@@ -80,12 +88,12 @@ function AstroBackground() {
           if (distance < CONNECT_DISTANCE) {
             const opacity = 1 - distance / CONNECT_DISTANCE;
 
-            context.beginPath();
-            context.moveTo(stars[i].x, stars[i].y);
-            context.lineTo(stars[j].x, stars[j].y);
-            context.strokeStyle = `rgba(217, 173, 87, ${opacity * 0.24})`;
-            context.lineWidth = 1;
-            context.stroke();
+            ctx.beginPath();
+            ctx.moveTo(stars[i].x, stars[i].y);
+            ctx.lineTo(stars[j].x, stars[j].y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.2})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
           }
         }
       }
@@ -105,10 +113,9 @@ function AstroBackground() {
   }, []);
 
   return (
-    <div className="astro-bg-layer" aria-hidden="true">
-      <img src={galaxyBg} alt="" className="astro-bg-image" />
-      <canvas ref={canvasRef} className="astro-star-canvas" />
-      <div className="astro-gold-vignette" />
+    <div className="astro-background" aria-hidden="true">
+      <img src={galaxyBg} alt="" className="astro-background-image" />
+      <canvas ref={canvasRef} className="astro-background-canvas" />
     </div>
   );
 }

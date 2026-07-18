@@ -1,6 +1,8 @@
 import type {
   KundaliDashaResponse,
   KundaliDoshaResponse,
+  KundaliGenerateRequest,
+  KundaliGenerateResponse,
   KundaliHouseResponse,
   KundaliNavamsaResponse,
   KundaliParasharaReportResponse,
@@ -71,7 +73,9 @@ export function getDosha(reportId: number): Promise<KundaliDoshaResponse> {
 }
 
 export async function downloadKundaliPdf(reportId: number) {
-  const response = await fetch(`${API_BASE_URL}/api/kundali/reports/${reportId}/pdf`);
+  const response = await fetch(
+    `${API_BASE_URL}/api/kundali/reports/${reportId}/pdf`
+  );
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -91,7 +95,9 @@ export async function downloadKundaliPdf(reportId: number) {
   window.URL.revokeObjectURL(url);
 }
 
-export async function getHouses(reportId: number): Promise<KundaliHouseResponse> {
+export async function getHouses(
+  reportId: number
+): Promise<KundaliHouseResponse> {
   const response = await fetch(
     `${API_BASE_URL}/api/kundali/reports/${reportId}/houses`
   );
