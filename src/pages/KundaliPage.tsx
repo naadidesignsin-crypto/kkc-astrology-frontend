@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 
 import AstrologyServices from "../components/AstrologyServices";
@@ -15,12 +15,6 @@ import type { ReportTabId } from "../components/GeneratedReportTabs";
 import NavamsaChartCard from "../components/NavamsaChartCard";
 import ParasharaInterpretationSection from "../components/ParasharaInterpretationSection";
 
-import {
-  getLocationLabel,
-  locationPresets,
-  searchLocationPresets,
-  type LocationPreset,
-} from "../data/locationPresets";
 import { uiText } from "../data/kundaliUiText";
 
 import {
@@ -36,7 +30,10 @@ import {
   getSummary,
 } from "../services/kundaliApi";
 
+import { searchLocations } from "../services/locationApi";
+
 import type { UiLanguage } from "../types/language";
+import type { LocationSearchResponse } from "../types/location";
 
 import type {
   DashaPeriod,
@@ -59,25 +56,45 @@ import kkcLogo from "../assets/Logo.png";
 type DisplayValueFn = (value?: string | number | boolean | null) => string;
 type TextMap = typeof uiText["te"];
 
-const defaultForm = {
-  fullName: "Test User",
-  gender: "Male",
-  dateOfBirth: "1995-08-15",
-  timeOfBirth: "06:30:00",
+const fallbackLocation: LocationSearchResponse = {
+  id: "fallback-hyderabad",
+  displayName: "Hyderabad, Telangana, India",
   birthPlace: "Hyderabad, Telangana, India",
   latitude: 17.385,
   longitude: 78.4867,
+  timezone: "Asia/Kolkata",
+  city: "Hyderabad",
+  state: "Telangana",
+  country: "India",
+  countryCode: "in",
+  source: "Fallback",
+};
+
+const emptyForm = {
+  fullName: "",
+  gender: "",
+  dateOfBirth: "",
+  timeOfBirth: "",
+  birthPlace: "",
+  latitude: 0,
+  longitude: 0,
   timezone: "Asia/Kolkata",
   language: "en",
 };
 
 function KundaliPage() {
-  const [form, setForm] = useState(defaultForm);
+  const [form, setForm] = useState(emptyForm);
 
-  const [citySearch, setCitySearch] = useState(
-    getLocationLabel(locationPresets[0], "en")
-  );
-  const [showCityResults, setShowCityResults] = useState(false);
+  const [locationQuery, setLocationQuery] = useState("");
+  const [selectedLocation, setSelectedLocation] =
+    useState<LocationSearchResponse | null>(null);
+  const [locationResults, setLocationResults] = useState<
+    LocationSearchResponse[]
+  >([]);
+  const [showLocationResults, setShowLocationResults] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [locationError, setLocationError] = useState("");
+  const locationBoxRef = useRef<HTMLDivElement | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [generationStage, setGenerationStage] =
@@ -100,13 +117,106 @@ function KundaliPage() {
   const t = uiText[language];
   const useTeluguValues = language === "te";
 
-  const filteredCities = useMemo(
-    () => searchLocationPresets(citySearch),
-    [citySearch]
-  );
+  const isFormValid =
+    form.fullName.trim().length >= 2 &&
+    form.gender.trim().length > 0 &&
+    form.dateOfBirth.trim().length > 0 &&
+    form.timeOfBirth.trim().length > 0 &&
+    selectedLocation !== null &&
+    Number.isFinite(form.latitude) &&
+    Number.isFinite(form.longitude) &&
+    form.timezone.trim().length > 0;
+
+  useEffect(() => {
+    const cleanQuery = locationQuery.trim();
+
+    const selectedName = selectedLocation?.displayName?.trim();
+    const selectedBirthPlace = selectedLocation?.birthPlace?.trim();
+
+    const isAlreadySelected =
+      selectedLocation &&
+      (cleanQuery === selectedName || cleanQuery === selectedBirthPlace);
+
+    if (isAlreadySelected) {
+      setLocationResults([]);
+      setShowLocationResults(false);
+      setLocationError("");
+      return;
+    }
+
+    if (cleanQuery.length < 3) {
+      setLocationResults([]);
+      setShowLocationResults(false);
+      setLocationError("");
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const timer = window.setTimeout(() => {
+      void fetchLocationResults(cleanQuery, controller.signal);
+    }, 700);
+
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
+  }, [locationQuery, selectedLocation, language]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        locationBoxRef.current &&
+        !locationBoxRef.current.contains(event.target as Node)
+      ) {
+        setShowLocationResults(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  async function fetchLocationResults(query: string, signal: AbortSignal) {
+    try {
+      setLocationLoading(true);
+      setLocationError("");
+
+      const results = await searchLocations(query, 8, signal);
+
+      setLocationResults(results);
+      setShowLocationResults(true);
+    } catch (err) {
+      if (err instanceof Error && err.name === "AbortError") {
+        return;
+      }
+
+      setLocationResults([]);
+      setShowLocationResults(true);
+      setLocationError(
+        language === "te"
+          ? "స్థల వివరాలు పొందలేకపోయాం. మళ్లీ ప్రయత్నించండి."
+          : "Unable to fetch location results. Try again."
+      );
+    } finally {
+      setLocationLoading(false);
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!isFormValid) {
+      setError(
+        language === "te"
+          ? "దయచేసి పేరు, లింగం, తేదీ, సమయం మరియు జన్మ స్థలాన్ని పూర్తిగా ఇవ్వండి."
+          : "Please enter name, gender, birth date, birth time, and select birth place from the list."
+      );
+      return;
+    }
 
     setLoading(true);
     setGenerationStage("creating");
@@ -121,8 +231,21 @@ function KundaliPage() {
     setParashara(null);
     setActiveReportTab("summary");
 
+    const finalLocation = selectedLocation || fallbackLocation;
+
+    const requestPayload = {
+      ...form,
+      fullName: form.fullName.trim(),
+      gender: form.gender.trim(),
+      birthPlace: finalLocation.birthPlace,
+      latitude: finalLocation.latitude,
+      longitude: finalLocation.longitude,
+      timezone: finalLocation.timezone || "Asia/Kolkata",
+      language: "en",
+    };
+
     try {
-      const generated = await generateKundali(form);
+      const generated = await generateKundali(requestPayload);
 
       if (generated.status !== "SUCCESS") {
         throw new Error(generated.errorMessage || t.generationFailed);
@@ -190,46 +313,54 @@ function KundaliPage() {
   }
 
   function updateField(name: string, value: string) {
-    setForm((current) => ({
-      ...current,
-      [name]:
-        name === "latitude" || name === "longitude" ? Number(value) : value,
-    }));
-  }
-
-  function applyCity(city: LocationPreset) {
-    setCitySearch(getLocationLabel(city, language));
-    setShowCityResults(false);
+    setError("");
 
     setForm((current) => ({
       ...current,
-      birthPlace: city.birthPlace,
-      latitude: city.latitude,
-      longitude: city.longitude,
-      timezone: city.timezone,
+      [name]: value,
     }));
   }
 
-  function handleCitySearch(value: string) {
-    setCitySearch(value);
-    setShowCityResults(true);
+  function selectLocation(location: LocationSearchResponse) {
+    setSelectedLocation(location);
+    setLocationQuery(location.displayName || location.birthPlace);
+    setLocationResults([]);
+    setShowLocationResults(false);
+    setLocationError("");
+    setError("");
 
-    const exactMatch = locationPresets.find((city) => {
-      const labelTe = city.labelTe.toLowerCase();
-      const labelEn = city.labelEn.toLowerCase();
-      const birthPlace = city.birthPlace.toLowerCase();
-      const cleanValue = value.trim().toLowerCase();
+    setForm((current) => ({
+      ...current,
+      birthPlace: location.birthPlace,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      timezone: location.timezone || "Asia/Kolkata",
+    }));
+  }
 
-      return (
-        labelTe === cleanValue ||
-        labelEn === cleanValue ||
-        birthPlace === cleanValue
-      );
-    });
+  function handleLocationInput(value: string) {
+    setLocationQuery(value);
+    setSelectedLocation(null);
+    setLocationError("");
+    setError("");
 
-    if (exactMatch) {
-      applyCity(exactMatch);
+    if (value.trim().length < 3) {
+      setLocationResults([]);
+      setShowLocationResults(false);
     }
+
+    setForm((current) => ({
+      ...current,
+      birthPlace: value,
+      latitude: 0,
+      longitude: 0,
+      timezone: "Asia/Kolkata",
+    }));
+  }
+
+  function openNativePicker(input: HTMLInputElement) {
+    const pickerInput = input as HTMLInputElement & { showPicker?: () => void };
+    pickerInput.showPicker?.();
   }
 
   return (
@@ -317,6 +448,9 @@ function KundaliPage() {
             <input
               value={form.fullName}
               onChange={(event) => updateField("fullName", event.target.value)}
+              placeholder={
+                language === "te" ? "పూర్తి పేరు ఇవ్వండి" : "Enter full name"
+              }
               required
             />
           </label>
@@ -326,7 +460,11 @@ function KundaliPage() {
             <select
               value={form.gender}
               onChange={(event) => updateField("gender", event.target.value)}
+              required
             >
+              <option value="">
+                {language === "te" ? "లింగం ఎంచుకోండి" : "Select gender"}
+              </option>
               <option value="Male">{t.male}</option>
               <option value="Female">{t.female}</option>
             </select>
@@ -340,6 +478,7 @@ function KundaliPage() {
               onChange={(event) =>
                 updateField("dateOfBirth", event.target.value)
               }
+              onClick={(event) => openNativePicker(event.currentTarget)}
               required
             />
           </label>
@@ -353,102 +492,124 @@ function KundaliPage() {
               onChange={(event) =>
                 updateField("timeOfBirth", event.target.value)
               }
+              onClick={(event) => openNativePicker(event.currentTarget)}
               required
             />
           </label>
 
-          <label className="city-search-label">
-            {t.city}
+          <label className="dynamic-location-label">
+            {language === "te" ? "జన్మ స్థలం" : "Birth Place"}
 
-            <div className="city-search-box">
+            <div className="dynamic-location-box" ref={locationBoxRef}>
               <input
-                value={citySearch}
-                onChange={(event) => handleCitySearch(event.target.value)}
-                onFocus={() => setShowCityResults(true)}
+                value={locationQuery}
+                onChange={(event) => handleLocationInput(event.target.value)}
+                onFocus={() => {
+                  if (!selectedLocation && locationQuery.trim().length >= 3) {
+                    setShowLocationResults(true);
+                  }
+                }}
                 placeholder={
                   language === "te"
-                    ? "ఉదా: హైదరాబాద్, విజయవాడ, తిరుపతి"
-                    : "Example: Hyderabad, Vijayawada, Tirupati"
+                    ? "నగరం / గ్రామం / స్థలం టైప్ చేయండి"
+                    : "Type city / village / birth place"
                 }
                 autoComplete="off"
+                required
               />
 
-              {showCityResults && (
-                <div className="city-results">
-                  {filteredCities.length > 0 ? (
-                    filteredCities.map((city) => (
+              {locationLoading && (
+                <span className="location-search-status">
+                  {language === "te" ? "శోధిస్తున్నాం..." : "Searching..."}
+                </span>
+              )}
+
+              {showLocationResults && (
+                <div className="dynamic-location-results">
+                  {locationError && <p>{locationError}</p>}
+
+                  {!locationError &&
+                    !locationLoading &&
+                    !selectedLocation &&
+                    locationQuery.trim().length >= 3 &&
+                    locationResults.length === 0 && (
+                      <p>
+                        {language === "te"
+                          ? "స్థలం కనిపించలేదు. మరింత స్పష్టంగా టైప్ చేయండి."
+                          : "No location found. Type a more specific place name."}
+                      </p>
+                    )}
+
+                  {!locationError &&
+                    locationResults.map((location) => (
                       <button
                         type="button"
-                        key={city.id}
-                        onClick={() => applyCity(city)}
+                        key={location.id}
+                        onClick={() => selectLocation(location)}
                       >
-                        <strong>{getLocationLabel(city, language)}</strong>
-                        <span>{city.birthPlace}</span>
+                        <strong>{location.birthPlace}</strong>
+                        <span>{location.displayName}</span>
                       </button>
-                    ))
-                  ) : (
-                    <p>
-                      {language === "te"
-                        ? "నగరం కనిపించలేదు. కింద జన్మ స్థలం, అక్షాంశం, రేఖాంశం మాన్యువల్‌గా ఇవ్వండి."
-                        : "City not found. Enter birth place, latitude, and longitude manually below."}
-                    </p>
-                  )}
+                    ))}
                 </div>
               )}
             </div>
           </label>
 
-          <label>
-            {t.birthPlace}
-            <input
-              value={form.birthPlace}
-              onChange={(event) =>
-                updateField("birthPlace", event.target.value)
-              }
-              required
-            />
-          </label>
+          {selectedLocation && (
+            <div className="selected-location-card">
+              <span>
+                {language === "te"
+                  ? "ఎంచుకున్న జన్మ స్థలం"
+                  : "Selected Birth Place"}
+              </span>
 
-          <div className="two-column">
-            <label>
-              {t.latitude}
-              <input
-                type="number"
-                step="0.000001"
-                value={form.latitude}
-                onChange={(event) =>
-                  updateField("latitude", event.target.value)
-                }
-                required
+              <strong>{selectedLocation.birthPlace}</strong>
+
+              <small>
+                {language === "te"
+                  ? "అక్షాంశం, రేఖాంశం మరియు టైమ్‌జోన్ ఆటోమేటిక్‌గా తీసుకున్నాం."
+                  : "Latitude, longitude, and timezone are auto-filled."}
+              </small>
+            </div>
+          )}
+
+          <details className="advanced-location-details">
+            <summary>
+              {language === "te" ? "అడ్వాన్స్డ్ వివరాలు" : "Advanced Details"}
+            </summary>
+
+            <div className="advanced-location-grid">
+              <Info
+                label={t.birthPlace}
+                value={selectedLocation?.birthPlace || form.birthPlace || "-"}
               />
-            </label>
-
-            <label>
-              {t.longitude}
-              <input
-                type="number"
-                step="0.000001"
-                value={form.longitude}
-                onChange={(event) =>
-                  updateField("longitude", event.target.value)
-                }
-                required
+              <Info
+                label={t.latitude}
+                value={selectedLocation ? form.latitude : "-"}
               />
-            </label>
-          </div>
+              <Info
+                label={t.longitude}
+                value={selectedLocation ? form.longitude : "-"}
+              />
+              <Info
+                label={t.timezone}
+                value={selectedLocation ? form.timezone : "-"}
+              />
+            </div>
+          </details>
 
-          <label>
-            {t.timezone}
-            <input
-              value={form.timezone}
-              onChange={(event) => updateField("timezone", event.target.value)}
-              required
-            />
-          </label>
-
-          <button type="submit" disabled={loading}>
+          <button type="submit" disabled={loading || !isFormValid}>
             {loading ? t.generating : t.generate}
           </button>
+
+          {!isFormValid && (
+            <p className="form-helper-message">
+              {language === "te"
+                ? "జాతకం రూపొందించడానికి పేరు, లింగం, తేదీ, సమయం మరియు జన్మ స్థలాన్ని పూర్తి చేయండి."
+                : "Complete name, gender, birth date, birth time, and select birth place to generate Kundali."}
+            </p>
+          )}
 
           {error && <p className="error-message">{error}</p>}
         </form>

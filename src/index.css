@@ -2843,3 +2843,140 @@ html {
     display: grid;
   }
 }
+
+/* =========================
+   DYNAMIC LOCATION SEARCH
+========================= */
+
+.dynamic-location-label {
+  position: relative;
+}
+
+.dynamic-location-box {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+
+.location-search-status {
+  color: rgba(255, 226, 161, 0.76);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.dynamic-location-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 226, 161, 0.22);
+  border-radius: 18px;
+  padding: 8px;
+  background: rgba(8, 5, 2, 0.96);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
+}
+
+.dynamic-location-results button {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 226, 161, 0.08);
+  border-radius: 12px;
+  padding: 10px;
+  background: transparent;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dynamic-location-results button:last-child {
+  border-bottom: 0;
+}
+
+.dynamic-location-results button:hover,
+.dynamic-location-results button:focus-visible {
+  background: rgba(255, 226, 161, 0.11);
+  outline: none;
+}
+
+.dynamic-location-results strong {
+  color: #ffe2a1;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.dynamic-location-results span {
+  color: rgba(255, 248, 232, 0.62);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.dynamic-location-results p {
+  margin: 0;
+  padding: 10px;
+  color: rgba(255, 248, 232, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.selected-location-card {
+  display: grid;
+  gap: 5px;
+  border: 1px solid rgba(255, 226, 161, 0.18);
+  border-radius: 18px;
+  padding: 13px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 226, 161, 0.12), transparent 40%),
+    rgba(255, 255, 255, 0.045);
+}
+
+.selected-location-card span {
+  color: #d8ae5f;
+  font-size: 0.72rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.selected-location-card strong {
+  color: #ffffff;
+  line-height: 1.35;
+}
+
+.selected-location-card small {
+  color: rgba(255, 248, 232, 0.66);
+  line-height: 1.45;
+}
+
+.advanced-location-details {
+  border: 1px solid rgba(255, 226, 161, 0.14);
+  border-radius: 18px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.advanced-location-details summary {
+  color: #ffe2a1;
+  font-size: 0.88rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.advanced-location-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.form-helper-message {
+  margin: -4px 0 0;
+  color: rgba(255, 226, 161, 0.78);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
