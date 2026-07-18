@@ -34,6 +34,7 @@ import {
   translateKundaliSentence,
 } from "../utils/kundaliTranslations";
 import AstroBackground from "../components/AstroBackground";
+import kkcLogo from "../assets/Logo.png";
 
 type DisplayValueFn = (value?: string | number | boolean | null) => string;
 type TextMap = typeof uiText["te"];
@@ -178,7 +179,9 @@ function KundaliPage() {
     <AstroBackground />
       <header className="site-header">
         <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
-          <span className="brand-mark">ॐ</span>
+          <span className="brand-logo-wrap">
+            <img src={kkcLogo} alt="KKC Astrology Logo" className="brand-logo" />
+          </span>
           <span>
             <strong>{t.brandTitle}</strong>
             <small>{t.brandSubtitle}</small>
