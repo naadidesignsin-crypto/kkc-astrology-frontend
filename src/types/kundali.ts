@@ -139,3 +139,27 @@ export type KundaliNavamsaResponse = {
   navamsaAscendant: string | null;
   planets: NavamsaPlanetResponse[];
 };
+
+export type ParasharaSectionResponse = {
+  sectionKey: string;
+  title: string;
+  summary: string;
+  focusAreas: string[];
+  observations: string[];
+  guidance: string;
+  caution: string;
+};
+
+export type KundaliParasharaReportResponse = {
+  reportId: number;
+  sectionType: string;
+  status: string;
+
+  lagna: string | null;
+  rashi: string | null;
+  nakshatra: string | null;
+  currentDasha: string | null;
+  navamsaAscendant: string | null;
+
+  sections: ParasharaSectionResponse[];
+};

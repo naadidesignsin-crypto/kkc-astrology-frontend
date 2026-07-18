@@ -13,6 +13,7 @@ import HouseInterpretationSection from "../components/HouseInterpretationSection
 import GeneratedReportTabs from "../components/GeneratedReportTabs";
 import type { ReportTabId } from "../components/GeneratedReportTabs";
 import NavamsaChartCard from "../components/NavamsaChartCard";
+import ParasharaInterpretationSection from "../components/ParasharaInterpretationSection";
 
 import {
   getLocationLabel,
@@ -30,6 +31,7 @@ import {
   getDosha,
   getHouses,
   getNavamsa,
+  getParashara,
   getPlanets,
   getSummary,
 } from "../services/kundaliApi";
@@ -42,6 +44,7 @@ import type {
   KundaliDoshaResponse,
   KundaliHouseResponse,
   KundaliNavamsaResponse,
+  KundaliParasharaReportResponse,
   KundaliPlanetsResponse,
   KundaliSummaryResponse,
 } from "../types/kundali";
@@ -87,6 +90,8 @@ function KundaliPage() {
   const [dosha, setDosha] = useState<KundaliDoshaResponse | null>(null);
   const [houses, setHouses] = useState<KundaliHouseResponse | null>(null);
   const [navamsa, setNavamsa] = useState<KundaliNavamsaResponse | null>(null);
+  const [parashara, setParashara] =
+    useState<KundaliParasharaReportResponse | null>(null);
   const [activeReportTab, setActiveReportTab] =
     useState<ReportTabId>("summary");
 
@@ -113,6 +118,7 @@ function KundaliPage() {
     setDosha(null);
     setHouses(null);
     setNavamsa(null);
+    setParashara(null);
     setActiveReportTab("summary");
 
     try {
@@ -135,15 +141,23 @@ function KundaliPage() {
 
       setGenerationStage("fetching");
 
-      const [summaryData, planetData, dashaData, doshaData, houseData, navamsaData] =
-        await Promise.all([
-          getSummary(reportId),
-          getPlanets(reportId),
-          getDasha(reportId),
-          getDosha(reportId),
-          getHouses(reportId),
-          getNavamsa(reportId),
-        ]);
+      const [
+        summaryData,
+        planetData,
+        dashaData,
+        doshaData,
+        houseData,
+        navamsaData,
+        parasharaData,
+      ] = await Promise.all([
+        getSummary(reportId),
+        getPlanets(reportId),
+        getDasha(reportId),
+        getDosha(reportId),
+        getHouses(reportId),
+        getNavamsa(reportId),
+        getParashara(reportId),
+      ]);
 
       setSummary(summaryData);
       setPlanets(planetData);
@@ -151,6 +165,7 @@ function KundaliPage() {
       setDosha(doshaData);
       setHouses(houseData);
       setNavamsa(navamsaData);
+      setParashara(parasharaData);
     } catch (err) {
       setError(err instanceof Error ? err.message : t.errorFallback);
     } finally {
@@ -241,6 +256,9 @@ function KundaliPage() {
           <a href="#summary">{t.navSummary}</a>
           <a href="#kundali-chart">{language === "te" ? "చార్ట్" : "Chart"}</a>
           <a href="#navamsa">{language === "te" ? "నవాంశం" : "Navamsa"}</a>
+          <a href="#parashara">
+            {language === "te" ? "పరాశర" : "Parāśara"}
+          </a>
           <a href="#houses">{language === "te" ? "భవాలు" : "Houses"}</a>
           <a href="#planets">{t.navPlanets}</a>
           <a href="#dasha">{t.navDasha}</a>
@@ -484,6 +502,18 @@ function KundaliPage() {
                   disabled: !navamsa,
                   content: navamsa ? (
                     <NavamsaChartCard navamsa={navamsa} language={language} />
+                  ) : null,
+                },
+                {
+                  id: "parashara",
+                  labelEn: "Parāśara",
+                  labelTe: "పరాశర",
+                  disabled: !parashara,
+                  content: parashara ? (
+                    <ParasharaInterpretationSection
+                      parashara={parashara}
+                      language={language}
+                    />
                   ) : null,
                 },
                 {

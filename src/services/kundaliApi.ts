@@ -1,12 +1,11 @@
 import type {
   KundaliDashaResponse,
   KundaliDoshaResponse,
-  KundaliGenerateRequest,
-  KundaliGenerateResponse,
+  KundaliHouseResponse,
   KundaliNavamsaResponse,
+  KundaliParasharaReportResponse,
   KundaliPlanetsResponse,
   KundaliSummaryResponse,
-  KundaliHouseResponse,
 } from "../types/kundali";
 
 const API_BASE_URL =
@@ -115,6 +114,21 @@ export async function getNavamsa(
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(errorText || "Unable to fetch Navamsa details");
+  }
+
+  return response.json();
+}
+
+export async function getParashara(
+  reportId: number
+): Promise<KundaliParasharaReportResponse> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/kundali/reports/${reportId}/parashara`
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Unable to fetch Parashara interpretation");
   }
 
   return response.json();

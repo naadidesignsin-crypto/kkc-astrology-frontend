@@ -2633,3 +2633,213 @@ html {
     min-height: auto;
   }
 }
+
+/* =========================
+   PARASHARA INTERPRETATION
+========================= */
+
+.parashara-section {
+  overflow: hidden;
+}
+
+.parashara-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 22px;
+  align-items: start;
+  margin-bottom: 22px;
+}
+
+.parashara-heading h2 {
+  margin: 0;
+  color: #ffe2a1;
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.parashara-heading p:not(.eyebrow) {
+  max-width: 760px;
+  margin: 10px 0 0;
+  color: rgba(255, 248, 232, 0.72);
+  line-height: 1.7;
+}
+
+.parashara-summary-box {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(255, 226, 161, 0.18);
+  border-radius: 20px;
+  padding: 14px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255, 226, 161, 0.1), transparent 40%),
+    rgba(255, 255, 255, 0.045);
+}
+
+.parashara-summary-box span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 226, 161, 0.08);
+  padding-bottom: 8px;
+  color: rgba(255, 248, 232, 0.86);
+  font-size: 0.9rem;
+}
+
+.parashara-summary-box span:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.parashara-summary-box strong {
+  color: #d8ae5f;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.parashara-card-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.parashara-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 226, 161, 0.18);
+  border-radius: 24px;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255, 226, 161, 0.12), transparent 30%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 0 22px rgba(255, 226, 161, 0.035);
+}
+
+.parashara-card::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  pointer-events: none;
+  border: 1px solid rgba(255, 226, 161, 0.055);
+  border-radius: 18px;
+}
+
+.parashara-card-top,
+.parashara-summary,
+.parashara-block,
+.parashara-guidance,
+.parashara-caution {
+  position: relative;
+  z-index: 1;
+}
+
+.parashara-card-top {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.parashara-card-top span {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(217, 173, 87, 0.14);
+  color: #ffe2a1;
+  font-size: 0.74rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.parashara-card-top h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  line-height: 1.18;
+}
+
+.parashara-summary {
+  margin: 0;
+  color: rgba(255, 248, 232, 0.76);
+  line-height: 1.7;
+}
+
+.parashara-block {
+  margin-top: 16px;
+}
+
+.parashara-block h4,
+.parashara-guidance strong,
+.parashara-caution strong {
+  display: block;
+  margin: 0 0 9px;
+  color: #d8ae5f;
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.parashara-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.parashara-chip-list span {
+  border: 1px solid rgba(255, 226, 161, 0.2);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 248, 232, 0.9);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.parashara-block ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 19px;
+  color: rgba(255, 248, 232, 0.74);
+  line-height: 1.6;
+}
+
+.parashara-guidance,
+.parashara-caution {
+  margin-top: 16px;
+  border-top: 1px solid rgba(255, 226, 161, 0.1);
+  padding-top: 14px;
+}
+
+.parashara-guidance p,
+.parashara-caution p {
+  margin: 0;
+  color: rgba(255, 248, 232, 0.76);
+  line-height: 1.7;
+}
+
+.parashara-caution {
+  border-color: rgba(255, 173, 96, 0.18);
+}
+
+@media (max-width: 980px) {
+  .parashara-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .parashara-summary-box {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 560px) {
+  .parashara-card {
+    border-radius: 20px;
+    padding: 17px;
+  }
+
+  .parashara-summary-box span {
+    display: grid;
+  }
+}

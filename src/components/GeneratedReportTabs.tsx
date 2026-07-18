@@ -5,6 +5,7 @@ export type ReportTabId =
   | "summary"
   | "birth-chart"
   | "navamsa"
+  | "parashara"
   | "houses"
   | "planets"
   | "dasha"
