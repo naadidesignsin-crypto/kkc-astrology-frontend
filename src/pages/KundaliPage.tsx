@@ -7,6 +7,8 @@ import NavagrahaOrbit from "../components/NavagrahaOrbit";
 import KundaliChartCard from "../components/KundaliChartCard";
 import KundaliGeneratingLoader from "../components/KundaliGeneratingLoader";
 import type { KundaliGenerationStage } from "../components/KundaliGeneratingLoader";
+import FloatingAstrologyWhatsApp from "../components/FloatingAstrologyWhatsApp";
+import ReportConsultationCard from "../components/ReportConsultationCard";
 
 import {
   getLocationLabel,
@@ -196,7 +198,7 @@ function KundaliPage() {
   return (
     <main className="kundali-page">
       <AstroBackground />
-
+      <FloatingAstrologyWhatsApp language={language} />
       <header className="site-header">
         <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
           <span className="brand-logo-wrap">
@@ -218,6 +220,9 @@ function KundaliPage() {
           <a href="#planets">{t.navPlanets}</a>
           <a href="#dasha">{t.navDasha}</a>
           <a href="#dosha">{t.navDosha}</a>
+          <a href="#consultation">
+            {language === "te" ? "సంప్రదించండి" : "Consult"}
+          </a>
         </nav>
 
         <button
@@ -456,6 +461,13 @@ function KundaliPage() {
                   displaySentence={displaySentence}
                 />
               )}
+          <ReportConsultationCard
+            language={language}
+            summary={summary}
+            planets={planets}
+            dasha={dasha}
+            dosha={dosha}
+          />
             </>
           )}
         </section>
