@@ -654,3 +654,60 @@ html {
     width: 100%;
   }
 }
+
+.city-search-label {
+  position: relative;
+}
+
+.city-search-box {
+  position: relative;
+}
+
+.city-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 35;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid rgba(222, 184, 96, 0.28);
+  border-radius: 16px;
+  background: rgba(8, 8, 8, 0.96);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(14px);
+}
+
+.city-results button {
+  display: grid;
+  width: 100%;
+  gap: 4px;
+  border: 0;
+  border-bottom: 1px solid rgba(222, 184, 96, 0.12);
+  padding: 12px 14px;
+  background: transparent;
+  text-align: left;
+}
+
+.city-results button:hover,
+.city-results button:focus-visible {
+  background: rgba(222, 184, 96, 0.1);
+  outline: none;
+}
+
+.city-results strong {
+  color: #ffffff;
+  font-size: 0.94rem;
+}
+
+.city-results span,
+.city-results p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.city-results p {
+  padding: 14px;
+}

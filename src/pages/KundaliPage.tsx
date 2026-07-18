@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 
 import AstrologyServices from "../components/AstrologyServices";
-import { locationPresets } from "../data/locationPresets";
+import {
+  getLocationLabel,
+  locationPresets,
+  searchLocationPresets,
+  type LocationPreset,
+} from "../data/locationPresets";
 import { uiText } from "../data/kundaliUiText";
 
 import {
@@ -46,7 +51,10 @@ const defaultForm = {
 
 function KundaliPage() {
   const [form, setForm] = useState(defaultForm);
-  const [selectedCity, setSelectedCity] = useState("హైదరాబాద్");
+  const [citySearch, setCitySearch] = useState(
+    getLocationLabel(locationPresets[0], "te")
+  );
+  const [showCityResults, setShowCityResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -59,6 +67,10 @@ function KundaliPage() {
 
   const t = uiText[language];
   const useTeluguValues = language === "te";
+  const filteredCities = useMemo(
+    () => searchLocationPresets(citySearch),
+    [citySearch]
+  );
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -125,14 +137,9 @@ function KundaliPage() {
     }));
   }
 
-  function handleCityChange(cityLabel: string) {
-    setSelectedCity(cityLabel);
-
-    const city = locationPresets.find((item) => item.label === cityLabel);
-
-    if (!city) {
-      return;
-    }
+  function applyCity(city: LocationPreset) {
+    setCitySearch(getLocationLabel(city, language));
+    setShowCityResults(false);
 
     setForm((current) => ({
       ...current,
@@ -141,6 +148,28 @@ function KundaliPage() {
       longitude: city.longitude,
       timezone: city.timezone,
     }));
+  }
+
+  function handleCitySearch(value: string) {
+    setCitySearch(value);
+    setShowCityResults(true);
+
+    const exactMatch = locationPresets.find((city) => {
+      const labelTe = city.labelTe.toLowerCase();
+      const labelEn = city.labelEn.toLowerCase();
+      const birthPlace = city.birthPlace.toLowerCase();
+      const cleanValue = value.trim().toLowerCase();
+
+      return (
+        labelTe === cleanValue ||
+        labelEn === cleanValue ||
+        birthPlace === cleanValue
+      );
+    });
+
+    if (exactMatch) {
+      applyCity(exactMatch);
+    }
   }
 
   return (
@@ -238,18 +267,45 @@ function KundaliPage() {
             />
           </label>
 
-          <label>
+          <label className="city-search-label">
             {t.city}
-            <select
-              value={selectedCity}
-              onChange={(event) => handleCityChange(event.target.value)}
-            >
-              {locationPresets.map((city) => (
-                <option value={city.label} key={city.label}>
-                  {city.label}
-                </option>
-              ))}
-            </select>
+
+            <div className="city-search-box">
+              <input
+                value={citySearch}
+                onChange={(event) => handleCitySearch(event.target.value)}
+                onFocus={() => setShowCityResults(true)}
+                placeholder={
+                  language === "te"
+                    ? "ఉదా: హైదరాబాద్, విజయవాడ, తిరుపతి"
+                    : "Example: Hyderabad, Vijayawada, Tirupati"
+                }
+                autoComplete="off"
+              />
+
+              {showCityResults && (
+                <div className="city-results">
+                  {filteredCities.length > 0 ? (
+                    filteredCities.map((city) => (
+                      <button
+                        type="button"
+                        key={city.id}
+                        onClick={() => applyCity(city)}
+                      >
+                        <strong>{getLocationLabel(city, language)}</strong>
+                        <span>{city.birthPlace}</span>
+                      </button>
+                    ))
+                  ) : (
+                    <p>
+                      {language === "te"
+                        ? "నగరం కనిపించలేదు. కింద జన్మ స్థలం, అక్షాంశం, రేఖాంశం మాన్యువల్‌గా ఇవ్వండి."
+                        : "City not found. Enter birth place, latitude, and longitude manually below."}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
           </label>
 
           <label>
