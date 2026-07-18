@@ -35,6 +35,7 @@ import {
 } from "../utils/kundaliTranslations";
 import AstroBackground from "../components/AstroBackground";
 import kkcLogo from "../assets/Logo.png";
+import NavagrahaOrbit from "../components/NavagrahaOrbit";
 
 type DisplayValueFn = (value?: string | number | boolean | null) => string;
 type TextMap = typeof uiText["te"];
@@ -189,6 +190,7 @@ function KundaliPage() {
         </a>
 
         <nav className="top-nav" aria-label="Main navigation">
+          <a href="#navagraha">{language === "te" ? "నవగ్రహం" : "Navagraha"}</a>
           <a href="#services">{t.navServices}</a>
           <a href="#kundali-form">{t.navKundali}</a>
           <a href="#summary">{t.navSummary}</a>
@@ -232,6 +234,7 @@ function KundaliPage() {
         </div>
       </div>
 
+      <NavagrahaOrbit language={language} />
       <AstrologyServices />
 
       <section className="content-grid">
