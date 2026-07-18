@@ -5,6 +5,7 @@ import type {
   KundaliGenerateResponse,
   KundaliPlanetsResponse,
   KundaliSummaryResponse,
+  KundaliHouseResponse,
 } from "../types/kundali";
 
 const API_BASE_URL =
@@ -67,4 +68,38 @@ export function getDosha(reportId: number): Promise<KundaliDoshaResponse> {
   return request<KundaliDoshaResponse>(
     `/api/kundali/reports/${reportId}/dosha`
   );
+}
+
+export async function downloadKundaliPdf(reportId: number) {
+  const response = await fetch(`${API_BASE_URL}/api/kundali/reports/${reportId}/pdf`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Unable to download Kundali PDF");
+  }
+
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `kkc-kundali-report-${reportId}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  window.URL.revokeObjectURL(url);
+}
+
+export async function getHouses(reportId: number): Promise<KundaliHouseResponse> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/kundali/reports/${reportId}/houses`
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Unable to fetch house interpretations");
+  }
+
+  return response.json();
 }

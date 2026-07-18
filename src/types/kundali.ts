@@ -95,3 +95,28 @@ export interface KundaliDoshaResponse {
   reason: string;
   info: string;
 }
+
+export type HousePlanetResponse = {
+  name: string;
+  rashi: string;
+  nakshatra: string;
+  degree: string;
+  retrograde: boolean | null;
+  combust: boolean | null;
+};
+
+export type HouseInterpretationResponse = {
+  houseNumber: number;
+  houseName: string;
+  mainArea: string;
+  meaning: string;
+  interpretation: string;
+  planets: HousePlanetResponse[];
+};
+
+export type KundaliHouseResponse = {
+  reportId: number;
+  sectionType: string;
+  status: string;
+  houses: HouseInterpretationResponse[];
+};

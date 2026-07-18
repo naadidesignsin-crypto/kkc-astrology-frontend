@@ -9,6 +9,8 @@ import KundaliGeneratingLoader from "../components/KundaliGeneratingLoader";
 import type { KundaliGenerationStage } from "../components/KundaliGeneratingLoader";
 import FloatingAstrologyWhatsApp from "../components/FloatingAstrologyWhatsApp";
 import ReportConsultationCard from "../components/ReportConsultationCard";
+import { downloadKundaliPdf } from "../services/kundaliApi";
+import HouseInterpretationSection from "../components/HouseInterpretationSection";
 
 import {
   getLocationLabel,
@@ -23,6 +25,7 @@ import {
   generateSection,
   getDasha,
   getDosha,
+  getHouses,
   getPlanets,
   getSummary,
 } from "../services/kundaliApi";
@@ -33,6 +36,7 @@ import type {
   DashaPeriod,
   KundaliDashaResponse,
   KundaliDoshaResponse,
+  KundaliHouseResponse,
   KundaliPlanetsResponse,
   KundaliSummaryResponse,
 } from "../types/kundali";
@@ -76,6 +80,7 @@ function KundaliPage() {
   const [planets, setPlanets] = useState<KundaliPlanetsResponse | null>(null);
   const [dasha, setDasha] = useState<KundaliDashaResponse | null>(null);
   const [dosha, setDosha] = useState<KundaliDoshaResponse | null>(null);
+  const [houses, setHouses] = useState<KundaliHouseResponse | null>(null);
 
   const [language, setLanguage] = useState<UiLanguage>("en");
 
@@ -94,6 +99,7 @@ function KundaliPage() {
     setGenerationStage("creating");
     setError("");
     setSummary(null);
+    setHouses(null);
     setPlanets(null);
     setDasha(null);
     setDosha(null);
@@ -118,17 +124,20 @@ function KundaliPage() {
 
       setGenerationStage("fetching");
 
-      const [summaryData, planetData, dashaData, doshaData] = await Promise.all([
-        getSummary(reportId),
-        getPlanets(reportId),
-        getDasha(reportId),
-        getDosha(reportId),
-      ]);
+      const [summaryData, planetData, dashaData, doshaData, houseData] =
+        await Promise.all([
+          getSummary(reportId),
+          getPlanets(reportId),
+          getDasha(reportId),
+          getDosha(reportId),
+          getHouses(reportId),
+        ]);
 
       setSummary(summaryData);
       setPlanets(planetData);
       setDasha(dashaData);
       setDosha(doshaData);
+      setHouses(houseData);
     } catch (err) {
       setError(err instanceof Error ? err.message : t.errorFallback);
     } finally {
@@ -223,6 +232,7 @@ function KundaliPage() {
           <a href="#consultation">
             {language === "te" ? "సంప్రదించండి" : "Consult"}
           </a>
+          <a href="#houses">{language === "te" ? "భవాలు" : "Houses"}</a>
         </nav>
 
         <button
@@ -433,9 +443,39 @@ function KundaliPage() {
                 displayValue={displayValue}
               />
 
+              <div className="result-card pdf-download-card">
+                <div>
+                  <p className="eyebrow">
+                    {language === "te" ? "PDF రిపోర్ట్" : "PDF Report"}
+                  </p>
+                  <h2>
+                    {language === "te"
+                      ? "జాతక PDF రిపోర్ట్ డౌన్‌లోడ్ చేయండి"
+                      : "Download Kundali PDF Report"}
+                  </h2>
+                  <p>
+                    {language === "te"
+                      ? "జాతక సారాంశం, గ్రహ స్థానాలు, దశ మరియు దోష వివరాలతో PDF పొందండి."
+                      : "Get a PDF with Kundali summary, planetary positions, Dasha, and Dosha details."}
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => downloadKundaliPdf(summary.id)}
+                >
+                  {language === "te" ? "PDF డౌన్‌లోడ్" : "Download PDF"}
+                </button>
+              </div>
+
               {planets && (
                 <KundaliChartCard planets={planets} language={language} />
               )}
+
+                {houses && (
+                  <HouseInterpretationSection houses={houses} language={language} />
+                )}
+
 
               {planets && (
                 <PlanetTable

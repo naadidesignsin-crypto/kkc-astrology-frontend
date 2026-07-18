@@ -2265,3 +2265,239 @@ html {
     min-width: 0;
   }
 }
+
+.pdf-download-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.pdf-download-card h2 {
+  margin: 0;
+  color: #ffe2a1;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.pdf-download-card p:not(.eyebrow) {
+  max-width: 620px;
+  margin: 10px 0 0;
+  color: rgba(255, 248, 232, 0.72);
+  line-height: 1.65;
+}
+
+.pdf-download-card button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, #f4d37f, #b77a21);
+  color: #170f04;
+  font-weight: 950;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
+}
+
+@media (max-width: 720px) {
+  .pdf-download-card {
+    display: grid;
+  }
+
+  .pdf-download-card button {
+    width: 100%;
+  }
+}
+
+/* =========================
+   HOUSE-WISE PARASHARA SECTION
+========================= */
+
+.house-interpretation-section {
+  overflow: hidden;
+}
+
+.house-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.house-section-heading h2 {
+  margin: 0;
+  color: #ffe2a1;
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.house-section-heading p:not(.eyebrow) {
+  max-width: 760px;
+  margin: 10px 0 0;
+  color: rgba(255, 248, 232, 0.72);
+  line-height: 1.7;
+}
+
+.house-section-badge {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 226, 161, 0.28);
+  border-radius: 999px;
+  padding: 9px 14px;
+  background: rgba(255, 255, 255, 0.055);
+  color: #ffe2a1;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.house-interpretation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.house-interpretation-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 226, 161, 0.18);
+  border-radius: 22px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 226, 161, 0.12), transparent 28%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 0 22px rgba(255, 226, 161, 0.035);
+}
+
+.house-interpretation-card::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  border: 1px solid rgba(255, 226, 161, 0.055);
+  border-radius: 17px;
+}
+
+.house-card-top,
+.house-main-area,
+.house-interpretation-card p,
+.house-planets-block,
+.house-interpretation-text {
+  position: relative;
+  z-index: 1;
+}
+
+.house-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.house-card-top span {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(217, 173, 87, 0.14);
+  color: #ffe2a1;
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.house-card-top strong {
+  color: #ffffff;
+  font-size: 1rem;
+  text-align: right;
+}
+
+.house-main-area {
+  border-left: 3px solid rgba(217, 173, 87, 0.7);
+  padding-left: 10px;
+  color: rgba(255, 248, 232, 0.9);
+  font-size: 0.92rem;
+  font-weight: 850;
+  line-height: 1.5;
+}
+
+.house-interpretation-card p {
+  margin: 12px 0 0;
+  color: rgba(255, 248, 232, 0.72);
+  line-height: 1.65;
+}
+
+.house-planets-block {
+  margin-top: 14px;
+}
+
+.house-planets-block small {
+  display: block;
+  margin-bottom: 8px;
+  color: #d8ae5f;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.house-planet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.house-planet-chip {
+  display: inline-flex;
+  border: 1px solid rgba(255, 226, 161, 0.24);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(0, 0, 0, 0.28);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.house-empty-text {
+  border: 1px dashed rgba(255, 226, 161, 0.2);
+  border-radius: 14px;
+  padding: 10px;
+  color: rgba(255, 248, 232, 0.58);
+  font-size: 0.85rem;
+}
+
+.house-interpretation-text {
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 226, 161, 0.12);
+  padding-top: 12px;
+  color: rgba(255, 248, 232, 0.78);
+  line-height: 1.65;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 860px) {
+  .house-section-heading {
+    display: grid;
+  }
+
+  .house-section-badge {
+    width: fit-content;
+  }
+
+  .house-interpretation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .house-interpretation-card {
+    padding: 15px;
+    border-radius: 18px;
+  }
+
+  .house-card-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .house-card-top strong {
+    text-align: left;
+  }
+}
