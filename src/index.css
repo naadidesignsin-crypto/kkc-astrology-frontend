@@ -3904,3 +3904,1024 @@ body,
   width: 100%;
   height: 100%;
 }
+
+/* =====================================================
+   LANDING PAGE SYNC WITH KUNDALI PAGE THEME
+   Purpose:
+   - Same font family as Kundali app
+   - Same black + muted gold visual style
+   - Remove harsh black-white contrast
+   - Keep landing page layout untouched
+===================================================== */
+
+.landing-page {
+  background:
+    radial-gradient(circle at 72% 14%, rgba(213, 166, 74, 0.12), transparent 30%),
+    radial-gradient(circle at 16% 24%, rgba(213, 166, 74, 0.08), transparent 24%),
+    #050402;
+  color: #f7eed8;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* Force homepage typography to match Kundali page */
+.landing-page,
+.landing-page h1,
+.landing-page h2,
+.landing-page h3,
+.landing-page h4,
+.landing-page p,
+.landing-page a,
+.landing-page button,
+.landing-page span,
+.landing-page small,
+.landing-page strong {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* Header sync */
+.landing-header {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(16, 11, 4, 0.92),
+      rgba(4, 4, 3, 0.9)
+    );
+  border: 1px solid rgba(213, 166, 74, 0.28);
+  border-radius: 999px;
+  padding: 16px 22px;
+  margin-top: 28px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
+}
+
+.landing-brand img {
+  filter: none;
+}
+
+.landing-brand strong {
+  color: #fff3d2;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.landing-brand small {
+  color: rgba(247, 238, 216, 0.66);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.landing-nav a {
+  color: rgba(247, 238, 216, 0.82);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.landing-nav a:hover {
+  color: #f2c96f;
+}
+
+.landing-nav a::after {
+  background: #d5a64a;
+}
+
+/* Buttons synced with Kundali CTA */
+.landing-outline-btn,
+.landing-primary-btn,
+.landing-white-btn,
+.landing-footer-btn {
+  border-radius: 999px;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.landing-outline-btn {
+  border: 1px solid rgba(213, 166, 74, 0.54);
+  background: rgba(213, 166, 74, 0.08);
+  color: #f2c96f;
+}
+
+.landing-outline-btn:hover {
+  background: linear-gradient(135deg, #f3cc73, #c98d2e);
+  color: #090703;
+  border-color: transparent;
+}
+
+.landing-primary-btn,
+.landing-white-btn,
+.landing-footer-btn {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #f3cc73, #c98d2e);
+  color: #090703 !important;
+  box-shadow: 0 16px 34px rgba(213, 166, 74, 0.22);
+}
+
+.landing-primary-btn:hover,
+.landing-white-btn:hover,
+.landing-footer-btn:hover {
+  background: transparent;
+  border-color: rgba(213, 166, 74, 0.58);
+  color: #f2c96f !important;
+}
+
+/* Hero sync */
+.landing-hero {
+  min-height: 640px;
+}
+
+.landing-hero::before {
+  background:
+    radial-gradient(circle at 74% 34%, rgba(213, 166, 74, 0.16), transparent 34%),
+    radial-gradient(circle at 14% 22%, rgba(255, 224, 160, 0.08), transparent 26%),
+    linear-gradient(180deg, rgba(16, 11, 4, 0.96), rgba(5, 4, 2, 1));
+  border: 1px solid rgba(213, 166, 74, 0.2);
+  border-radius: 34px;
+}
+
+.landing-eyebrow,
+.landing-section-heading p {
+  color: rgba(242, 201, 111, 0.82);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.landing-hero h1 {
+  max-width: 740px;
+  color: #ffe7a6;
+  font-size: clamp(3.2rem, 6.6vw, 5.8rem);
+  font-weight: 950;
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+  text-transform: none;
+}
+
+.landing-hero p:not(.landing-eyebrow) {
+  color: rgba(247, 238, 216, 0.74);
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.landing-play-btn {
+  color: rgba(247, 238, 216, 0.88);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.landing-play-btn span {
+  border-color: rgba(213, 166, 74, 0.45);
+  color: #f2c96f;
+  background: rgba(213, 166, 74, 0.08);
+}
+
+/* Zodiac visual sync */
+.landing-zodiac-orbit {
+  background:
+    radial-gradient(circle, rgba(213, 166, 74, 0.22), transparent 58%);
+}
+
+.landing-om {
+  border-color: rgba(213, 166, 74, 0.4);
+  color: #f2c96f;
+  background:
+    radial-gradient(circle, rgba(213, 166, 74, 0.22), rgba(0, 0, 0, 0.2));
+  box-shadow:
+    0 0 30px rgba(213, 166, 74, 0.16),
+    inset 0 0 22px rgba(213, 166, 74, 0.08);
+}
+
+.zodiac-ring {
+  border-color: rgba(213, 166, 74, 0.22);
+}
+
+.zodiac-symbol {
+  color: rgba(242, 201, 111, 0.86);
+}
+
+/* Remove pure-white section contrast */
+.landing-services,
+.landing-testimonials,
+.landing-gallery-strip {
+  background:
+    linear-gradient(180deg, #090703, #050402);
+  color: #f7eed8;
+  border-top: 1px solid rgba(213, 166, 74, 0.18);
+  border-bottom: 1px solid rgba(213, 166, 74, 0.14);
+}
+
+.landing-section-heading h2,
+.landing-services .landing-section-heading h2,
+.landing-testimonials .landing-section-heading h2 {
+  color: #ffe7a6;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.8rem);
+  font-weight: 950;
+  letter-spacing: -0.055em;
+}
+
+.landing-services .landing-section-heading p,
+.landing-testimonials .landing-section-heading p {
+  color: rgba(242, 201, 111, 0.76);
+}
+
+/* Service cards match Kundali cards */
+.landing-service-card,
+.landing-testimonial-card {
+  border: 1px solid rgba(213, 166, 74, 0.28);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(213, 166, 74, 0.11),
+      rgba(255, 255, 255, 0.035)
+    );
+  color: #f7eed8;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+}
+
+.landing-service-card span {
+  border-color: rgba(213, 166, 74, 0.36);
+  background: rgba(213, 166, 74, 0.1);
+  color: #f2c96f;
+}
+
+.landing-service-card h3,
+.landing-testimonial-card strong {
+  color: #fff3d2;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-weight: 900;
+}
+
+.landing-service-card p,
+.landing-testimonial-card p {
+  color: rgba(247, 238, 216, 0.68);
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+
+.landing-service-card a {
+  color: #f2c96f;
+  font-size: 0.74rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* About section synced */
+.landing-about {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(213, 166, 74, 0.13), transparent 30%),
+    linear-gradient(180deg, #050402, #0b0804);
+  color: #f7eed8;
+  border-top: 1px solid rgba(213, 166, 74, 0.14);
+  border-bottom: 1px solid rgba(213, 166, 74, 0.14);
+}
+
+.landing-about h2 {
+  color: #ffe7a6;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-weight: 950;
+  letter-spacing: -0.055em;
+}
+
+.landing-about p:not(.landing-eyebrow) {
+  color: rgba(247, 238, 216, 0.7);
+}
+
+.landing-about-visual {
+  border: 1px solid rgba(213, 166, 74, 0.24);
+  background:
+    radial-gradient(circle at 68% 26%, rgba(213, 166, 74, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(213, 166, 74, 0.1), rgba(255, 255, 255, 0.025));
+  filter: none;
+}
+
+.landing-temple-frame span,
+.landing-temple-frame strong {
+  color: #f2c96f;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.landing-temple-frame strong {
+  font-weight: 950;
+  letter-spacing: -0.03em;
+}
+
+.landing-temple-frame small {
+  color: rgba(247, 238, 216, 0.62);
+}
+
+/* Why section */
+.landing-why {
+  background:
+    linear-gradient(180deg, #0b0804, #050402);
+  color: #f7eed8;
+}
+
+.landing-why .landing-section-heading p {
+  color: rgba(242, 201, 111, 0.78);
+}
+
+.landing-why .landing-section-heading h2 {
+  color: #ffe7a6;
+}
+
+.landing-why-card {
+  border-radius: 18px;
+  padding: 26px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(213, 166, 74, 0.08),
+      rgba(255, 255, 255, 0.025)
+    );
+  border: 1px solid rgba(213, 166, 74, 0.18);
+}
+
+.landing-why-card span {
+  color: #f2c96f;
+}
+
+.landing-why-card h3 {
+  color: #fff3d2;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-weight: 900;
+}
+
+.landing-why-card p {
+  color: rgba(247, 238, 216, 0.64);
+}
+
+/* Testimonials */
+.landing-testimonial-card span {
+  color: rgba(242, 201, 111, 0.28);
+}
+
+/* Gallery strip */
+.landing-gallery-strip {
+  color: rgba(247, 238, 216, 0.64);
+}
+
+/* Footer sync */
+.landing-footer {
+  background:
+    linear-gradient(180deg, #050402, #020201);
+  color: #f7eed8;
+  border-top: 1px solid rgba(213, 166, 74, 0.18);
+}
+
+.landing-footer img {
+  filter: none;
+}
+
+.landing-footer h4 {
+  color: #fff3d2;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.landing-footer p,
+.landing-footer a {
+  color: rgba(247, 238, 216, 0.62);
+}
+
+.landing-footer a:hover {
+  color: #f2c96f;
+}
+
+/* Mobile polish */
+@media (max-width: 640px) {
+  .landing-header {
+    border-radius: 24px;
+    padding: 14px;
+  }
+
+  .landing-hero h1 {
+    font-size: clamp(2.8rem, 15vw, 4.2rem);
+    line-height: 0.98;
+  }
+
+  .landing-service-card,
+  .landing-testimonial-card,
+  .landing-why-card {
+    text-align: left;
+  }
+
+  .landing-service-card span {
+    margin-left: 0;
+  }
+}
+
+/* =====================================================
+   LANDING PAGE SYNCED WITH KUNDALI APP
+===================================================== */
+
+.landing-sync-page {
+  position: relative;
+  min-height: 100vh;
+  background: #050402;
+  color: #f7eed8;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  overflow-x: hidden;
+}
+
+.landing-sync-page * {
+  box-sizing: border-box;
+}
+
+.landing-sync-page a {
+  text-decoration: none;
+}
+
+.landing-sync-header {
+  position: sticky;
+  top: 22px;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  width: min(1180px, calc(100% - 32px));
+  margin: 22px auto 0;
+  padding: 16px 22px;
+  border: 1px solid rgba(213, 166, 74, 0.28);
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(16, 11, 4, 0.94),
+      rgba(4, 4, 3, 0.9)
+    );
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+}
+
+.landing-sync-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: max-content;
+}
+
+.landing-sync-logo-wrap {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(213, 166, 74, 0.32);
+  border-radius: 50%;
+  background: rgba(213, 166, 74, 0.08);
+}
+
+.landing-sync-logo-wrap img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.landing-sync-brand strong {
+  display: block;
+  color: #fff3d2;
+  font-size: 0.95rem;
+  font-weight: 950;
+  line-height: 1.1;
+}
+
+.landing-sync-brand small {
+  display: block;
+  margin-top: 4px;
+  color: rgba(247, 238, 216, 0.62);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.landing-sync-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.landing-sync-nav a {
+  color: rgba(247, 238, 216, 0.82);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.landing-sync-nav a:hover {
+  color: #f2c96f;
+}
+
+.landing-sync-consult-btn,
+.landing-sync-primary-btn,
+.landing-sync-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.landing-sync-consult-btn,
+.landing-sync-primary-btn {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #f3cc73, #c98d2e);
+  color: #090703;
+  box-shadow: 0 16px 34px rgba(213, 166, 74, 0.22);
+}
+
+.landing-sync-consult-btn {
+  padding: 12px 20px;
+}
+
+.landing-sync-primary-btn,
+.landing-sync-secondary-btn {
+  padding: 14px 22px;
+}
+
+.landing-sync-consult-btn:hover,
+.landing-sync-primary-btn:hover {
+  background: transparent;
+  border-color: rgba(213, 166, 74, 0.58);
+  color: #f2c96f;
+}
+
+.landing-sync-secondary-btn {
+  border: 1px solid rgba(213, 166, 74, 0.48);
+  background: rgba(213, 166, 74, 0.08);
+  color: #f2c96f;
+}
+
+.landing-sync-secondary-btn:hover {
+  background: rgba(213, 166, 74, 0.16);
+}
+
+.landing-sync-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 430px;
+  align-items: center;
+  gap: 48px;
+  width: min(1180px, calc(100% - 32px));
+  min-height: 660px;
+  margin: 22px auto 0;
+  padding: 72px 38px;
+  border: 1px solid rgba(213, 166, 74, 0.22);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 74% 34%, rgba(213, 166, 74, 0.17), transparent 34%),
+    linear-gradient(180deg, rgba(16, 11, 4, 0.96), rgba(5, 4, 2, 0.98));
+  overflow: hidden;
+}
+
+.landing-sync-eyebrow,
+.landing-sync-section-heading p {
+  margin: 0 0 16px;
+  color: rgba(242, 201, 111, 0.82);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.landing-sync-hero h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #ffe7a6;
+  font-size: clamp(3.2rem, 6.4vw, 5.8rem);
+  font-weight: 950;
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+}
+
+.landing-sync-hero p:not(.landing-sync-eyebrow) {
+  max-width: 620px;
+  margin: 24px 0 0;
+  color: rgba(247, 238, 216, 0.72);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.landing-sync-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.landing-sync-orbit-card {
+  display: grid;
+  place-items: center;
+}
+
+.landing-sync-orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(390px, 82vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(213, 166, 74, 0.22), transparent 60%);
+}
+
+.landing-sync-om {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  border: 1px solid rgba(213, 166, 74, 0.4);
+  border-radius: 50%;
+  color: #f2c96f;
+  background:
+    radial-gradient(circle, rgba(213, 166, 74, 0.22), rgba(0, 0, 0, 0.18));
+  box-shadow:
+    0 0 30px rgba(213, 166, 74, 0.16),
+    inset 0 0 22px rgba(213, 166, 74, 0.08);
+  font-size: 3.7rem;
+}
+
+.landing-sync-ring {
+  position: absolute;
+  border: 1px solid rgba(213, 166, 74, 0.22);
+  border-radius: 50%;
+}
+
+.landing-sync-ring-one {
+  inset: 5%;
+}
+
+.landing-sync-ring-two {
+  inset: 22%;
+}
+
+.landing-sync-ring-three {
+  inset: 38%;
+}
+
+.landing-sync-planet {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(213, 166, 74, 0.34);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.38);
+  color: #f2c96f;
+  font-size: 1.35rem;
+}
+
+.landing-sync-planet.p1 { top: 1%; left: 45%; }
+.landing-sync-planet.p2 { top: 17%; right: 13%; }
+.landing-sync-planet.p3 { right: 1%; top: 45%; }
+.landing-sync-planet.p4 { right: 15%; bottom: 13%; }
+.landing-sync-planet.p5 { bottom: 1%; left: 45%; }
+.landing-sync-planet.p6 { bottom: 15%; left: 13%; }
+.landing-sync-planet.p7 { left: 1%; top: 45%; }
+.landing-sync-planet.p8 { top: 17%; left: 13%; }
+
+.landing-sync-section,
+.landing-sync-about,
+.landing-sync-contact {
+  width: min(1180px, calc(100% - 32px));
+  margin: 28px auto 0;
+  border: 1px solid rgba(213, 166, 74, 0.2);
+  border-radius: 28px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(213, 166, 74, 0.09),
+      rgba(255, 255, 255, 0.025)
+    );
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.landing-sync-section {
+  padding: 42px 36px;
+}
+
+.landing-sync-section-heading {
+  max-width: 780px;
+  margin-bottom: 28px;
+}
+
+.landing-sync-section-heading h2,
+.landing-sync-about h2,
+.landing-sync-contact h2 {
+  margin: 0;
+  color: #ffe7a6;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.landing-sync-service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.landing-sync-card,
+.landing-sync-why-card {
+  border: 1px solid rgba(213, 166, 74, 0.26);
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(213, 166, 74, 0.1),
+      rgba(255, 255, 255, 0.035)
+    );
+  padding: 22px;
+}
+
+.landing-sync-card-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(213, 166, 74, 0.34);
+  border-radius: 50%;
+  color: #f2c96f;
+  background: rgba(213, 166, 74, 0.08);
+}
+
+.landing-sync-card h3 {
+  margin: 18px 0 6px;
+  color: #fff3d2;
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+.landing-sync-card strong {
+  color: #d5a64a;
+  font-size: 0.78rem;
+}
+
+.landing-sync-card p,
+.landing-sync-about p,
+.landing-sync-contact p,
+.landing-sync-why-card p {
+  color: rgba(247, 238, 216, 0.68);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.landing-sync-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.landing-sync-tags span {
+  border: 1px solid rgba(213, 166, 74, 0.2);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(247, 238, 216, 0.72);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.landing-sync-about {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 40px;
+  align-items: center;
+  padding: 46px 40px;
+}
+
+.landing-sync-about-card {
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+  border: 1px solid rgba(213, 166, 74, 0.24);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at center, rgba(213, 166, 74, 0.18), transparent 58%);
+  text-align: center;
+}
+
+.landing-sync-about-card span {
+  color: #f2c96f;
+  font-size: 4.8rem;
+}
+
+.landing-sync-about-card h3 {
+  margin: 12px 0 4px;
+  color: #fff3d2;
+  font-size: 1.5rem;
+}
+
+.landing-sync-about-card p {
+  margin: 0;
+}
+
+.landing-sync-why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.landing-sync-why-card span {
+  color: #f2c96f;
+  font-size: 1.4rem;
+}
+
+.landing-sync-contact {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: center;
+  padding: 36px 40px;
+}
+
+.landing-sync-contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.landing-sync-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(1180px, calc(100% - 32px));
+  margin: 28px auto 0;
+  padding: 34px 0 50px;
+  color: rgba(247, 238, 216, 0.62);
+}
+
+.landing-sync-footer strong {
+  color: #fff3d2;
+}
+
+.landing-sync-footer a {
+  margin-left: 18px;
+  color: rgba(247, 238, 216, 0.66);
+  font-weight: 800;
+}
+
+.landing-sync-footer a:hover {
+  color: #f2c96f;
+}
+
+@media (max-width: 1080px) {
+  .landing-sync-header {
+    grid-template-columns: 1fr auto;
+    border-radius: 28px;
+  }
+
+  .landing-sync-nav {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .landing-sync-hero,
+  .landing-sync-about,
+  .landing-sync-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-sync-service-grid,
+  .landing-sync-why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-sync-contact-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-sync-header,
+  .landing-sync-hero,
+  .landing-sync-section,
+  .landing-sync-about,
+  .landing-sync-contact,
+  .landing-sync-footer {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .landing-sync-header {
+    top: 12px;
+    padding: 14px;
+  }
+
+  .landing-sync-consult-btn {
+    display: none;
+  }
+
+  .landing-sync-hero {
+    min-height: auto;
+    padding: 52px 22px;
+  }
+
+  .landing-sync-hero h1 {
+    font-size: clamp(2.7rem, 14vw, 4rem);
+  }
+
+  .landing-sync-service-grid,
+  .landing-sync-why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-sync-section,
+  .landing-sync-about,
+  .landing-sync-contact {
+    padding: 28px 22px;
+  }
+
+  .landing-sync-footer {
+    flex-direction: column;
+  }
+
+  .landing-sync-footer a {
+    display: block;
+    margin: 10px 0 0;
+  }
+}
