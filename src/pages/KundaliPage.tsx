@@ -2,6 +2,12 @@ import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 
 import AstrologyServices from "../components/AstrologyServices";
+import AstroBackground from "../components/AstroBackground";
+import NavagrahaOrbit from "../components/NavagrahaOrbit";
+import KundaliChartCard from "../components/KundaliChartCard";
+import KundaliGeneratingLoader from "../components/KundaliGeneratingLoader";
+import type { KundaliGenerationStage } from "../components/KundaliGeneratingLoader";
+
 import {
   getLocationLabel,
   locationPresets,
@@ -33,9 +39,8 @@ import {
   toTeluguValue,
   translateKundaliSentence,
 } from "../utils/kundaliTranslations";
-import AstroBackground from "../components/AstroBackground";
+
 import kkcLogo from "../assets/Logo.png";
-import NavagrahaOrbit from "../components/NavagrahaOrbit";
 
 type DisplayValueFn = (value?: string | number | boolean | null) => string;
 type TextMap = typeof uiText["te"];
@@ -54,11 +59,15 @@ const defaultForm = {
 
 function KundaliPage() {
   const [form, setForm] = useState(defaultForm);
+
   const [citySearch, setCitySearch] = useState(
     getLocationLabel(locationPresets[0], "te")
   );
   const [showCityResults, setShowCityResults] = useState(false);
+
   const [loading, setLoading] = useState(false);
+  const [generationStage, setGenerationStage] =
+    useState<KundaliGenerationStage>("creating");
   const [error, setError] = useState("");
 
   const [summary, setSummary] = useState<KundaliSummaryResponse | null>(null);
@@ -70,6 +79,7 @@ function KundaliPage() {
 
   const t = uiText[language];
   const useTeluguValues = language === "te";
+
   const filteredCities = useMemo(
     () => searchLocationPresets(citySearch),
     [citySearch]
@@ -79,6 +89,7 @@ function KundaliPage() {
     event.preventDefault();
 
     setLoading(true);
+    setGenerationStage("creating");
     setError("");
     setSummary(null);
     setPlanets(null);
@@ -94,9 +105,16 @@ function KundaliPage() {
 
       const reportId = generated.id;
 
+      setGenerationStage("planets");
       await generateSection(reportId, "PLANETARY_POSITIONS");
+
+      setGenerationStage("dasha");
       await generateSection(reportId, "DASHA");
+
+      setGenerationStage("dosha");
       await generateSection(reportId, "DOSHA");
+
+      setGenerationStage("fetching");
 
       const [summaryData, planetData, dashaData, doshaData] = await Promise.all([
         getSummary(reportId),
@@ -177,12 +195,14 @@ function KundaliPage() {
 
   return (
     <main className="kundali-page">
-    <AstroBackground />
+      <AstroBackground />
+
       <header className="site-header">
         <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
           <span className="brand-logo-wrap">
             <img src={kkcLogo} alt="KKC Astrology Logo" className="brand-logo" />
           </span>
+
           <span>
             <strong>{t.brandTitle}</strong>
             <small>{t.brandSubtitle}</small>
@@ -194,6 +214,7 @@ function KundaliPage() {
           <a href="#services">{t.navServices}</a>
           <a href="#kundali-form">{t.navKundali}</a>
           <a href="#summary">{t.navSummary}</a>
+          <a href="#kundali-chart">{language === "te" ? "చార్ట్" : "Chart"}</a>
           <a href="#planets">{t.navPlanets}</a>
           <a href="#dasha">{t.navDasha}</a>
           <a href="#dosha">{t.navDosha}</a>
@@ -222,6 +243,7 @@ function KundaliPage() {
           <span>{t.portalDescription}</span>
         </div>
       </section>
+
       <div className="astro-orb-card" aria-hidden="true">
         <div className="astro-orb">
           <span className="orb-center">ॐ</span>
@@ -235,6 +257,7 @@ function KundaliPage() {
       </div>
 
       <NavagrahaOrbit language={language} />
+
       <AstrologyServices />
 
       <section className="content-grid">
@@ -391,10 +414,10 @@ function KundaliPage() {
           )}
 
           {loading && (
-            <div className="empty-card">
-              <h2>{t.loadingTitle}</h2>
-              <p>{t.loadingDescription}</p>
-            </div>
+            <KundaliGeneratingLoader
+              language={language}
+              stage={generationStage}
+            />
           )}
 
           {summary && (
@@ -404,6 +427,10 @@ function KundaliPage() {
                 t={t}
                 displayValue={displayValue}
               />
+
+              {planets && (
+                <KundaliChartCard planets={planets} language={language} />
+              )}
 
               {planets && (
                 <PlanetTable

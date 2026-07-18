@@ -1406,3 +1406,639 @@ html {
     border-radius: 18px;
   }
 }
+
+/* =========================
+   KUNDALI CHART VISUAL CARD
+========================= */
+
+.kundali-chart-card {
+  overflow: hidden;
+}
+
+.chart-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.chart-heading-row h2 {
+  margin: 0;
+  color: #ffe2a1;
+  font-size: clamp(1.45rem, 3vw, 2.4rem);
+  line-height: 1.1;
+}
+
+.chart-badge {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 226, 161, 0.32);
+  border-radius: 999px;
+  padding: 9px 13px;
+  color: #ffe2a1;
+  background: rgba(217, 173, 87, 0.1);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.kundali-chart-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(120px, auto));
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(255, 226, 161, 0.18);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at center, rgba(255, 226, 161, 0.11), transparent 42%),
+    rgba(0, 0, 0, 0.28);
+}
+
+.chart-house {
+  position: relative;
+  min-height: 118px;
+  padding: 12px;
+  border: 1px solid rgba(255, 226, 161, 0.18);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 226, 161, 0.08), transparent 42%),
+    rgba(255, 255, 255, 0.045);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.chart-house:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 226, 161, 0.4);
+  background:
+    radial-gradient(circle at top right, rgba(255, 226, 161, 0.14), transparent 42%),
+    rgba(255, 255, 255, 0.065);
+}
+
+.house-number {
+  display: inline-flex;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: #d8ae5f;
+  background: rgba(217, 173, 87, 0.08);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.house-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.planet-chip {
+  display: inline-flex;
+  border: 1px solid rgba(255, 226, 161, 0.24);
+  border-radius: 999px;
+  padding: 6px 9px;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(0, 0, 0, 0.24);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.lagna-chip {
+  border-color: rgba(255, 226, 161, 0.62);
+  color: #160d02;
+  background: linear-gradient(135deg, #f4d37f, #b77a21);
+}
+
+.house-planets small {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.78rem;
+}
+
+.chart-center {
+  position: absolute;
+  inset: 50%;
+  display: grid;
+  width: 150px;
+  height: 150px;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 226, 161, 0.36);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 239, 190, 0.28), rgba(28, 16, 4, 0.88));
+  box-shadow:
+    0 0 46px rgba(217, 173, 87, 0.36),
+    inset 0 0 22px rgba(255, 226, 161, 0.08);
+  pointer-events: none;
+}
+
+.chart-center span {
+  color: #ffe2a1;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.chart-center strong {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.chart-note {
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .chart-heading-row {
+    display: grid;
+  }
+
+  .kundali-chart-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+  }
+
+  .chart-center {
+    position: static;
+    grid-column: 1 / -1;
+    width: 100%;
+    height: auto;
+    min-height: 110px;
+    transform: none;
+    border-radius: 22px;
+    order: -1;
+  }
+
+  .chart-house {
+    min-height: 105px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kundali-chart-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   SOUTH INDIAN KUNDALI CHART
+========================= */
+
+.south-chart-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding: 8px 0 2px;
+}
+
+.south-chart {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  grid-template-rows: repeat(4, minmax(124px, auto));
+  gap: 8px;
+  min-width: 680px;
+  padding: 14px;
+  border: 1px solid rgba(255, 226, 161, 0.22);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at center, rgba(255, 226, 161, 0.12), transparent 44%),
+    linear-gradient(135deg, rgba(22, 14, 5, 0.84), rgba(0, 0, 0, 0.62));
+  box-shadow:
+    inset 0 0 34px rgba(255, 226, 161, 0.04),
+    0 22px 74px rgba(0, 0, 0, 0.34);
+}
+
+.south-house {
+  position: relative;
+  min-height: 124px;
+  padding: 13px;
+  border: 1px solid rgba(255, 226, 161, 0.23);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 226, 161, 0.1), transparent 38%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 0 18px rgba(255, 226, 161, 0.025);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.south-house:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 226, 161, 0.48);
+  background:
+    radial-gradient(circle at top right, rgba(255, 226, 161, 0.17), transparent 42%),
+    rgba(255, 255, 255, 0.065);
+}
+
+.south-house-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.south-house-top span {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #ffe2a1;
+  background: rgba(217, 173, 87, 0.12);
+  font-size: 0.75rem;
+  font-weight: 950;
+}
+
+.south-house-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.south-house-planets small {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.82rem;
+}
+
+.south-planet {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 226, 161, 0.28);
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: rgba(255, 255, 255, 0.9);
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 226, 161, 0.1), transparent 42%),
+    rgba(0, 0, 0, 0.3);
+  font-size: 0.84rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.south-planet.lagna-chip {
+  border-color: rgba(255, 226, 161, 0.74);
+  color: #170f04;
+  background: linear-gradient(135deg, #f6d985, #bd8125);
+  box-shadow: 0 0 20px rgba(217, 173, 87, 0.28);
+}
+
+.south-chart-center {
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  min-height: 256px;
+  border: 1px solid rgba(255, 226, 161, 0.28);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at center, rgba(255, 226, 161, 0.18), transparent 54%),
+    radial-gradient(circle at 50% 110%, rgba(217, 173, 87, 0.1), transparent 46%),
+    rgba(0, 0, 0, 0.34);
+  box-shadow:
+    inset 0 0 38px rgba(255, 226, 161, 0.06),
+    0 0 42px rgba(217, 173, 87, 0.14);
+}
+
+.south-chart-center span {
+  color: #ffe2a1;
+  font-size: 3rem;
+  line-height: 1;
+  text-shadow: 0 0 28px rgba(217, 173, 87, 0.52);
+}
+
+.south-chart-center strong {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.south-chart-center small {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.78rem;
+}
+
+/* 4x4 South-style perimeter placement */
+.south-house-1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.south-house-2 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.south-house-3 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.south-house-4 {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.south-house-5 {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.south-house-6 {
+  grid-column: 4;
+  grid-row: 3;
+}
+
+.south-house-7 {
+  grid-column: 4;
+  grid-row: 4;
+}
+
+.south-house-8 {
+  grid-column: 3;
+  grid-row: 4;
+}
+
+.south-house-9 {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.south-house-10 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+.south-house-11 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.south-house-12 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+@media (max-width: 760px) {
+  .south-chart {
+    min-width: 620px;
+    grid-template-columns: repeat(4, 145px);
+  }
+
+  .south-house {
+    min-height: 116px;
+  }
+
+  .south-chart-center {
+    min-height: 240px;
+  }
+}
+
+/* =========================
+   PREMIUM KUNDALI LOADER
+========================= */
+
+.kundali-loader-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  min-height: 420px;
+  padding: clamp(22px, 4vw, 34px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 226, 161, 0.28);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 22% 26%, rgba(255, 226, 161, 0.16), transparent 28%),
+    radial-gradient(circle at 86% 20%, rgba(217, 173, 87, 0.13), transparent 30%),
+    linear-gradient(135deg, rgba(22, 14, 5, 0.86), rgba(0, 0, 0, 0.62));
+  box-shadow: 0 28px 92px rgba(0, 0, 0, 0.48);
+}
+
+.kundali-loader-card::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  pointer-events: none;
+  border: 1px solid rgba(255, 226, 161, 0.08);
+  border-radius: 22px;
+}
+
+.loader-orb-wrap,
+.loader-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.loader-orb-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.loader-orb {
+  position: relative;
+  display: grid;
+  width: 210px;
+  height: 210px;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(255, 226, 161, 0.15), transparent 58%),
+    rgba(0, 0, 0, 0.22);
+}
+
+.loader-orb span {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  width: 82px;
+  height: 82px;
+  place-items: center;
+  border: 1px solid rgba(255, 226, 161, 0.72);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 239, 190, 0.38), rgba(36, 21, 4, 0.86));
+  color: #ffe2a1;
+  font-size: 2.3rem;
+  box-shadow:
+    0 0 46px rgba(217, 173, 87, 0.46),
+    inset 0 0 20px rgba(255, 226, 161, 0.12);
+}
+
+.loader-ring {
+  position: absolute;
+  border: 1px solid rgba(255, 226, 161, 0.3);
+  border-radius: 50%;
+}
+
+.loader-ring::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffe2a1;
+  box-shadow: 0 0 20px rgba(255, 226, 161, 0.9);
+}
+
+.loader-ring-one {
+  inset: 10px;
+  animation: kundaliLoaderSpin 13s linear infinite;
+}
+
+.loader-ring-two {
+  inset: 34px;
+  opacity: 0.72;
+  animation: kundaliLoaderSpinReverse 9s linear infinite;
+}
+
+.loader-ring-three {
+  inset: 58px;
+  opacity: 0.5;
+  animation: kundaliLoaderSpin 7s linear infinite;
+}
+
+.loader-copy h2 {
+  margin: 0;
+  color: #ffe2a1;
+  font-size: clamp(1.8rem, 4vw, 3.3rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+.loader-copy p:not(.eyebrow) {
+  max-width: 760px;
+  margin: 14px 0 0;
+  color: rgba(255, 248, 232, 0.72);
+  line-height: 1.75;
+}
+
+.loader-progress-track {
+  position: relative;
+  height: 10px;
+  margin: 24px 0 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 226, 161, 0.16);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.loader-progress-track span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #b77a21, #f4d37f, #ffe2a1);
+  box-shadow: 0 0 28px rgba(217, 173, 87, 0.42);
+  transition: width 260ms ease;
+}
+
+.loader-steps {
+  display: grid;
+  gap: 10px;
+}
+
+.loader-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  border: 1px solid rgba(255, 226, 161, 0.13);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.loader-step span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 226, 161, 0.2);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.58);
+  background: rgba(0, 0, 0, 0.28);
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.loader-step strong {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.92rem;
+}
+
+.loader-step.active {
+  border-color: rgba(255, 226, 161, 0.44);
+  background:
+    radial-gradient(circle at top right, rgba(255, 226, 161, 0.12), transparent 38%),
+    rgba(255, 255, 255, 0.065);
+}
+
+.loader-step.active span {
+  color: #170f04;
+  background: linear-gradient(135deg, #f4d37f, #b77a21);
+}
+
+.loader-step.active strong {
+  color: #ffffff;
+}
+
+.loader-step.done span {
+  color: #170f04;
+  background: #f4d37f;
+}
+
+.loader-step.done strong {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+@keyframes kundaliLoaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes kundaliLoaderSpinReverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .kundali-loader-card {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .loader-orb {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 520px) {
+  .kundali-loader-card {
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .loader-orb {
+    width: 150px;
+    height: 150px;
+  }
+
+  .loader-orb span {
+    width: 66px;
+    height: 66px;
+    font-size: 1.9rem;
+  }
+}
