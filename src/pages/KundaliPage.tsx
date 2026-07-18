@@ -9,8 +9,10 @@ import KundaliGeneratingLoader from "../components/KundaliGeneratingLoader";
 import type { KundaliGenerationStage } from "../components/KundaliGeneratingLoader";
 import FloatingAstrologyWhatsApp from "../components/FloatingAstrologyWhatsApp";
 import ReportConsultationCard from "../components/ReportConsultationCard";
-import { downloadKundaliPdf } from "../services/kundaliApi";
 import HouseInterpretationSection from "../components/HouseInterpretationSection";
+import GeneratedReportTabs from "../components/GeneratedReportTabs";
+import type { ReportTabId } from "../components/GeneratedReportTabs";
+import NavamsaChartCard from "../components/NavamsaChartCard";
 
 import {
   getLocationLabel,
@@ -21,11 +23,13 @@ import {
 import { uiText } from "../data/kundaliUiText";
 
 import {
+  downloadKundaliPdf,
   generateKundali,
   generateSection,
   getDasha,
   getDosha,
   getHouses,
+  getNavamsa,
   getPlanets,
   getSummary,
 } from "../services/kundaliApi";
@@ -37,6 +41,7 @@ import type {
   KundaliDashaResponse,
   KundaliDoshaResponse,
   KundaliHouseResponse,
+  KundaliNavamsaResponse,
   KundaliPlanetsResponse,
   KundaliSummaryResponse,
 } from "../types/kundali";
@@ -81,6 +86,9 @@ function KundaliPage() {
   const [dasha, setDasha] = useState<KundaliDashaResponse | null>(null);
   const [dosha, setDosha] = useState<KundaliDoshaResponse | null>(null);
   const [houses, setHouses] = useState<KundaliHouseResponse | null>(null);
+  const [navamsa, setNavamsa] = useState<KundaliNavamsaResponse | null>(null);
+  const [activeReportTab, setActiveReportTab] =
+    useState<ReportTabId>("summary");
 
   const [language, setLanguage] = useState<UiLanguage>("en");
 
@@ -98,11 +106,14 @@ function KundaliPage() {
     setLoading(true);
     setGenerationStage("creating");
     setError("");
+
     setSummary(null);
-    setHouses(null);
     setPlanets(null);
     setDasha(null);
     setDosha(null);
+    setHouses(null);
+    setNavamsa(null);
+    setActiveReportTab("summary");
 
     try {
       const generated = await generateKundali(form);
@@ -124,13 +135,14 @@ function KundaliPage() {
 
       setGenerationStage("fetching");
 
-      const [summaryData, planetData, dashaData, doshaData, houseData] =
+      const [summaryData, planetData, dashaData, doshaData, houseData, navamsaData] =
         await Promise.all([
           getSummary(reportId),
           getPlanets(reportId),
           getDasha(reportId),
           getDosha(reportId),
           getHouses(reportId),
+          getNavamsa(reportId),
         ]);
 
       setSummary(summaryData);
@@ -138,6 +150,7 @@ function KundaliPage() {
       setDasha(dashaData);
       setDosha(doshaData);
       setHouses(houseData);
+      setNavamsa(navamsaData);
     } catch (err) {
       setError(err instanceof Error ? err.message : t.errorFallback);
     } finally {
@@ -208,6 +221,7 @@ function KundaliPage() {
     <main className="kundali-page">
       <AstroBackground />
       <FloatingAstrologyWhatsApp language={language} />
+
       <header className="site-header">
         <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
           <span className="brand-logo-wrap">
@@ -226,13 +240,14 @@ function KundaliPage() {
           <a href="#kundali-form">{t.navKundali}</a>
           <a href="#summary">{t.navSummary}</a>
           <a href="#kundali-chart">{language === "te" ? "చార్ట్" : "Chart"}</a>
+          <a href="#navamsa">{language === "te" ? "నవాంశం" : "Navamsa"}</a>
+          <a href="#houses">{language === "te" ? "భవాలు" : "Houses"}</a>
           <a href="#planets">{t.navPlanets}</a>
           <a href="#dasha">{t.navDasha}</a>
           <a href="#dosha">{t.navDosha}</a>
           <a href="#consultation">
             {language === "te" ? "సంప్రదించండి" : "Consult"}
           </a>
-          <a href="#houses">{language === "te" ? "భవాలు" : "Houses"}</a>
         </nav>
 
         <button
@@ -436,79 +451,117 @@ function KundaliPage() {
           )}
 
           {summary && (
-            <>
-              <SummaryCard
-                summary={summary}
-                t={t}
-                displayValue={displayValue}
-              />
-
-              <div className="result-card pdf-download-card">
-                <div>
-                  <p className="eyebrow">
-                    {language === "te" ? "PDF రిపోర్ట్" : "PDF Report"}
-                  </p>
-                  <h2>
-                    {language === "te"
-                      ? "జాతక PDF రిపోర్ట్ డౌన్‌లోడ్ చేయండి"
-                      : "Download Kundali PDF Report"}
-                  </h2>
-                  <p>
-                    {language === "te"
-                      ? "జాతక సారాంశం, గ్రహ స్థానాలు, దశ మరియు దోష వివరాలతో PDF పొందండి."
-                      : "Get a PDF with Kundali summary, planetary positions, Dasha, and Dosha details."}
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => downloadKundaliPdf(summary.id)}
-                >
-                  {language === "te" ? "PDF డౌన్‌లోడ్" : "Download PDF"}
-                </button>
-              </div>
-
-              {planets && (
-                <KundaliChartCard planets={planets} language={language} />
-              )}
-
-                {houses && (
-                  <HouseInterpretationSection houses={houses} language={language} />
-                )}
-
-
-              {planets && (
-                <PlanetTable
-                  planets={planets}
-                  t={t}
-                  displayValue={displayValue}
-                />
-              )}
-
-              {dasha && (
-                <DashaCard
-                  dasha={dasha}
-                  t={t}
-                  displayValue={displayValue}
-                />
-              )}
-
-              {dosha && (
-                <DoshaCard
-                  dosha={dosha}
-                  t={t}
-                  displayValue={displayValue}
-                  displaySentence={displaySentence}
-                />
-              )}
-          <ReportConsultationCard
-            language={language}
-            summary={summary}
-            planets={planets}
-            dasha={dasha}
-            dosha={dosha}
-          />
-            </>
+            <GeneratedReportTabs
+              language={language}
+              activeTab={activeReportTab}
+              onTabChange={setActiveReportTab}
+              tabs={[
+                {
+                  id: "summary",
+                  labelEn: "Summary",
+                  labelTe: "సారాంశం",
+                  content: (
+                    <SummaryCard
+                      summary={summary}
+                      t={t}
+                      displayValue={displayValue}
+                    />
+                  ),
+                },
+                {
+                  id: "birth-chart",
+                  labelEn: "Birth Chart",
+                  labelTe: "జన్మ చార్ట్",
+                  disabled: !planets,
+                  content: planets ? (
+                    <KundaliChartCard planets={planets} language={language} />
+                  ) : null,
+                },
+                {
+                  id: "navamsa",
+                  labelEn: "Navamsa",
+                  labelTe: "నవాంశం",
+                  disabled: !navamsa,
+                  content: navamsa ? (
+                    <NavamsaChartCard navamsa={navamsa} language={language} />
+                  ) : null,
+                },
+                {
+                  id: "houses",
+                  labelEn: "Houses",
+                  labelTe: "భవాలు",
+                  disabled: !houses,
+                  content: houses ? (
+                    <HouseInterpretationSection
+                      houses={houses}
+                      language={language}
+                    />
+                  ) : null,
+                },
+                {
+                  id: "planets",
+                  labelEn: "Planets",
+                  labelTe: "గ్రహాలు",
+                  disabled: !planets,
+                  content: planets ? (
+                    <PlanetTable
+                      planets={planets}
+                      t={t}
+                      displayValue={displayValue}
+                    />
+                  ) : null,
+                },
+                {
+                  id: "dasha",
+                  labelEn: "Dasha",
+                  labelTe: "దశ",
+                  disabled: !dasha,
+                  content: dasha ? (
+                    <DashaCard
+                      dasha={dasha}
+                      t={t}
+                      displayValue={displayValue}
+                    />
+                  ) : null,
+                },
+                {
+                  id: "dosha",
+                  labelEn: "Dosha",
+                  labelTe: "దోషం",
+                  disabled: !dosha,
+                  content: dosha ? (
+                    <DoshaCard
+                      dosha={dosha}
+                      t={t}
+                      displayValue={displayValue}
+                      displaySentence={displaySentence}
+                    />
+                  ) : null,
+                },
+                {
+                  id: "pdf",
+                  labelEn: "PDF",
+                  labelTe: "PDF",
+                  content: (
+                    <PdfDownloadCard summary={summary} language={language} />
+                  ),
+                },
+                {
+                  id: "consultation",
+                  labelEn: "Consult",
+                  labelTe: "సంప్రదించండి",
+                  content: (
+                    <ReportConsultationCard
+                      language={language}
+                      summary={summary}
+                      planets={planets}
+                      dasha={dasha}
+                      dosha={dosha}
+                    />
+                  ),
+                },
+              ]}
+            />
           )}
         </section>
       </section>
@@ -668,6 +721,40 @@ function DoshaCard({
 
       <p className="description-text">{displaySentence(dosha.reason)}</p>
       <p className="description-text muted">{displaySentence(dosha.info)}</p>
+    </div>
+  );
+}
+
+function PdfDownloadCard({
+  summary,
+  language,
+}: {
+  summary: KundaliSummaryResponse;
+  language: UiLanguage;
+}) {
+  const isTelugu = language === "te";
+
+  return (
+    <div className="result-card pdf-download-card">
+      <div>
+        <p className="eyebrow">{isTelugu ? "PDF రిపోర్ట్" : "PDF Report"}</p>
+
+        <h2>
+          {isTelugu
+            ? "జాతక PDF రిపోర్ట్ డౌన్‌లోడ్ చేయండి"
+            : "Download Kundali PDF Report"}
+        </h2>
+
+        <p>
+          {isTelugu
+            ? "జాతక సారాంశం, గ్రహ స్థానాలు, భవాలు, దశ మరియు దోష వివరాలతో PDF పొందండి."
+            : "Get a PDF with Kundali summary, planetary positions, houses, Dasha, and Dosha details."}
+        </p>
+      </div>
+
+      <button type="button" onClick={() => downloadKundaliPdf(summary.id)}>
+        {isTelugu ? "PDF డౌన్‌లోడ్" : "Download PDF"}
+      </button>
     </div>
   );
 }

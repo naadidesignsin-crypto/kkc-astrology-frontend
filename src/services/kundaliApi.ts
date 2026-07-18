@@ -3,6 +3,7 @@ import type {
   KundaliDoshaResponse,
   KundaliGenerateRequest,
   KundaliGenerateResponse,
+  KundaliNavamsaResponse,
   KundaliPlanetsResponse,
   KundaliSummaryResponse,
   KundaliHouseResponse,
@@ -99,6 +100,21 @@ export async function getHouses(reportId: number): Promise<KundaliHouseResponse>
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(errorText || "Unable to fetch house interpretations");
+  }
+
+  return response.json();
+}
+
+export async function getNavamsa(
+  reportId: number
+): Promise<KundaliNavamsaResponse> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/kundali/reports/${reportId}/navamsa`
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Unable to fetch Navamsa details");
   }
 
   return response.json();

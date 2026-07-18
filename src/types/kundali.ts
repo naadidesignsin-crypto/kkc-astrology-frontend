@@ -120,3 +120,22 @@ export type KundaliHouseResponse = {
   status: string;
   houses: HouseInterpretationResponse[];
 };
+
+export type NavamsaPlanetResponse = {
+  planetName: string;
+  birthRashi: string;
+  birthHouse: number | null;
+  birthLongitude: number | null;
+  birthNakshatra: string;
+  navamsaNumber: number;
+  navamsaRashi: string;
+  navamsaHouse: number | null;
+};
+
+export type KundaliNavamsaResponse = {
+  reportId: number;
+  sectionType: string;
+  status: string;
+  navamsaAscendant: string | null;
+  planets: NavamsaPlanetResponse[];
+};
