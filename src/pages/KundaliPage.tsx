@@ -33,6 +33,7 @@ import {
   toTeluguValue,
   translateKundaliSentence,
 } from "../utils/kundaliTranslations";
+import AstroBackground from "../components/AstroBackground";
 
 type DisplayValueFn = (value?: string | number | boolean | null) => string;
 type TextMap = typeof uiText["te"];
@@ -174,6 +175,7 @@ function KundaliPage() {
 
   return (
     <main className="kundali-page">
+    <AstroBackground />
       <header className="site-header">
         <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
           <span className="brand-mark">ॐ</span>
@@ -215,6 +217,17 @@ function KundaliPage() {
           <span>{t.portalDescription}</span>
         </div>
       </section>
+      <div className="astro-orb-card" aria-hidden="true">
+        <div className="astro-orb">
+          <span className="orb-center">ॐ</span>
+          <span className="orb-ring orb-ring-one" />
+          <span className="orb-ring orb-ring-two" />
+          <span className="orb-ring orb-ring-three" />
+          <span className="orb-dot orb-dot-one" />
+          <span className="orb-dot orb-dot-two" />
+          <span className="orb-dot orb-dot-three" />
+        </div>
+      </div>
 
       <AstrologyServices />
 
