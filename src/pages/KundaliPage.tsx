@@ -63,7 +63,7 @@ function KundaliPage() {
   const [form, setForm] = useState(defaultForm);
 
   const [citySearch, setCitySearch] = useState(
-    getLocationLabel(locationPresets[0], "te")
+    getLocationLabel(locationPresets[0], "en")
   );
   const [showCityResults, setShowCityResults] = useState(false);
 
@@ -77,7 +77,7 @@ function KundaliPage() {
   const [dasha, setDasha] = useState<KundaliDashaResponse | null>(null);
   const [dosha, setDosha] = useState<KundaliDoshaResponse | null>(null);
 
-  const [language, setLanguage] = useState<UiLanguage>("te");
+  const [language, setLanguage] = useState<UiLanguage>("en");
 
   const t = uiText[language];
   const useTeluguValues = language === "te";
@@ -263,7 +263,7 @@ function KundaliPage() {
 
       <NavagrahaOrbit language={language} />
 
-      <AstrologyServices />
+      <AstrologyServices language={language} />
 
       <section className="content-grid">
         <form className="kundali-form" id="kundali-form" onSubmit={handleSubmit}>
