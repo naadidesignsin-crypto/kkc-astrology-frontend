@@ -10,6 +10,8 @@ import {
   getSummary,
 } from "../services/kundaliApi";
 
+import { locationPresets } from "../data/locationPresets";
+
 import type {
   DashaPeriod,
   KundaliDashaResponse,
@@ -18,7 +20,10 @@ import type {
   KundaliSummaryResponse,
 } from "../types/kundali";
 
-import { toTeluguValue, translateKundaliSentence } from "../utils/kundaliTranslations";
+import {
+  toTeluguValue,
+  translateKundaliSentence,
+} from "../utils/kundaliTranslations";
 
 const defaultForm = {
   fullName: "Test User",
@@ -34,6 +39,7 @@ const defaultForm = {
 
 function KundaliPage() {
   const [form, setForm] = useState(defaultForm);
+  const [selectedCity, setSelectedCity] = useState("హైదరాబాద్");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -56,7 +62,9 @@ function KundaliPage() {
       const generated = await generateKundali(form);
 
       if (generated.status !== "SUCCESS") {
-        throw new Error(generated.errorMessage || "జాతకం రూపొందించడంలో సమస్య వచ్చింది.");
+        throw new Error(
+          generated.errorMessage || "జాతకం రూపొందించడంలో సమస్య వచ్చింది."
+        );
       }
 
       const reportId = generated.id;
@@ -91,19 +99,65 @@ function KundaliPage() {
     }));
   }
 
+  function handleCityChange(cityLabel: string) {
+    setSelectedCity(cityLabel);
+
+    const city = locationPresets.find((item) => item.label === cityLabel);
+
+    if (!city) {
+      return;
+    }
+
+    setForm((current) => ({
+      ...current,
+      birthPlace: city.birthPlace,
+      latitude: city.latitude,
+      longitude: city.longitude,
+      timezone: city.timezone,
+    }));
+  }
+
   return (
     <main className="kundali-page">
-      <section className="hero-section">
-        <p className="eyebrow">KKC జ్యోతిష్యం</p>
-        <h1>జాతక చక్రం తయారీ</h1>
-        <p>
-          జనన వివరాల ఆధారంగా లగ్నం, రాశి, నక్షత్రం, గ్రహ స్థానాలు,
-          విమ్షోత్తరి మహాదశ మరియు మంగళ దోష విశ్లేషణను చూడండి.
-        </p>
+      <header className="site-header">
+        <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
+          <span className="brand-mark">ॐ</span>
+          <span>
+            <strong>KKC Astrology</strong>
+            <small>జాతకం • జ్యోతిష్యం • మార్గదర్శనం</small>
+          </span>
+        </a>
+
+        <nav className="top-nav" aria-label="Main navigation">
+          <a href="#kundali-form">జాతకం</a>
+          <a href="#summary">సారాంశం</a>
+          <a href="#planets">గ్రహాలు</a>
+          <a href="#dasha">దశ</a>
+          <a href="#dosha">దోషం</a>
+        </nav>
+      </header>
+
+      <section className="hero-section" id="top">
+        <div>
+          <p className="eyebrow">KKC జ్యోతిష్యం</p>
+          <h1>జాతక చక్రం తయారీ</h1>
+          <p>
+            జనన తేదీ, సమయం, జన్మ స్థలం ఆధారంగా లగ్నం, రాశి, నక్షత్రం,
+            గ్రహ స్థానాలు, విమ్షోత్తరి మహాదశ మరియు మంగళ దోష విశ్లేషణను చూడండి.
+          </p>
+        </div>
+
+        <div className="hero-note">
+          <strong>.in Astrology Portal</strong>
+          <span>
+            ఈ పేజీ జ్యోతిష్యం మరియు జాతక సేవల కోసం మాత్రమే. Events, Donation,
+            Video Gallery విషయాలు .com సైట్‌లో ఉంటాయి.
+          </span>
+        </div>
       </section>
 
       <section className="content-grid">
-        <form className="kundali-form" onSubmit={handleSubmit}>
+        <form className="kundali-form" id="kundali-form" onSubmit={handleSubmit}>
           <h2>జనన వివరాలు</h2>
 
           <label>
@@ -149,6 +203,20 @@ function KundaliPage() {
               }
               required
             />
+          </label>
+
+          <label>
+            నగరం ఎంపిక చేయండి
+            <select
+              value={selectedCity}
+              onChange={(event) => handleCityChange(event.target.value)}
+            >
+              {locationPresets.map((city) => (
+                <option value={city.label} key={city.label}>
+                  {city.label}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label>
@@ -220,7 +288,9 @@ function KundaliPage() {
           {loading && (
             <div className="empty-card">
               <h2>జాతకం రూపొందుతోంది...</h2>
-              <p>అన్ని జాతక విభాగాలు సిద్ధం చేస్తున్నాం. దయచేసి వేచి ఉండండి.</p>
+              <p>
+                అన్ని జాతక విభాగాలు సిద్ధం చేస్తున్నాం. దయచేసి వేచి ఉండండి.
+              </p>
             </div>
           )}
 
@@ -240,7 +310,7 @@ function KundaliPage() {
 
 function SummaryCard({ summary }: { summary: KundaliSummaryResponse }) {
   return (
-    <div className="result-card">
+    <div className="result-card" id="summary">
       <h2>జాతక సారాంశం</h2>
 
       <div className="detail-grid">
@@ -268,7 +338,7 @@ function SummaryCard({ summary }: { summary: KundaliSummaryResponse }) {
 
 function PlanetTable({ planets }: { planets: KundaliPlanetsResponse }) {
   return (
-    <div className="result-card">
+    <div className="result-card" id="planets">
       <h2>గ్రహ స్థానాలు</h2>
 
       <div className="table-wrap">
@@ -308,12 +378,14 @@ function PlanetTable({ planets }: { planets: KundaliPlanetsResponse }) {
 
 function DashaCard({ dasha }: { dasha: KundaliDashaResponse }) {
   return (
-    <div className="result-card">
+    <div className="result-card" id="dasha">
       <h2>విమ్షోత్తరి మహాదశ</h2>
 
       {dasha.currentDasha && (
         <div className="highlight-box">
-          <strong>ప్రస్తుత దశ: {toTeluguValue(dasha.currentDasha.planet)}</strong>
+          <strong>
+            ప్రస్తుత దశ: {toTeluguValue(dasha.currentDasha.planet)}
+          </strong>
           <span>
             {dasha.currentDasha.startDate} నుంచి {dasha.currentDasha.endDate} వరకు
           </span>
@@ -339,7 +411,7 @@ function DashaCard({ dasha }: { dasha: KundaliDashaResponse }) {
 
 function DoshaCard({ dosha }: { dosha: KundaliDoshaResponse }) {
   return (
-    <div className="result-card">
+    <div className="result-card" id="dosha">
       <h2>మంగళ దోష విశ్లేషణ</h2>
 
       <div className="detail-grid">
