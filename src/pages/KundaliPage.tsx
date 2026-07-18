@@ -1,6 +1,10 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 
+import AstrologyServices from "../components/AstrologyServices";
+import { locationPresets } from "../data/locationPresets";
+import { uiText } from "../data/kundaliUiText";
+
 import {
   generateKundali,
   generateSection,
@@ -10,7 +14,7 @@ import {
   getSummary,
 } from "../services/kundaliApi";
 
-import { locationPresets } from "../data/locationPresets";
+import type { UiLanguage } from "../types/language";
 
 import type {
   DashaPeriod,
@@ -25,7 +29,8 @@ import {
   translateKundaliSentence,
 } from "../utils/kundaliTranslations";
 
-import AstrologyServices from "../components/AstrologyServices";
+type DisplayValueFn = (value?: string | number | boolean | null) => string;
+type TextMap = typeof uiText["te"];
 
 const defaultForm = {
   fullName: "Test User",
@@ -50,6 +55,11 @@ function KundaliPage() {
   const [dasha, setDasha] = useState<KundaliDashaResponse | null>(null);
   const [dosha, setDosha] = useState<KundaliDoshaResponse | null>(null);
 
+  const [language, setLanguage] = useState<UiLanguage>("te");
+
+  const t = uiText[language];
+  const useTeluguValues = language === "te";
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -64,9 +74,7 @@ function KundaliPage() {
       const generated = await generateKundali(form);
 
       if (generated.status !== "SUCCESS") {
-        throw new Error(
-          generated.errorMessage || "జాతకం రూపొందించడంలో సమస్య వచ్చింది."
-        );
+        throw new Error(generated.errorMessage || t.generationFailed);
       }
 
       const reportId = generated.id;
@@ -87,10 +95,26 @@ function KundaliPage() {
       setDasha(dashaData);
       setDosha(doshaData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "ఏదో సమస్య వచ్చింది.");
+      setError(err instanceof Error ? err.message : t.errorFallback);
     } finally {
       setLoading(false);
     }
+  }
+
+  function displayValue(value?: string | number | boolean | null) {
+    if (value === null || value === undefined || value === "") {
+      return "-";
+    }
+
+    return useTeluguValues ? toTeluguValue(value) : String(value);
+  }
+
+  function displaySentence(value?: string | null) {
+    if (!value) {
+      return "-";
+    }
+
+    return language === "te" ? translateKundaliSentence(value) : value;
   }
 
   function updateField(name: string, value: string) {
@@ -125,37 +149,41 @@ function KundaliPage() {
         <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
           <span className="brand-mark">ॐ</span>
           <span>
-            <strong>KKC Astrology</strong>
-            <small>జాతకం • జ్యోతిష్యం • మార్గదర్శనం</small>
+            <strong>{t.brandTitle}</strong>
+            <small>{t.brandSubtitle}</small>
           </span>
         </a>
 
         <nav className="top-nav" aria-label="Main navigation">
-          <a href="#services">సేవలు</a>
-          <a href="#kundali-form">జాతకం</a>
-          <a href="#summary">సారాంశం</a>
-          <a href="#planets">గ్రహాలు</a>
-          <a href="#dasha">దశ</a>
-          <a href="#dosha">దోషం</a>
+          <a href="#services">{t.navServices}</a>
+          <a href="#kundali-form">{t.navKundali}</a>
+          <a href="#summary">{t.navSummary}</a>
+          <a href="#planets">{t.navPlanets}</a>
+          <a href="#dasha">{t.navDasha}</a>
+          <a href="#dosha">{t.navDosha}</a>
         </nav>
+
+        <button
+          type="button"
+          className="language-toggle"
+          onClick={() =>
+            setLanguage((current) => (current === "te" ? "en" : "te"))
+          }
+        >
+          {t.languageButton}
+        </button>
       </header>
 
       <section className="hero-section" id="top">
         <div>
-          <p className="eyebrow">KKC జ్యోతిష్యం</p>
-          <h1>జాతక చక్రం తయారీ</h1>
-          <p>
-            జనన తేదీ, సమయం, జన్మ స్థలం ఆధారంగా లగ్నం, రాశి, నక్షత్రం,
-            గ్రహ స్థానాలు, విమ్షోత్తరి మహాదశ మరియు మంగళ దోష విశ్లేషణను చూడండి.
-          </p>
+          <p className="eyebrow">{t.eyebrow}</p>
+          <h1>{t.heroTitle}</h1>
+          <p>{t.heroDescription}</p>
         </div>
 
         <div className="hero-note">
-          <strong>.in Astrology Portal</strong>
-          <span>
-            ఈ పేజీ జ్యోతిష్యం మరియు జాతక సేవల కోసం మాత్రమే. Events, Donation,
-            Video Gallery విషయాలు .com సైట్‌లో ఉంటాయి.
-          </span>
+          <strong>{t.portalTitle}</strong>
+          <span>{t.portalDescription}</span>
         </div>
       </section>
 
@@ -163,10 +191,10 @@ function KundaliPage() {
 
       <section className="content-grid">
         <form className="kundali-form" id="kundali-form" onSubmit={handleSubmit}>
-          <h2>జనన వివరాలు</h2>
+          <h2>{t.formTitle}</h2>
 
           <label>
-            పూర్తి పేరు
+            {t.fullName}
             <input
               value={form.fullName}
               onChange={(event) => updateField("fullName", event.target.value)}
@@ -175,18 +203,18 @@ function KundaliPage() {
           </label>
 
           <label>
-            లింగం
+            {t.gender}
             <select
               value={form.gender}
               onChange={(event) => updateField("gender", event.target.value)}
             >
-              <option value="Male">పురుషుడు</option>
-              <option value="Female">స్త్రీ</option>
+              <option value="Male">{t.male}</option>
+              <option value="Female">{t.female}</option>
             </select>
           </label>
 
           <label>
-            జనన తేదీ
+            {t.dateOfBirth}
             <input
               type="date"
               value={form.dateOfBirth}
@@ -198,7 +226,7 @@ function KundaliPage() {
           </label>
 
           <label>
-            జనన సమయం
+            {t.timeOfBirth}
             <input
               type="time"
               step="1"
@@ -211,7 +239,7 @@ function KundaliPage() {
           </label>
 
           <label>
-            నగరం ఎంపిక చేయండి
+            {t.city}
             <select
               value={selectedCity}
               onChange={(event) => handleCityChange(event.target.value)}
@@ -225,7 +253,7 @@ function KundaliPage() {
           </label>
 
           <label>
-            జన్మ స్థలం
+            {t.birthPlace}
             <input
               value={form.birthPlace}
               onChange={(event) =>
@@ -237,7 +265,7 @@ function KundaliPage() {
 
           <div className="two-column">
             <label>
-              అక్షాంశం
+              {t.latitude}
               <input
                 type="number"
                 step="0.000001"
@@ -250,7 +278,7 @@ function KundaliPage() {
             </label>
 
             <label>
-              రేఖాంశం
+              {t.longitude}
               <input
                 type="number"
                 step="0.000001"
@@ -264,7 +292,7 @@ function KundaliPage() {
           </div>
 
           <label>
-            టైమ్‌జోన్
+            {t.timezone}
             <input
               value={form.timezone}
               onChange={(event) => updateField("timezone", event.target.value)}
@@ -273,7 +301,7 @@ function KundaliPage() {
           </label>
 
           <button type="submit" disabled={loading}>
-            {loading ? "జాతకం రూపొందుతోంది..." : "జాతకం రూపొందించండి"}
+            {loading ? t.generating : t.generate}
           </button>
 
           {error && <p className="error-message">{error}</p>}
@@ -282,29 +310,50 @@ function KundaliPage() {
         <section className="result-panel">
           {!summary && !loading && (
             <div className="empty-card">
-              <h2>జాతక వివరాలు ఇక్కడ కనిపిస్తాయి</h2>
-              <p>
-                జనన వివరాలు నమోదు చేసి జాతక సారాంశం, గ్రహ స్థానాలు, దశ మరియు
-                దోష వివరాలు చూడండి.
-              </p>
+              <h2>{t.emptyTitle}</h2>
+              <p>{t.emptyDescription}</p>
             </div>
           )}
 
           {loading && (
             <div className="empty-card">
-              <h2>జాతకం రూపొందుతోంది...</h2>
-              <p>
-                అన్ని జాతక విభాగాలు సిద్ధం చేస్తున్నాం. దయచేసి వేచి ఉండండి.
-              </p>
+              <h2>{t.loadingTitle}</h2>
+              <p>{t.loadingDescription}</p>
             </div>
           )}
 
           {summary && (
             <>
-              <SummaryCard summary={summary} />
-              {planets && <PlanetTable planets={planets} />}
-              {dasha && <DashaCard dasha={dasha} />}
-              {dosha && <DoshaCard dosha={dosha} />}
+              <SummaryCard
+                summary={summary}
+                t={t}
+                displayValue={displayValue}
+              />
+
+              {planets && (
+                <PlanetTable
+                  planets={planets}
+                  t={t}
+                  displayValue={displayValue}
+                />
+              )}
+
+              {dasha && (
+                <DashaCard
+                  dasha={dasha}
+                  t={t}
+                  displayValue={displayValue}
+                />
+              )}
+
+              {dosha && (
+                <DoshaCard
+                  dosha={dosha}
+                  t={t}
+                  displayValue={displayValue}
+                  displaySentence={displaySentence}
+                />
+              )}
             </>
           )}
         </section>
@@ -313,65 +362,81 @@ function KundaliPage() {
   );
 }
 
-function SummaryCard({ summary }: { summary: KundaliSummaryResponse }) {
+function SummaryCard({
+  summary,
+  t,
+  displayValue,
+}: {
+  summary: KundaliSummaryResponse;
+  t: TextMap;
+  displayValue: DisplayValueFn;
+}) {
   return (
     <div className="result-card" id="summary">
-      <h2>జాతక సారాంశం</h2>
+      <h2>{t.summaryTitle}</h2>
 
       <div className="detail-grid">
-        <Info label="పేరు" value={summary.fullName} />
-        <Info label="జన్మ స్థలం" value={summary.birthPlace} />
-        <Info label="లగ్నం" value={toTeluguValue(summary.ascendant)} />
-        <Info label="రాశి" value={toTeluguValue(summary.rashi)} />
-        <Info label="నక్షత్రం" value={toTeluguValue(summary.nakshatra)} />
-        <Info label="పాదం" value={summary.charan} />
-        <Info label="రాశి అధిపతి" value={toTeluguValue(summary.signLord)} />
+        <Info label={t.name} value={summary.fullName} />
+        <Info label={t.birthPlace} value={summary.birthPlace} />
+        <Info label={t.lagna} value={displayValue(summary.ascendant)} />
+        <Info label={t.rashi} value={displayValue(summary.rashi)} />
+        <Info label={t.nakshatra} value={displayValue(summary.nakshatra)} />
+        <Info label={t.charan} value={summary.charan} />
+        <Info label={t.signLord} value={displayValue(summary.signLord)} />
         <Info
-          label="నక్షత్ర అధిపతి"
-          value={toTeluguValue(summary.nakshatraLord)}
+          label={t.nakshatraLord}
+          value={displayValue(summary.nakshatraLord)}
         />
-        <Info label="తిథి" value={toTeluguValue(summary.tithi)} />
-        <Info label="యోగం" value={toTeluguValue(summary.yoga)} />
-        <Info label="కరణం" value={toTeluguValue(summary.karan)} />
-        <Info label="మాసం" value={toTeluguValue(summary.masa)} />
-        <Info label="సూర్యోదయం" value={summary.sunrise} />
-        <Info label="సూర్యాస్తమయం" value={summary.sunset} />
+        <Info label={t.tithi} value={displayValue(summary.tithi)} />
+        <Info label={t.yoga} value={displayValue(summary.yoga)} />
+        <Info label={t.karan} value={displayValue(summary.karan)} />
+        <Info label={t.masa} value={displayValue(summary.masa)} />
+        <Info label={t.sunrise} value={summary.sunrise} />
+        <Info label={t.sunset} value={summary.sunset} />
       </div>
     </div>
   );
 }
 
-function PlanetTable({ planets }: { planets: KundaliPlanetsResponse }) {
+function PlanetTable({
+  planets,
+  t,
+  displayValue,
+}: {
+  planets: KundaliPlanetsResponse;
+  t: TextMap;
+  displayValue: DisplayValueFn;
+}) {
   return (
     <div className="result-card" id="planets">
-      <h2>గ్రహ స్థానాలు</h2>
+      <h2>{t.planetsTitle}</h2>
 
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>గ్రహం</th>
-              <th>డిగ్రీ</th>
-              <th>రాశి</th>
-              <th>నక్షత్రం</th>
-              <th>భవం</th>
-              <th>వక్రం</th>
-              <th>అస్తం</th>
-              <th>స్థితి</th>
+              <th>{t.planet}</th>
+              <th>{t.degree}</th>
+              <th>{t.rashi}</th>
+              <th>{t.nakshatra}</th>
+              <th>{t.house}</th>
+              <th>{t.retrograde}</th>
+              <th>{t.combust}</th>
+              <th>{t.state}</th>
             </tr>
           </thead>
 
           <tbody>
             {planets.planets.map((planet) => (
               <tr key={`${planet.name}-${planet.longitude}`}>
-                <td>{toTeluguValue(planet.name)}</td>
+                <td>{displayValue(planet.name)}</td>
                 <td>{planet.degree}</td>
-                <td>{toTeluguValue(planet.rashi)}</td>
-                <td>{toTeluguValue(planet.nakshatra)}</td>
+                <td>{displayValue(planet.rashi)}</td>
+                <td>{displayValue(planet.nakshatra)}</td>
                 <td>{planet.house}</td>
-                <td>{planet.retrograde ? "అవును" : "కాదు"}</td>
-                <td>{planet.combust ? "అవును" : "కాదు"}</td>
-                <td>{toTeluguValue(planet.planetState)}</td>
+                <td>{planet.retrograde ? t.yes : t.no}</td>
+                <td>{planet.combust ? t.yes : t.no}</td>
+                <td>{displayValue(planet.planetState)}</td>
               </tr>
             ))}
           </tbody>
@@ -381,18 +446,27 @@ function PlanetTable({ planets }: { planets: KundaliPlanetsResponse }) {
   );
 }
 
-function DashaCard({ dasha }: { dasha: KundaliDashaResponse }) {
+function DashaCard({
+  dasha,
+  t,
+  displayValue,
+}: {
+  dasha: KundaliDashaResponse;
+  t: TextMap;
+  displayValue: DisplayValueFn;
+}) {
   return (
     <div className="result-card" id="dasha">
-      <h2>విమ్షోత్తరి మహాదశ</h2>
+      <h2>{t.dashaTitle}</h2>
 
       {dasha.currentDasha && (
         <div className="highlight-box">
           <strong>
-            ప్రస్తుత దశ: {toTeluguValue(dasha.currentDasha.planet)}
+            {t.currentDasha}: {displayValue(dasha.currentDasha.planet)}
           </strong>
           <span>
-            {dasha.currentDasha.startDate} నుంచి {dasha.currentDasha.endDate} వరకు
+            {dasha.currentDasha.startDate} {t.from}{" "}
+            {dasha.currentDasha.endDate} {t.to}
           </span>
         </div>
       )}
@@ -403,7 +477,7 @@ function DashaCard({ dasha }: { dasha: KundaliDashaResponse }) {
             className={period.active ? "dasha-item active" : "dasha-item"}
             key={`${period.planet}-${period.startDate}`}
           >
-            <strong>{toTeluguValue(period.planet)}</strong>
+            <strong>{displayValue(period.planet)}</strong>
             <span>
               {period.startDate} → {period.endDate}
             </span>
@@ -414,26 +488,32 @@ function DashaCard({ dasha }: { dasha: KundaliDashaResponse }) {
   );
 }
 
-function DoshaCard({ dosha }: { dosha: KundaliDoshaResponse }) {
+function DoshaCard({
+  dosha,
+  t,
+  displayValue,
+  displaySentence,
+}: {
+  dosha: KundaliDoshaResponse;
+  t: TextMap;
+  displayValue: DisplayValueFn;
+  displaySentence: (value?: string | null) => string;
+}) {
   return (
     <div className="result-card" id="dosha">
-      <h2>మంగళ దోష విశ్లేషణ</h2>
+      <h2>{t.doshaTitle}</h2>
 
       <div className="detail-grid">
         <Info
-          label="మంగళ దోషం"
-          value={dosha.mangalDoshaPresent ? "ఉంది" : "లేదు"}
+          label={t.mangalDosha}
+          value={dosha.mangalDoshaPresent ? t.present : t.notPresent}
         />
-        <Info label="రకం" value={toTeluguValue(dosha.type)} />
-        <Info label="తీవ్రత" value={toTeluguValue(dosha.intensity)} />
+        <Info label={t.type} value={displayValue(dosha.type)} />
+        <Info label={t.intensity} value={displayValue(dosha.intensity)} />
       </div>
 
-      <p className="description-text">
-        {translateKundaliSentence(dosha.reason)}
-      </p>
-      <p className="description-text muted">
-        {translateKundaliSentence(dosha.info)}
-      </p>
+      <p className="description-text">{displaySentence(dosha.reason)}</p>
+      <p className="description-text muted">{displaySentence(dosha.info)}</p>
     </div>
   );
 }

@@ -629,3 +629,28 @@ html {
     border-radius: 22px;
   }
 }
+
+.language-toggle {
+  flex: 0 0 auto;
+  border: 1px solid rgba(222, 184, 96, 0.38);
+  border-radius: 999px;
+  padding: 10px 15px;
+  background: rgba(222, 184, 96, 0.1);
+  color: #f2d37f;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.language-toggle:hover,
+.language-toggle:focus-visible {
+  border-color: rgba(222, 184, 96, 0.7);
+  background: rgba(222, 184, 96, 0.16);
+  color: #ffffff;
+  outline: none;
+}
+
+@media (max-width: 920px) {
+  .language-toggle {
+    width: 100%;
+  }
+}
