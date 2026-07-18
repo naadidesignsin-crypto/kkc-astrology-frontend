@@ -25,6 +25,8 @@ import {
   translateKundaliSentence,
 } from "../utils/kundaliTranslations";
 
+import AstrologyServices from "../components/AstrologyServices";
+
 const defaultForm = {
   fullName: "Test User",
   gender: "Male",
@@ -129,6 +131,7 @@ function KundaliPage() {
         </a>
 
         <nav className="top-nav" aria-label="Main navigation">
+          <a href="#services">సేవలు</a>
           <a href="#kundali-form">జాతకం</a>
           <a href="#summary">సారాంశం</a>
           <a href="#planets">గ్రహాలు</a>
@@ -155,6 +158,8 @@ function KundaliPage() {
           </span>
         </div>
       </section>
+
+      <AstrologyServices />
 
       <section className="content-grid">
         <form className="kundali-form" id="kundali-form" onSubmit={handleSubmit}>
