@@ -29,7 +29,6 @@ import type {
 } from "../types/kundali";
 
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
-import CosmicMotionBackground from "../components/CosmicMotionBackground";
 
 type KundaliForm = {
   fullName: string;
@@ -329,7 +328,6 @@ function KundaliPage() {
   return (
     <main className="kkc-kundali">
      <BlackWhiteCosmicBackground />
-     <CosmicMotionBackground />
       <header className="kkc-header kkc-kundali-header">
         <Link to="/" className="kkc-brand" aria-label="Go to landing page">
           <img src={kkcLogo} alt="KKC Logo" />

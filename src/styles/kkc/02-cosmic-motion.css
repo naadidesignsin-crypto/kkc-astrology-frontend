@@ -98,6 +98,14 @@
   font-size: 1.25rem;
 }
 
+.bw-planet img {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(1.65) contrast(1.15);
+  opacity: 0.86;
+}
+
 .bw-planet-1 { animation: bwOrbit1 28s linear infinite; }
 .bw-planet-2 { animation: bwOrbit2 32s linear infinite; }
 .bw-planet-3 { animation: bwOrbit3 36s linear infinite; }
@@ -182,4 +190,17 @@
   .bw-planet {
     animation: none;
   }
+}
+
+.bw-cosmic-bg,
+.bw-cosmic-bg * {
+  user-select: none;
+}
+
+.bw-cosmic-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  overflow: hidden;
 }

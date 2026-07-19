@@ -282,10 +282,59 @@
 
 /* Landing Sections */
 .kkc-services,
+/* Testimonials - black client style */
 .kkc-testimonials {
-  background: var(--kkc-light-bg);
-  color: var(--kkc-dark-text);
+  background: var(--kkc-black);
+  color: var(--kkc-white);
   padding: 76px max(28px, calc((100vw - var(--kkc-container)) / 2));
+  border-top: 1px solid var(--kkc-border-dark);
+  border-bottom: 1px solid var(--kkc-border-dark);
+}
+
+.kkc-testimonials .kkc-section-heading p {
+  color: var(--kkc-white-muted);
+}
+
+.kkc-testimonials .kkc-section-heading h2 {
+  color: var(--kkc-white);
+}
+
+.kkc-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.kkc-testimonial-card {
+  min-height: 220px;
+  border: 1px solid var(--kkc-border-dark);
+  padding: 32px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+  color: var(--kkc-white);
+  text-align: center;
+}
+
+.kkc-testimonial-card span {
+  color: rgba(255, 255, 255, 0.18);
+  font-family: var(--kkc-serif);
+  font-size: 4rem;
+  line-height: 0.5;
+}
+
+.kkc-testimonial-card p {
+  color: var(--kkc-white-soft);
+  line-height: 1.7;
+}
+
+.kkc-testimonial-card strong {
+  display: block;
+  margin-top: 22px;
+  color: var(--kkc-white);
 }
 
 .kkc-section-heading {

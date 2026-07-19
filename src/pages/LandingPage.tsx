@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 import kkcLogo from "../assets/Logo.png";
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
-import CosmicMotionBackground from "../components/CosmicMotionBackground";
 
 const whatsappNumber =
   import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919999999999";
@@ -94,7 +93,6 @@ function LandingPage() {
   return (
     <main className="kkc-landing">
     <BlackWhiteCosmicBackground />
-    <CosmicMotionBackground />
       <header className="kkc-header">
         <Link to="/" className="kkc-brand" aria-label="KKC Home">
           <img src={kkcLogo} alt="KKC Logo" />
