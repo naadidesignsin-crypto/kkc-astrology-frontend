@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 
-import AstroBackground from "../components/AstroBackground";
 import kkcLogo from "../assets/Logo.png";
+import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
+import CosmicMotionBackground from "../components/CosmicMotionBackground";
 
 const whatsappNumber =
   import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919999999999";
@@ -16,36 +17,32 @@ const services = [
   {
     title: "Astrology Consultation",
     description:
-      "Personal guidance for career, marriage, finance, health, education, timing, and important life decisions.",
-    icon: "☉",
-    linkText: "Book Consultation",
+      "Personalized predictions and remedies based on your birth chart.",
+    icon: "◎",
     link: whatsappUrl,
     external: true,
   },
   {
     title: "Kundali Generation",
     description:
-      "Generate Lagna, Rashi, Nakshatra, planetary positions, Vimshottari Dasha, Dosha, Navamsa, and PDF report.",
-    icon: "☾",
-    linkText: "Generate Kundali",
+      "Generate Lagna, Rashi, Nakshatra, planetary positions, Dasha and Dosha details.",
+    icon: "☉",
     link: "/kundali",
     external: false,
   },
   {
-    title: "Marriage Matching",
+    title: "Online Consultation",
     description:
-      "Check compatibility, Guna matching, Dosha impact, and marriage timing through Vedic astrology.",
-    icon: "♃",
-    linkText: "Consult Now",
+      "Connect with our experts from anywhere through online consultation.",
+    icon: "▣",
     link: whatsappUrl,
     external: true,
   },
   {
-    title: "Spiritual Guidance",
+    title: "Learn Astrology",
     description:
-      "Guidance for remedies, discipline, inner balance, spiritual timing, and conscious living.",
-    icon: "✧",
-    linkText: "Speak to KKC",
+      "Deepen your understanding of Vedic astrology and spiritual timing.",
+    icon: "▤",
     link: whatsappUrl,
     external: true,
   },
@@ -53,208 +50,252 @@ const services = [
 
 const whyChoose = [
   {
-    title: "Traditional Foundation",
+    title: "Authentic Guidance",
     description:
-      "Guidance based on Vedic astrology principles, birth chart details, Dasha, Dosha, and planetary timing.",
+      "Rooted in ancient Vedic knowledge and spiritual practices.",
+    icon: "♙",
   },
   {
-    title: "Clear Explanation",
+    title: "Trusted Expertise",
     description:
-      "Reports and consultations are kept understandable, direct, and useful for real decisions.",
+      "Guidance focused on clarity, timing, and practical life direction.",
+    icon: "♢",
   },
   {
-    title: "Personalized Reading",
+    title: "Personalized Solutions",
     description:
-      "Every consultation depends on birth details, situation, question, and current life phase.",
+      "Readings and remedies based on your unique birth details.",
+    icon: "☆",
   },
   {
-    title: "Online Support",
+    title: "Spiritual Transformation",
     description:
-      "Kundali generation and consultation enquiry are connected through the same astrology portal.",
+      "Supporting a balanced, conscious, and purposeful life.",
+    icon: "♡",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Anitha Reddy",
+    text: "KKC guidance helped me understand my current life phase with clarity.",
+  },
+  {
+    name: "Ramesh Kumar",
+    text: "The consultation gave practical direction for important decisions.",
+  },
+  {
+    name: "Divya Sharma",
+    text: "The astrology explanation was clear, structured, and meaningful.",
   },
 ];
 
 function LandingPage() {
   return (
-    <main className="client-home">
-      <AstroBackground />
-
-      <header className="client-header">
-        <Link to="/" className="client-brand" aria-label="KKC Astrology Home">
-          <span className="client-brand-mark">
-            <img src={kkcLogo} alt="KKC Astrology Logo" />
-          </span>
-
+    <main className="kkc-landing">
+    <BlackWhiteCosmicBackground />
+    <CosmicMotionBackground />
+      <header className="kkc-header">
+        <Link to="/" className="kkc-brand" aria-label="KKC Home">
+          <img src={kkcLogo} alt="KKC Logo" />
           <span>
-            <strong>KKC Astrology</strong>
-            <small>Kundali • Astrology • Spiritual Guidance</small>
+            <strong>KKC</strong>
+            <small>Kundalini Kriya Chaitanyam</small>
           </span>
         </Link>
 
-        <nav className="client-nav" aria-label="Main navigation">
+        <nav className="kkc-nav" aria-label="Landing navigation">
+          <a href="#home">Home</a>
+          <a href="#about">About Us</a>
           <a href="#services">Services</a>
-          <a href="#about">About</a>
-          <a href="#why">Why KKC</a>
-          <Link to="/kundali">Kundali</Link>
+          <a href="#learn">Learn</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#blog">Blog</a>
           <a href="#contact">Contact</a>
         </nav>
 
-        <a className="client-btn-outline" href={whatsappUrl} target="_blank">
+        <a className="kkc-outline-btn" href={whatsappUrl} target="_blank">
           Book Consultation
         </a>
       </header>
 
-      <section className="client-shell client-hero">
-        <div>
-          <p className="client-eyebrow">Vedic Astrology Consultation</p>
+      <section className="kkc-hero" id="home">
+        <div className="kkc-hero-content">
+          <p className="kkc-eyebrow">Align with the cosmic intelligence</p>
 
-          <h1>Ancient guidance for clear life decisions</h1>
+          <h1>Kundalini Kriya Chaitanyam</h1>
 
           <p>
-            Generate your Kundali and receive astrology guidance for career,
-            marriage, finance, health, Dasha, Dosha, timing, and spiritual
-            direction.
+            Ancient wisdom. Accurate guidance. Transforming lives through Vedic
+            astrology and spiritual clarity.
           </p>
 
-          <div className="client-actions">
-            <Link className="client-btn" to="/kundali">
-              Generate Kundali
-            </Link>
-
-            <a className="client-btn-outline" href={whatsappUrl} target="_blank">
+          <div className="kkc-hero-actions">
+            <a className="kkc-primary-btn" href={whatsappUrl} target="_blank">
               Book Consultation
             </a>
-          </div>
-        </div>
 
-        <div className="client-visual" aria-hidden="true">
-          <div className="client-zodiac">
-            <span className="client-zodiac-center">ॐ</span>
-            <span className="z1">☉</span>
-            <span className="z2">☽</span>
-            <span className="z3">♂</span>
-            <span className="z4">☿</span>
-            <span className="z5">♃</span>
-            <span className="z6">♀</span>
-            <span className="z7">♄</span>
-            <span className="z8">☊</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="client-section alt" id="services">
-        <div className="client-shell">
-          <div className="client-section-head center">
-            <p className="client-eyebrow">Astrology Services</p>
-            <h2>Guidance, Kundali, compatibility and spiritual clarity</h2>
-          </div>
-
-          <div className="client-service-grid">
-            {services.map((service) => (
-              <article className="client-card" key={service.title}>
-                <span className="client-card-icon">{service.icon}</span>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-
-                {service.external ? (
-                  <a href={service.link} target="_blank">
-                    {service.linkText} →
-                  </a>
-                ) : (
-                  <Link to={service.link}>{service.linkText} →</Link>
-                )}
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="client-shell client-about" id="about">
-        <div>
-          <p className="client-eyebrow">About KKC</p>
-
-          <h2>Spiritual insight with practical astrology guidance</h2>
-
-          <p>
-            KKC Astrology is focused on helping people understand their birth
-            chart, planetary placements, Dasha periods, Dosha impact, and life
-            direction through structured Kundali generation and consultation.
-          </p>
-
-          <div className="client-actions">
-            <Link className="client-btn" to="/kundali">
-              Start Kundali
+            <Link className="kkc-play-btn" to="/kundali">
+              <span>▶</span>
+              Generate Kundali
             </Link>
-            <a className="client-btn-outline" href={whatsappUrl} target="_blank">
-              Speak to KKC
-            </a>
           </div>
         </div>
 
-        <div className="client-about-panel">
-          <div>
-            <span>ॐ</span>
-            <strong>Vedic Guidance</strong>
-            <small>Kundali • Dasha • Dosha • Navamsa • Parāśara</small>
-          </div>
-        </div>
-      </section>
-
-      <section className="client-section" id="why">
-        <div className="client-shell">
-          <div className="client-section-head center">
-            <p className="client-eyebrow">Why Choose KKC</p>
-            <h2>Simple, structured and spiritually grounded</h2>
-          </div>
-
-          <div className="client-why-grid">
-            {whyChoose.map((item) => (
-              <article className="client-why-card" key={item.title}>
-                <span>✧</span>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </article>
-            ))}
+        <div className="kkc-hero-visual" aria-hidden="true">
+          <div className="kkc-zodiac">
+            <span className="kkc-zodiac-center">ॐ</span>
+            <span className="zodiac-icon z1">♈</span>
+            <span className="zodiac-icon z2">♉</span>
+            <span className="zodiac-icon z3">♊</span>
+            <span className="zodiac-icon z4">♋</span>
+            <span className="zodiac-icon z5">♌</span>
+            <span className="zodiac-icon z6">♍</span>
+            <span className="zodiac-icon z7">♎</span>
+            <span className="zodiac-icon z8">♏</span>
+            <span className="zodiac-icon z9">♐</span>
+            <span className="zodiac-icon z10">♑</span>
+            <span className="zodiac-icon z11">♒</span>
+            <span className="zodiac-icon z12">♓</span>
           </div>
         </div>
       </section>
 
-      <section className="client-shell client-contact" id="contact">
-        <div>
-          <p className="client-eyebrow">Consultation</p>
-          <h2>Speak to us for astrology consultation</h2>
+      <section className="kkc-services" id="services">
+        <SectionHeading eyebrow="What we offer" title="Our Services" dark={false} />
+
+        <div className="kkc-service-grid">
+          {services.map((service) => (
+            <article className="kkc-service-card" key={service.title}>
+              <span className="kkc-service-icon">{service.icon}</span>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+
+              {service.external ? (
+                <a href={service.link} target="_blank">
+                  Learn More →
+                </a>
+              ) : (
+                <Link to={service.link}>Generate Now →</Link>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="kkc-about" id="about">
+        <div className="kkc-about-content">
+          <p className="kkc-eyebrow">About Us</p>
+          <h2>Guided by Wisdom, Driven by Purpose</h2>
           <p>
-            Contact KKC for Kundali analysis, marriage matching, Dasha guidance,
-            Mangal Dosha analysis, or spiritual consultation.
+            Kundalini Kriya Chaitanyam is a spiritual and astrological platform
+            dedicated to guiding individuals towards mindful and purposeful life
+            through ancient Vedic sciences.
+          </p>
+
+          <a className="kkc-white-btn" href="#services">
+            Know More
+          </a>
+        </div>
+
+        <div className="kkc-about-image" aria-hidden="true">
+          <div className="kkc-about-fallback">
+            <span>ॐ</span>
+            <strong>Vedic Wisdom</strong>
+          </div>
+        </div>
+      </section>
+
+      <section className="kkc-why" id="learn">
+        <SectionHeading
+          eyebrow="Why choose KKC"
+          title="Experience. Authenticity. Trust."
+          dark
+        />
+
+        <div className="kkc-why-grid">
+          {whyChoose.map((item) => (
+            <article className="kkc-why-card" key={item.title}>
+              <span>{item.icon}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="kkc-testimonials" id="blog">
+        <SectionHeading
+          eyebrow="Testimonials"
+          title="Voices of Transformation"
+          dark={false}
+        />
+
+        <div className="kkc-testimonial-grid">
+          {testimonials.map((testimonial) => (
+            <article className="kkc-testimonial-card" key={testimonial.name}>
+              <span>“</span>
+              <p>{testimonial.text}</p>
+              <strong>— {testimonial.name}</strong>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <footer className="kkc-footer" id="contact">
+        <div className="kkc-footer-brand">
+          <img src={kkcLogo} alt="KKC Logo" />
+          <p>
+            Empowering lives with the wisdom of Vedic sciences and conscious
+            spiritual guidance.
           </p>
         </div>
 
-        <div className="client-contact-actions">
-          <a className="client-btn" href={whatsappUrl} target="_blank">
-            Consult on WhatsApp
-          </a>
-
-          <Link className="client-btn-outline" to="/kundali">
-            Generate Kundali
-          </Link>
-        </div>
-      </section>
-
-      <footer className="client-shell client-footer">
         <div>
-          <strong>KKC Astrology</strong>
-          <p>Kundali • Astrology • Spiritual Guidance</p>
-        </div>
-
-        <div>
-          <Link to="/kundali">Kundali</Link>
+          <h4>Quick Links</h4>
+          <a href="#home">Home</a>
+          <a href="#about">About Us</a>
           <a href="#services">Services</a>
-          <a href={whatsappUrl} target="_blank">
-            Consultation
+          <Link to="/kundali">Kundali</Link>
+          <a href="#contact">Contact Us</a>
+        </div>
+
+        <div>
+          <h4>Our Services</h4>
+          <a href={whatsappUrl} target="_blank">Astrology Consultation</a>
+          <Link to="/kundali">Kundali Generation</Link>
+          <a href={whatsappUrl} target="_blank">Online Consultation</a>
+          <a href={whatsappUrl} target="_blank">Learn Astrology</a>
+        </div>
+
+        <div>
+          <h4>Contact Us</h4>
+          <p>+91 XXXXXXXXXX</p>
+          <p>info@kkc.org</p>
+          <p>India</p>
+          <a className="kkc-footer-btn" href={whatsappUrl} target="_blank">
+            Book Consultation
           </a>
         </div>
       </footer>
     </main>
+  );
+}
+
+function SectionHeading({
+  eyebrow,
+  title,
+  dark,
+}: {
+  eyebrow: string;
+  title: string;
+  dark: boolean;
+}) {
+  return (
+    <div className={dark ? "kkc-section-heading dark" : "kkc-section-heading"}>
+      <p>{eyebrow}</p>
+      <h2>{title}</h2>
+    </div>
   );
 }
 

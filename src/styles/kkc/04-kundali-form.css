@@ -1,0 +1,264 @@
+/* =====================================================
+   04-kundali-form.css
+   Kundali page hero + birth details form
+===================================================== */
+
+.kkc-kundali {
+  position: relative;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.kkc-kundali-header {
+  position: sticky;
+  top: 0;
+  left: auto;
+  transform: none;
+  margin: 0 auto;
+  background: rgba(2, 2, 2, 0.86);
+  backdrop-filter: blur(18px);
+}
+
+.kkc-kundali-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(380px, 0.75fr);
+  gap: 54px;
+  align-items: start;
+  min-height: 720px;
+  padding: 110px max(32px, calc((100vw - var(--kkc-container)) / 2)) 80px;
+  background:
+    radial-gradient(circle at 82% 30%, rgba(255, 255, 255, 0.1), transparent 30%),
+    linear-gradient(90deg, rgba(2, 2, 2, 1), rgba(10, 10, 10, 0.94));
+}
+
+.kkc-kundali-copy {
+  padding-top: 70px;
+}
+
+.kkc-kundali-copy h1 {
+  max-width: 620px;
+  margin: 0;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: clamp(3rem, 5.6vw, 5.6rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.kkc-kundali-copy p:not(.kkc-eyebrow) {
+  max-width: 520px;
+  margin: 26px 0 0;
+  color: var(--kkc-white-soft);
+  font-size: 0.98rem;
+  line-height: 1.78;
+}
+
+.kkc-kundali-form {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--kkc-border-dark);
+  padding: 32px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+}
+
+.kkc-kundali-form::before {
+  content: "";
+  position: absolute;
+  right: -110px;
+  top: -110px;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.kkc-kundali-form > * {
+  position: relative;
+  z-index: 2;
+}
+
+.kkc-kundali-form h2 {
+  margin: 0 0 24px;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.kkc-kundali-form label {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--kkc-white-soft);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kkc-kundali-form input,
+.kkc-kundali-form select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--kkc-border-dark);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--kkc-white);
+  outline: none;
+}
+
+.kkc-kundali-form input:focus,
+.kkc-kundali-form select:focus {
+  border-color: var(--kkc-white);
+}
+
+.kkc-kundali-form input::placeholder {
+  color: var(--kkc-white-muted);
+}
+
+.kkc-kundali-form select option {
+  background: #080808;
+  color: var(--kkc-white);
+}
+
+.kkc-kundali-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.kkc-location-box {
+  position: relative;
+}
+
+.kkc-location-status,
+.kkc-form-helper,
+.kkc-form-error {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+}
+
+.kkc-location-status,
+.kkc-form-helper {
+  color: var(--kkc-white-muted);
+}
+
+.kkc-form-error {
+  color: #ffb4b4;
+}
+
+.kkc-location-results {
+  position: absolute;
+  top: calc(100% - 6px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  max-height: 290px;
+  overflow-y: auto;
+  border: 1px solid var(--kkc-border-dark);
+  background: #090909;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+}
+
+.kkc-location-results button {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 16px;
+  background: transparent;
+  color: var(--kkc-white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.kkc-location-results button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.kkc-location-results strong {
+  font-size: 0.9rem;
+}
+
+.kkc-location-results span,
+.kkc-location-results p {
+  color: var(--kkc-white-muted);
+  font-size: 0.8rem;
+}
+
+.kkc-selected-location {
+  display: grid;
+  gap: 4px;
+  margin: 10px 0 16px;
+  border: 1px solid var(--kkc-border-dark);
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.kkc-selected-location strong {
+  color: var(--kkc-white);
+  font-size: 0.82rem;
+}
+
+.kkc-selected-location span,
+.kkc-selected-location small {
+  color: var(--kkc-white-soft);
+}
+
+.kkc-kundali-form button[type="submit"] {
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid var(--kkc-white);
+  border-radius: 999px;
+  background: var(--kkc-white);
+  color: var(--kkc-black);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.kkc-kundali-form button[type="submit"]:hover:not(:disabled) {
+  background: transparent;
+  color: var(--kkc-white);
+}
+
+.kkc-kundali-form button[type="submit"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.46;
+}
+
+@media (max-width: 1080px) {
+  .kkc-kundali-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-kundali-copy {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kkc-kundali-header {
+    position: relative;
+  }
+
+  .kkc-kundali-hero {
+    padding: 42px 22px 58px;
+  }
+
+  .kkc-kundali-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-kundali-form {
+    padding: 24px;
+  }
+}
