@@ -34,6 +34,7 @@ import SouthIndianBirthChart from "../components/SouthIndianBirthChart";
 import KundaliGenerationLoader from "../components/KundaliGenerationLoader";
 import HouseReadingCard from "../components/HouseReadingCard";
 import ParasharaChapterCard from "../components/ParasharaChapterCard";
+import ReportConsultationCTA from "../components/ReportConsultationCTA";
 
 type KundaliForm = {
   fullName: string;
@@ -778,26 +779,32 @@ function ReportTabs({
         {activeTab === "summary" && <SummaryTab summary={summary} />}
 
         {activeTab === "birth-chart" && planets && (
-          <BirthChartTab planets={planets} />
+          <BirthChartTab summary={summary} planets={planets} />
         )}
 
         {activeTab === "navamsa" && navamsa && (
-          <NavamsaTab navamsa={navamsa} />
+          <NavamsaTab summary={summary} navamsa={navamsa} />
         )}
 
         {activeTab === "parashara" && parashara && (
-          <ParasharaTab parashara={parashara} />
+          <ParasharaTab summary={summary} parashara={parashara} />
         )}
 
-        {activeTab === "houses" && houses && <HousesTab houses={houses} />}
+        {activeTab === "houses" && houses && (
+          <HousesTab summary={summary} houses={houses} />
+        )}
 
         {activeTab === "planets" && planets && (
-          <PlanetsTab planets={planets} />
+          <PlanetsTab summary={summary} planets={planets} />
         )}
 
-        {activeTab === "dasha" && dasha && <DashaTab dasha={dasha} />}
+        {activeTab === "dasha" && dasha && (
+          <DashaTab summary={summary} dasha={dasha} />
+        )}
 
-        {activeTab === "dosha" && dosha && <DoshaTab dosha={dosha} />}
+        {activeTab === "dosha" && dosha && (
+          <DoshaTab summary={summary} dosha={dosha} />
+        )}
 
         {activeTab === "pdf" && <PdfTab summary={summary} />}
 
@@ -839,11 +846,24 @@ function SummaryTab({ summary }: { summary: KundaliSummaryResponse }) {
           <Info label="Provider" value={summary.provider} />
         </div>
       </article>
+
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Kundali Summary"
+        title="Need the birth summary explained?"
+        description="Get Lagna, Rashi, Nakshatra, Tithi and other birth details explained in simple language."
+      />
     </>
   );
 }
 
-function BirthChartTab({ planets }: { planets: KundaliPlanetsResponse }) {
+function BirthChartTab({
+  summary,
+  planets,
+}: {
+  summary: KundaliSummaryResponse;
+  planets: KundaliPlanetsResponse;
+}) {
   return (
     <article className="kkc-report-section astrology-chart-section">
       <div className="report-section-intro">
@@ -857,12 +877,30 @@ function BirthChartTab({ planets }: { planets: KundaliPlanetsResponse }) {
       </div>
 
       <SouthIndianBirthChart planets={planets} />
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Birth Chart"
+        title="Need help reading this birth chart?"
+        description="Get the 12-house chart, planet placements, career houses, marriage houses and core life areas explained clearly."
+      />
     </article>
   );
 }
 
-function NavamsaTab({ navamsa }: { navamsa: KundaliNavamsaResponse }) {
+function NavamsaTab({
+  summary,
+  navamsa,
+}: {
+  summary: KundaliSummaryResponse;
+  navamsa: KundaliNavamsaResponse;
+}) {
   return (
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Navamsa D9"
+        title="Need Navamsa interpretation?"
+        description="Get the D9 chart explained for marriage, dharma, inner strength and long-term life direction."
+      />
     <article className="kkc-report-section">
       <h3>Navamsa / D9</h3>
 
@@ -903,8 +941,10 @@ function NavamsaTab({ navamsa }: { navamsa: KundaliNavamsaResponse }) {
 }
 
 function ParasharaTab({
+  summary,
   parashara,
 }: {
+  summary: KundaliSummaryResponse;
   parashara: KundaliParasharaReportResponse;
 }) {
   const sectionCount = parashara.sections?.length || 0;
@@ -972,11 +1012,23 @@ function ParasharaTab({
           />
         ))}
       </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Parashara Interpretation"
+        title="Need a full Parāśara reading?"
+        description="Get career, marriage, finance, health, education, spirituality and remedies interpreted together."
+      />
     </article>
   );
 }
 
-function HousesTab({ houses }: { houses: KundaliHouseResponse }) {
+function HousesTab({
+  summary,
+  houses,
+}: {
+  summary: KundaliSummaryResponse;
+  houses: KundaliHouseResponse;
+}) {
   const occupiedHouses = houses.houses.filter(
     (house) => house.planets && house.planets.length > 0
   );
@@ -1036,11 +1088,23 @@ function HousesTab({ houses }: { houses: KundaliHouseResponse }) {
           />
         ))}
       </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="House-wise Interpretation"
+        title="Need house-wise guidance?"
+        description="Get each important house explained for personality, career, marriage, finance, health and spiritual direction."
+      />
     </article>
   );
 }
 
-function PlanetsTab({ planets }: { planets: KundaliPlanetsResponse }) {
+function PlanetsTab({
+  summary,
+  planets,
+}: {
+  summary: KundaliSummaryResponse;
+  planets: KundaliPlanetsResponse;
+}) {
   return (
     <article className="kkc-report-section planets-report-section">
       <div className="report-section-intro">
@@ -1073,11 +1137,23 @@ function PlanetsTab({ planets }: { planets: KundaliPlanetsResponse }) {
           </div>
         ))}
       </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Planetary Positions"
+        title="Need planet placement interpretation?"
+        description="Get Rashi, Nakshatra, house placement, retrograde and combust details explained in practical terms."
+      />
     </article>
   );
 }
 
-function DashaTab({ dasha }: { dasha: KundaliDashaResponse }) {
+function DashaTab({
+  summary,
+  dasha,
+}: {
+  summary: KundaliSummaryResponse;
+  dasha: KundaliDashaResponse;
+}) {
   return (
     <article className="kkc-report-section">
       <div className="report-section-intro">
@@ -1118,11 +1194,23 @@ function DashaTab({ dasha }: { dasha: KundaliDashaResponse }) {
           </div>
         ))}
       </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Vimshottari Dasha"
+        title="Need Dasha timing guidance?"
+        description="Get current and upcoming Dasha periods interpreted for decisions, timing and life direction."
+      />
     </article>
   );
 }
 
-function DoshaTab({ dosha }: { dosha: KundaliDoshaResponse }) {
+function DoshaTab({
+  summary,
+  dosha,
+}: {
+  summary: KundaliSummaryResponse;
+  dosha: KundaliDoshaResponse;
+}) {
   return (
     <article className="kkc-report-section">
       <div className="report-section-intro">
@@ -1160,6 +1248,12 @@ function DoshaTab({ dosha }: { dosha: KundaliDoshaResponse }) {
         <h4>Additional Information</h4>
         <p>{dosha.info || "Additional information not available."}</p>
       </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Mangal Dosha Analysis"
+        title="Need Dosha explanation?"
+        description="Get Mangal Dosha status, intensity, impact and suitable guidance explained clearly."
+      />
     </article>
   );
 }
@@ -1170,13 +1264,31 @@ function PdfTab({ summary }: { summary: KundaliSummaryResponse }) {
       <p className="kkc-eyebrow">PDF Report</p>
       <h3>Download complete Kundali report</h3>
       <p>
-        Download Kundali summary, planetary positions, houses, Navamsa, Dasha
-        and Dosha details in PDF format.
+        Download Kundali summary, planetary positions, birth chart, Navamsa,
+        Parāśara chapters, house analysis, Dasha and Dosha details.
       </p>
 
+      <div className="pdf-includes-grid">
+        <span>✓ Birth Summary</span>
+        <span>✓ Birth Chart</span>
+        <span>✓ Planetary Positions</span>
+        <span>✓ Navamsa / D9</span>
+        <span>✓ Parāśara Reading</span>
+        <span>✓ House Analysis</span>
+        <span>✓ Vimshottari Dasha</span>
+        <span>✓ Mangal Dosha</span>
+      </div>
+
       <button type="button" onClick={() => downloadKundaliPdf(summary.id)}>
-        Download PDF
+        Download Complete Report
       </button>
+
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Complete PDF Report"
+        title="Need this PDF explained personally?"
+        description="Share the downloaded Kundali report with KKC and get a guided explanation section by section."
+      />
     </article>
   );
 }

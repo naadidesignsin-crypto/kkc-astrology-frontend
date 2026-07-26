@@ -3755,3 +3755,153 @@
     padding: 18px;
   }
 }
+
+/* =====================================================
+   STEP 6 - CONSULTATION CTA BLOCKS
+   Reusable conversion blocks for report sections
+===================================================== */
+
+.report-consultation-cta {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 28px;
+  border: 1px solid rgba(255, 207, 122, 0.2);
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background:
+    radial-gradient(circle at 92% 12%, rgba(255, 207, 122, 0.13), transparent 32%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #101010;
+  color: #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.26);
+}
+
+.report-consultation-cta::after {
+  content: "ॐ";
+  position: absolute;
+  right: 34px;
+  bottom: -38px;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: var(--kkc-serif);
+  font-size: 8rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.report-consultation-cta > * {
+  position: relative;
+  z-index: 2;
+}
+
+.report-consultation-cta h4 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(1.55rem, 2.4vw, 2.3rem);
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+.report-consultation-cta p:not(.report-section-kicker) {
+  max-width: 680px;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.66) !important;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.report-consultation-cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 1px solid #ffcf7a;
+  border-radius: 999px;
+  padding: 0 24px;
+  background: #ffcf7a;
+  color: #050505;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.report-consultation-cta a:hover {
+  transform: translateY(-1px);
+  background: transparent;
+  color: #ffcf7a;
+}
+
+/* PDF includes */
+.pdf-includes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.pdf-includes-grid span {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: var(--kkc-radius-md);
+  padding: 14px 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+/* Avoid double-heavy spacing inside PDF tab */
+.kkc-pdf-tab .report-consultation-cta {
+  margin-top: 30px;
+  text-align: left;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .report-consultation-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .report-consultation-cta a {
+    width: fit-content;
+  }
+
+  .pdf-includes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .report-consultation-cta {
+    padding: 22px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .report-consultation-cta a {
+    width: 100%;
+  }
+
+  .pdf-includes-grid {
+    grid-template-columns: 1fr;
+  }
+}
