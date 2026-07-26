@@ -32,6 +32,7 @@ import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground
 import PlanetBadge from "../components/PlanetBadge";
 import SouthIndianBirthChart from "../components/SouthIndianBirthChart";
 import KundaliGenerationLoader from "../components/KundaliGenerationLoader";
+import HouseReadingCard from "../components/HouseReadingCard";
 
 type KundaliForm = {
   fullName: string;
@@ -956,85 +957,64 @@ function ParasharaTab({
 }
 
 function HousesTab({ houses }: { houses: KundaliHouseResponse }) {
+  const occupiedHouses = houses.houses.filter(
+    (house) => house.planets && house.planets.length > 0
+  );
+
+  const totalPlanetsInHouses = houses.houses.reduce(
+    (count, house) => count + (house.planets?.length || 0),
+    0
+  );
+
   return (
     <article className="kkc-report-section houses-report-section">
       <div className="report-section-intro">
         <p className="report-section-kicker">House-wise Interpretation</p>
         <h3>12 Houses of the Kundali</h3>
         <p>
-          Each house explains a specific life area. Planetary placement inside
-          each house affects interpretation, timing, decisions and life events.
+          Each house represents a specific life area. Expand a house to read its
+          meaning, interpretation and planet placements.
         </p>
       </div>
 
-      <div className="houses-overview-strip">
+      <div className="houses-report-summary">
         <div>
           <span>Total Houses</span>
           <strong>12</strong>
         </div>
 
         <div>
-          <span>Report Type</span>
-          <strong>Parāśara House Reading</strong>
+          <span>Occupied Houses</span>
+          <strong>{occupiedHouses.length}</strong>
         </div>
 
         <div>
-          <span>Planet Mapping</span>
-          <strong>House-wise</strong>
+          <span>Planet Placements</span>
+          <strong>{totalPlanetsInHouses}</strong>
+        </div>
+
+        <div>
+          <span>Reading Style</span>
+          <strong>Parāśara</strong>
         </div>
       </div>
 
-      <div className="professional-houses-grid">
-        {houses.houses.map((house) => {
-          const housePlanets = house.planets ?? [];
+      <div className="houses-section-note">
+        <span>How to read this section</span>
+        <p>
+          Start with House 1, 4, 7 and 10 for core life direction. Then read
+          House 5 and 9 for dharma, intelligence and fortune.
+        </p>
+      </div>
 
-          return (
-            <section
-              className="professional-house-card"
-              key={house.houseNumber}
-            >
-              <div className="professional-house-head">
-                <span>House {house.houseNumber}</span>
-                <strong>{house.houseName}</strong>
-              </div>
-
-              <div className="professional-house-area">
-                <small>Life Area</small>
-                <h4>{house.mainArea || "General Life Area"}</h4>
-              </div>
-
-              <p className="professional-house-meaning">
-                {house.meaning || "House meaning is not available."}
-              </p>
-
-              <div className="professional-house-reading">
-                <small>Interpretation</small>
-                <p>
-                  {house.interpretation ||
-                    "Interpretation is not available for this house."}
-                </p>
-              </div>
-
-              <div className="professional-house-planets">
-                <small>Planets in this house</small>
-
-                {housePlanets.length === 0 ? (
-                  <span className="empty-planet-chip">No planet placed</span>
-                ) : (
-                  <div className="professional-house-planet-list">
-                    {housePlanets.map((planet) => (
-                      <PlanetBadge
-                        key={`${house.houseNumber}-${planet.name}`}
-                        name={planet.name}
-                        compact
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            </section>
-          );
-        })}
+      <div className="house-accordion-grid">
+        {houses.houses.map((house) => (
+          <HouseReadingCard
+            key={house.houseNumber}
+            house={house}
+            defaultOpen={house.houseNumber === 1}
+          />
+        ))}
       </div>
     </article>
   );
