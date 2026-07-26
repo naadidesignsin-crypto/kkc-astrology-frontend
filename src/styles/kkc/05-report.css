@@ -642,3 +642,426 @@
     font-size: 7rem;
   }
 }
+
+/* =====================================================
+   PROFESSIONAL ASTROLOGY REPORT VISUALS
+   Planet images, chart layout, colorful spiritual elements
+===================================================== */
+
+/* Section intro */
+.report-section-intro {
+  max-width: 780px;
+  margin-bottom: 30px;
+}
+
+.report-section-kicker {
+  margin: 0 0 10px;
+  color: rgba(0, 0, 0, 0.52);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.report-section-intro h3 {
+  margin-bottom: 14px;
+}
+
+.report-section-intro p {
+  max-width: 720px;
+}
+
+/* Planet badge */
+.planet-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+}
+
+.planet-badge img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: saturate(1.14) contrast(1.05);
+}
+
+.planet-badge strong {
+  color: var(--kkc-dark-text);
+  font-weight: 950;
+}
+
+.planet-badge.compact {
+  gap: 7px;
+}
+
+.planet-badge.compact img {
+  width: 26px;
+  height: 26px;
+}
+
+.planet-badge.compact strong {
+  font-size: 0.78rem;
+}
+
+.planet-badge.fallback {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #f0eee8;
+}
+
+.planet-badge.fallback span {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 950;
+}
+
+/* South Indian chart */
+.south-chart-shell {
+  display: grid;
+  gap: 24px;
+}
+
+.south-chart-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.south-chart-title > span {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #f6d365, #fda085);
+  color: #111111;
+  font-family: var(--kkc-serif);
+  font-size: 2.4rem;
+}
+
+.south-chart-title h4 {
+  margin: 0;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.south-chart-title p {
+  margin: 4px 0 0;
+  color: var(--kkc-dark-muted);
+}
+
+.south-chart {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  grid-template-rows: repeat(4, minmax(120px, auto));
+  gap: 0;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.14);
+  border-radius: var(--kkc-radius-lg);
+  background:
+    radial-gradient(circle at center, rgba(246, 211, 101, 0.16), transparent 32%),
+    #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
+}
+
+.south-chart-center {
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.11);
+  background:
+    radial-gradient(circle, rgba(253, 160, 133, 0.18), transparent 58%),
+    #f7f4eb;
+}
+
+.south-chart-center span {
+  color: #d87935;
+  font-family: var(--kkc-serif);
+  font-size: 4rem;
+}
+
+.south-chart-center strong {
+  color: var(--kkc-dark-text);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.south-chart-house {
+  min-height: 120px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.11);
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.south-house-number {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.south-house-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.south-house-planets small {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #f0eee8;
+  color: var(--kkc-dark-muted);
+  font-weight: 850;
+}
+
+/* South chart house positions */
+.chart-house-1 { grid-column: 1; grid-row: 1; }
+.chart-house-2 { grid-column: 2; grid-row: 1; }
+.chart-house-3 { grid-column: 3; grid-row: 1; }
+.chart-house-4 { grid-column: 4; grid-row: 1; }
+.chart-house-5 { grid-column: 4; grid-row: 2; }
+.chart-house-6 { grid-column: 4; grid-row: 3; }
+.chart-house-7 { grid-column: 4; grid-row: 4; }
+.chart-house-8 { grid-column: 3; grid-row: 4; }
+.chart-house-9 { grid-column: 2; grid-row: 4; }
+.chart-house-10 { grid-column: 1; grid-row: 4; }
+.chart-house-11 { grid-column: 1; grid-row: 3; }
+.chart-house-12 { grid-column: 1; grid-row: 2; }
+
+/* Planet cards */
+.planet-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.planet-detail-card {
+  border: 1px solid var(--kkc-dark-line);
+  border-radius: var(--kkc-radius-lg);
+  padding: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(246, 211, 101, 0.13), transparent 30%),
+    #ffffff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.06);
+}
+
+.planet-detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.planet-detail-head > span:last-child {
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.planet-detail-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.planet-detail-list .kkc-info-box {
+  min-height: 78px;
+  box-shadow: none;
+}
+
+/* Dasha */
+.current-dasha-premium {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: var(--kkc-radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  background:
+    linear-gradient(135deg, #111111, #2a251d);
+  color: #ffffff;
+}
+
+.current-dasha-premium .planet-badge strong {
+  color: #ffffff;
+}
+
+.current-dasha-premium span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.current-dasha-premium strong {
+  display: block;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.current-dasha-premium p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.dasha-timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.dasha-period-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--kkc-dark-line);
+  border-radius: var(--kkc-radius-md);
+  padding: 14px 16px;
+  background: #ffffff;
+}
+
+.dasha-period-card.active {
+  border-color: #111111;
+  background:
+    linear-gradient(135deg, #111111, #2a251d);
+}
+
+.dasha-period-card.active strong,
+.dasha-period-card.active span,
+.dasha-period-card.active .planet-badge strong {
+  color: #ffffff;
+}
+
+.dasha-period-card div:last-child {
+  display: grid;
+  gap: 4px;
+}
+
+.dasha-period-card div:last-child strong {
+  color: var(--kkc-dark-text);
+}
+
+.dasha-period-card div:last-child span {
+  color: var(--kkc-dark-muted);
+  font-size: 0.84rem;
+}
+
+/* Dosha */
+.dosha-status-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.dosha-status-card div {
+  border-radius: var(--kkc-radius-lg);
+  padding: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(246, 211, 101, 0.15), transparent 34%),
+    #ffffff;
+  border: 1px solid var(--kkc-dark-line);
+}
+
+.dosha-status-card span {
+  display: block;
+  color: rgba(0, 0, 0, 0.48);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dosha-status-card strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.dosha-explanation {
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid var(--kkc-dark-line);
+}
+
+.dosha-explanation h4 {
+  margin: 0 0 8px;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.dosha-explanation p + h4 {
+  margin-top: 24px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .planet-card-grid,
+  .planet-detail-list,
+  .dosha-status-card {
+    grid-template-columns: 1fr;
+  }
+
+  .south-chart {
+    grid-template-columns: repeat(4, minmax(90px, 1fr));
+    grid-template-rows: repeat(4, minmax(100px, auto));
+  }
+}
+
+@media (max-width: 640px) {
+  .south-chart {
+    grid-template-columns: repeat(4, minmax(72px, 1fr));
+    grid-template-rows: repeat(4, minmax(92px, auto));
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .south-chart-house {
+    padding: 9px;
+  }
+
+  .south-chart-center span {
+    font-size: 2.8rem;
+  }
+
+  .planet-badge strong {
+    display: none;
+  }
+
+  .planet-detail-head .planet-badge strong {
+    display: block;
+  }
+}

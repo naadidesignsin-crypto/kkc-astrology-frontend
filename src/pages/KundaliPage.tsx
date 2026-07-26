@@ -29,6 +29,8 @@ import type {
 } from "../types/kundali";
 
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
+import PlanetBadge from "../components/PlanetBadge";
+import SouthIndianBirthChart from "../components/SouthIndianBirthChart";
 
 type KundaliForm = {
   fullName: string;
@@ -730,34 +732,19 @@ function SummaryTab({ summary }: { summary: KundaliSummaryResponse }) {
 }
 
 function BirthChartTab({ planets }: { planets: KundaliPlanetsResponse }) {
-  const houses = Array.from({ length: 12 }, (_, index) => index + 1);
-
   return (
-    <article className="kkc-report-section">
-      <h3>Birth Chart</h3>
-      <p>House-wise planetary placement generated from birth details.</p>
-
-      <div className="kkc-birth-chart-grid">
-        {houses.map((house) => {
-          const housePlanets = planets.planets.filter(
-            (planet) => planet.house === house
-          );
-
-          return (
-            <div className="kkc-house-box" key={house}>
-              <strong>House {house}</strong>
-
-              {housePlanets.length === 0 ? (
-                <span>No planet</span>
-              ) : (
-                housePlanets.map((planet) => (
-                  <span key={`${house}-${planet.name}`}>{planet.name}</span>
-                ))
-              )}
-            </div>
-          );
-        })}
+    <article className="kkc-report-section astrology-chart-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Birth Chart</p>
+        <h3>Rashi Chart / 12 Houses</h3>
+        <p>
+          This chart shows house-wise planetary placement generated from the
+          birth details. Each planet is shown with its visual icon for easier
+          reading.
+        </p>
       </div>
+
+      <SouthIndianBirthChart planets={planets} />
     </article>
   );
 }
@@ -890,49 +877,36 @@ function HousesTab({ houses }: { houses: KundaliHouseResponse }) {
 
 function PlanetsTab({ planets }: { planets: KundaliPlanetsResponse }) {
   return (
-    <article className="kkc-report-section">
-      <h3>Planetary Positions</h3>
+    <article className="kkc-report-section planets-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Planetary Positions</p>
+        <h3>Planet Details</h3>
+        <p>
+          Planetary position, Rashi, Nakshatra, house placement and motion
+          details.
+        </p>
+      </div>
 
-      <div className="kkc-table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Planet</th>
-              <th>Degree</th>
-              <th>Latitude</th>
-              <th>Longitude</th>
-              <th>Rashi</th>
-              <th>Rashi Lord</th>
-              <th>Nakshatra</th>
-              <th>Nakshatra Lord</th>
-              <th>Charan</th>
-              <th>House</th>
-              <th>Retrograde</th>
-              <th>Combust</th>
-              <th>State</th>
-            </tr>
-          </thead>
+      <div className="planet-card-grid">
+        {planets.planets.map((planet) => (
+          <div className="planet-detail-card" key={`${planet.name}-${planet.house}`}>
+            <div className="planet-detail-head">
+              <PlanetBadge name={planet.name} />
+              <span>House {planet.house || "-"}</span>
+            </div>
 
-          <tbody>
-            {planets.planets.map((planet) => (
-              <tr key={`${planet.name}-${planet.house}`}>
-                <td>{planet.name}</td>
-                <td>{planet.degree}</td>
-                <td>{planet.latitude}</td>
-                <td>{planet.longitude}</td>
-                <td>{planet.rashi}</td>
-                <td>{planet.rashiLord}</td>
-                <td>{planet.nakshatra}</td>
-                <td>{planet.nakshatraLord}</td>
-                <td>{planet.charan}</td>
-                <td>{planet.house || "-"}</td>
-                <td>{planet.retrograde ? "Yes" : "No"}</td>
-                <td>{planet.combust ? "Yes" : "No"}</td>
-                <td>{planet.planetState || "-"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            <div className="planet-detail-list">
+              <Info label="Rashi" value={planet.rashi} />
+              <Info label="Rashi Lord" value={planet.rashiLord} />
+              <Info label="Nakshatra" value={planet.nakshatra} />
+              <Info label="Nakshatra Lord" value={planet.nakshatraLord} />
+              <Info label="Degree" value={planet.degree} />
+              <Info label="Charan" value={planet.charan} />
+              <Info label="Retrograde" value={planet.retrograde ? "Yes" : "No"} />
+              <Info label="Combust" value={planet.combust ? "Yes" : "No"} />
+            </div>
+          </div>
+        ))}
       </div>
     </article>
   );
@@ -941,27 +915,42 @@ function PlanetsTab({ planets }: { planets: KundaliPlanetsResponse }) {
 function DashaTab({ dasha }: { dasha: KundaliDashaResponse }) {
   return (
     <article className="kkc-report-section">
-      <h3>Vimshottari Dasha</h3>
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Vimshottari Dasha</p>
+        <h3>Dasha Timeline</h3>
+        <p>
+          Current and upcoming planetary periods based on Vimshottari Dasha.
+        </p>
+      </div>
 
       {dasha.currentDasha && (
-        <div className="kkc-current-dasha">
-          <span>Current Dasha</span>
-          <strong>{dasha.currentDasha.planet}</strong>
-          <p>
-            {dasha.currentDasha.startDate} → {dasha.currentDasha.endDate}
-          </p>
+        <div className="current-dasha-premium">
+          <PlanetBadge name={dasha.currentDasha.planet} />
+          <div>
+            <span>Current Dasha</span>
+            <strong>{dasha.currentDasha.planet}</strong>
+            <p>
+              {dasha.currentDasha.startDate} → {dasha.currentDasha.endDate}
+            </p>
+          </div>
         </div>
       )}
 
-      <div className="kkc-dasha-list">
+      <div className="dasha-timeline">
         {dasha.dashaPeriods.map((period: DashaPeriod) => (
-          <span
+          <div
             key={`${period.planet}-${period.startDate}`}
-            className={period.active ? "active" : ""}
+            className={period.active ? "dasha-period-card active" : "dasha-period-card"}
           >
-            <strong>{period.planet}</strong>
-            {period.startDate} → {period.endDate}
-          </span>
+            <PlanetBadge name={period.planet} compact />
+
+            <div>
+              <strong>{period.planet}</strong>
+              <span>
+                {period.startDate} → {period.endDate}
+              </span>
+            </div>
+          </div>
         ))}
       </div>
     </article>
@@ -971,19 +960,41 @@ function DashaTab({ dasha }: { dasha: KundaliDashaResponse }) {
 function DoshaTab({ dosha }: { dosha: KundaliDoshaResponse }) {
   return (
     <article className="kkc-report-section">
-      <h3>Mangal Dosha Analysis</h3>
-
-      <div className="kkc-report-grid">
-        <Info
-          label="Mangal Dosha"
-          value={dosha.mangalDoshaPresent ? "Present" : "Not Present"}
-        />
-        <Info label="Type" value={dosha.type} />
-        <Info label="Intensity" value={dosha.intensity} />
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Dosha Analysis</p>
+        <h3>Mangal Dosha</h3>
+        <p>
+          Mangal Dosha status, intensity, type and explanation based on the
+          generated Kundali.
+        </p>
       </div>
 
-      <p>{dosha.reason}</p>
-      <p>{dosha.info}</p>
+      <div className="dosha-status-card">
+        <div>
+          <span>Status</span>
+          <strong>
+            {dosha.mangalDoshaPresent ? "Mangal Dosha Present" : "Mangal Dosha Not Present"}
+          </strong>
+        </div>
+
+        <div>
+          <span>Type</span>
+          <strong>{dosha.type || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Intensity</span>
+          <strong>{dosha.intensity || "-"}</strong>
+        </div>
+      </div>
+
+      <div className="dosha-explanation">
+        <h4>Reason</h4>
+        <p>{dosha.reason || "Reason not available."}</p>
+
+        <h4>Additional Information</h4>
+        <p>{dosha.info || "Additional information not available."}</p>
+      </div>
     </article>
   );
 }
