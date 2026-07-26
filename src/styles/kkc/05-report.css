@@ -1065,3 +1065,291 @@
     display: block;
   }
 }
+
+/* =====================================================
+   DARK KUNDALI REPORT THEME
+   Purpose:
+   - Remove white report background
+   - Make all report tabs black + white
+   - Keep planet images colorful
+   - Make astrology report look premium, not like dashboard cards
+===================================================== */
+
+/* Full report area */
+.kkc-kundali-report {
+  background:
+    radial-gradient(circle at 82% 8%, rgba(255, 255, 255, 0.08), transparent 30%),
+    radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.04), transparent 24%),
+    linear-gradient(180deg, #020202 0%, #090909 52%, #020202 100%) !important;
+  color: var(--kkc-white) !important;
+}
+
+/* Report header already black, make it more integrated */
+.kkc-report-hero-card,
+.kkc-report-head,
+.kkc-empty-report {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #070707 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--kkc-white) !important;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.42) !important;
+}
+
+.kkc-report-hero-card h2,
+.kkc-report-head h2,
+.kkc-empty-report h2 {
+  color: var(--kkc-white) !important;
+}
+
+.kkc-report-subtitle,
+.kkc-report-head p,
+.kkc-empty-report p {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+/* Report key stats inside top report card */
+.kkc-report-key-stats div {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.kkc-report-key-stats dt {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.kkc-report-key-stats dd {
+  color: var(--kkc-white) !important;
+}
+
+/* Tabs wrapper */
+.kkc-report-navigation {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34) !important;
+}
+
+.kkc-report-navigation-copy span {
+  color: var(--kkc-white) !important;
+}
+
+.kkc-report-navigation-copy p {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Tabs */
+.kkc-tab {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.kkc-tab:hover:not(:disabled),
+.kkc-tab.active {
+  background: var(--kkc-white) !important;
+  border-color: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+.kkc-tab:disabled {
+  opacity: 0.32 !important;
+}
+
+/* Every report section */
+.kkc-report-section {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.055), transparent 30%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--kkc-white) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34) !important;
+}
+
+.kkc-report-section h3,
+.kkc-report-section h4,
+.report-section-intro h3 {
+  color: var(--kkc-white) !important;
+}
+
+.kkc-report-section p,
+.report-section-intro p {
+  color: rgba(255, 255, 255, 0.66) !important;
+}
+
+.report-section-kicker {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Info boxes */
+.kkc-info-box {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: none !important;
+}
+
+.kkc-info-box::before {
+  background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.28)) !important;
+}
+
+.kkc-info-box span {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.kkc-info-box strong {
+  color: var(--kkc-white) !important;
+}
+
+/* Planet badges */
+.planet-badge strong {
+  color: var(--kkc-white) !important;
+}
+
+.planet-badge.fallback {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--kkc-white) !important;
+}
+
+.planet-badge.fallback span {
+  background: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+/* South Indian chart dark theme */
+.south-chart {
+  background:
+    radial-gradient(circle at center, rgba(255, 199, 86, 0.14), transparent 34%),
+    #070707 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42) !important;
+}
+
+.south-chart-center {
+  background:
+    radial-gradient(circle, rgba(255, 178, 74, 0.18), transparent 62%),
+    #111111 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.south-chart-center span {
+  color: #ffb84d !important;
+  text-shadow: 0 0 18px rgba(255, 184, 77, 0.22);
+}
+
+.south-chart-center strong {
+  color: var(--kkc-white) !important;
+}
+
+.south-chart-house {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02)),
+    #0d0d0d !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.south-house-number {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.south-house-planets small {
+  background: rgba(255, 255, 255, 0.09) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* Planet detail cards */
+.planet-detail-card {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #0b0b0b !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--kkc-white) !important;
+}
+
+.planet-detail-head > span:last-child {
+  background: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+/* Dasha */
+.current-dasha-premium,
+.dasha-period-card.active {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.16), transparent 30%),
+    linear-gradient(135deg, #151515, #050505) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.dasha-period-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.dasha-period-card div:last-child strong,
+.dasha-period-card div:last-child span {
+  color: var(--kkc-white) !important;
+}
+
+.dasha-period-card div:last-child span {
+  opacity: 0.66;
+}
+
+/* Dosha */
+.dosha-status-card div,
+.dosha-explanation {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.dosha-status-card span {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.dosha-status-card strong,
+.dosha-explanation h4 {
+  color: var(--kkc-white) !important;
+}
+
+/* Tables dark theme */
+.kkc-table-wrap {
+  background: #0b0b0b !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.kkc-table-wrap th {
+  background: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+.kkc-table-wrap td {
+  color: rgba(255, 255, 255, 0.72) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+.kkc-table-wrap tbody tr:hover {
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+
+/* PDF / Consultation cards */
+.kkc-pdf-tab button,
+.kkc-consultation-tab .kkc-primary-btn {
+  background: var(--kkc-white) !important;
+  border-color: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+.kkc-pdf-tab button:hover,
+.kkc-consultation-tab .kkc-primary-btn:hover {
+  background: transparent !important;
+  color: var(--kkc-white) !important;
+}
