@@ -23,3 +23,32 @@
 
   --kkc-container: 1180px;
 }
+
+/* =====================================================
+   Shape + shadow tokens
+===================================================== */
+
+:root {
+  --kkc-radius-xs: 10px;
+  --kkc-radius-sm: 14px;
+  --kkc-radius-md: 20px;
+  --kkc-radius-lg: 28px;
+  --kkc-radius-xl: 36px;
+
+  --kkc-shadow-dark-card: 0 28px 90px rgba(0, 0, 0, 0.38);
+  --kkc-shadow-light-card: 0 22px 60px rgba(0, 0, 0, 0.08);
+
+  --kkc-glass-dark:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.04)
+    );
+
+  --kkc-glass-light:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f4f2ec
+    );
+}

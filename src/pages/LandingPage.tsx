@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import kkcLogo from "../assets/Logo.png";
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
+import PlanetOrbit from "../components/PlanetOrbit"
 
 const whatsappNumber =
   import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919999999999";
@@ -139,23 +140,8 @@ function LandingPage() {
             </Link>
           </div>
         </div>
-
-        <div className="kkc-hero-visual" aria-hidden="true">
-          <div className="kkc-zodiac">
-            <span className="kkc-zodiac-center">ॐ</span>
-            <span className="zodiac-icon z1">♈</span>
-            <span className="zodiac-icon z2">♉</span>
-            <span className="zodiac-icon z3">♊</span>
-            <span className="zodiac-icon z4">♋</span>
-            <span className="zodiac-icon z5">♌</span>
-            <span className="zodiac-icon z6">♍</span>
-            <span className="zodiac-icon z7">♎</span>
-            <span className="zodiac-icon z8">♏</span>
-            <span className="zodiac-icon z9">♐</span>
-            <span className="zodiac-icon z10">♑</span>
-            <span className="zodiac-icon z11">♒</span>
-            <span className="zodiac-icon z12">♓</span>
-          </div>
+        <div className="kkc-hero-visual">
+          <PlanetOrbit />
         </div>
       </section>
 

@@ -419,6 +419,175 @@
   text-transform: uppercase;
 }
 
+/* =====================================================
+   Visible Hero Planet Orbit
+   Used in LandingPage hero section
+===================================================== */
+
+.kkc-planet-orbit {
+  --orbit-size: min(520px, 78vw);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--orbit-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.kkc-planet-orbit::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 42%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.055), transparent 66%);
+}
+
+.kkc-planet-ring {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+.kkc-planet-ring-one {
+  inset: 4%;
+}
+
+.kkc-planet-ring-two {
+  inset: 22%;
+}
+
+.kkc-planet-ring-three {
+  inset: 40%;
+}
+
+.kkc-planet-center {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 148px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 0 54px rgba(255, 255, 255, 0.08),
+    inset 0 0 34px rgba(255, 255, 255, 0.04);
+}
+
+.kkc-planet-center span {
+  font-family: var(--kkc-serif);
+  font-size: 5.2rem;
+  line-height: 1;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f7d56f 32%,
+    #ff9f43 58%,
+    #ffffff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(247, 213, 111, 0.22));
+}
+
+.kkc-planet-track {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: 50%;
+  animation: kkcPlanetTrackRotate 52s linear infinite;
+}
+
+.kkc-planet-item {
+  --angle: calc((360deg / var(--planet-count)) * var(--planet-index));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: -29px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.68));
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.08),
+    inset 0 0 16px rgba(255, 255, 255, 0.08);
+  transform:
+    rotate(var(--angle))
+    translateX(calc(var(--orbit-size) * 0.42))
+    rotate(calc(-1 * var(--angle)));
+}
+
+.kkc-planet-item img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: saturate(1.18) contrast(1.08) brightness(1.06);
+  opacity: 0.96;
+  animation: kkcPlanetIconCounterRotate 52s linear infinite;
+}
+
+@keyframes kkcPlanetTrackRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes kkcPlanetIconCounterRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .kkc-planet-orbit {
+    --orbit-size: min(390px, 90vw);
+  }
+
+  .kkc-planet-center {
+    width: 112px;
+    height: 112px;
+  }
+
+  .kkc-planet-center span {
+    font-size: 4rem;
+  }
+
+  .kkc-planet-item {
+    width: 44px;
+    height: 44px;
+    margin: -22px;
+  }
+
+  .kkc-planet-item img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .kkc-planet-track,
+  .kkc-planet-item img {
+    animation: none;
+  }
+}
 /* About */
 .kkc-about {
   display: grid;
@@ -657,4 +826,31 @@
   .kkc-about-image {
     min-height: 300px;
   }
+}
+
+/* =====================================================
+   LANDING REALISTIC SOFT EDGES
+===================================================== */
+
+.kkc-service-card,
+.kkc-testimonial-card,
+.kkc-about-image {
+  border-radius: var(--kkc-radius-md);
+}
+
+.kkc-service-card,
+.kkc-testimonial-card {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.kkc-service-card:hover,
+.kkc-testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.09);
+}
+
+.kkc-about-image {
+  overflow: hidden;
 }

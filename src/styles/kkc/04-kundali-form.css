@@ -262,3 +262,67 @@
     padding: 24px;
   }
 }
+/* =====================================================
+   FORM REALISTIC SOFT EDGES
+===================================================== */
+
+.kkc-kundali-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kkc-kundali-form {
+  border-radius: var(--kkc-radius-lg);
+  background: var(--kkc-glass-dark);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: var(--kkc-shadow-dark-card);
+  backdrop-filter: blur(18px);
+}
+
+.kkc-kundali-form::before {
+  border-radius: 50%;
+}
+
+.kkc-kundali-form input,
+.kkc-kundali-form select {
+  border-radius: var(--kkc-radius-md);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.025)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.kkc-kundali-form input:focus,
+.kkc-kundali-form select:focus {
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+}
+
+.kkc-selected-location {
+  border-radius: var(--kkc-radius-sm);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+.kkc-location-results {
+  border-radius: var(--kkc-radius-md);
+  overflow: hidden;
+}
+
+.kkc-kundali-form button[type="submit"] {
+  border-radius: 999px;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.kkc-kundali-form button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-1px);
+}

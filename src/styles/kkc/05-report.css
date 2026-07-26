@@ -480,3 +480,165 @@
     position: static;
   }
 }
+
+/* =====================================================
+   REPORT REALISTIC SOFT EDGES
+===================================================== */
+
+.kkc-kundali-report {
+  background:
+    radial-gradient(circle at top right, rgba(0, 0, 0, 0.04), transparent 32%),
+    linear-gradient(180deg, #f7f6f2 0%, #ebe8df 100%);
+}
+
+/* Empty report card */
+.kkc-empty-report {
+  border-radius: var(--kkc-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--kkc-shadow-light-card);
+}
+
+.kkc-empty-report::after {
+  content: "ॐ";
+  position: absolute;
+  right: 72px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.06);
+  font-family: var(--kkc-serif);
+  font-size: 10rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.kkc-empty-report {
+  position: relative;
+}
+
+/* Generated report hero */
+.kkc-report-hero-card,
+.kkc-report-head {
+  border-radius: var(--kkc-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--kkc-shadow-light-card);
+}
+
+.kkc-report-hero-card::after,
+.kkc-report-head::after {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: calc(var(--kkc-radius-lg) - 8px);
+  pointer-events: none;
+}
+
+/* Tabs wrapper */
+.kkc-report-navigation {
+  border-radius: var(--kkc-radius-lg);
+  overflow: hidden;
+}
+
+.kkc-tabs {
+  padding-bottom: 2px;
+}
+
+.kkc-tab {
+  border-radius: 999px;
+}
+
+/* White report sections */
+.kkc-report-section {
+  border-radius: var(--kkc-radius-lg);
+  background: var(--kkc-glass-light);
+  box-shadow: var(--kkc-shadow-light-card);
+}
+
+.kkc-info-box {
+  border-radius: var(--kkc-radius-md);
+  background: var(--kkc-glass-light);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.055);
+}
+
+.kkc-info-box::before {
+  border-radius: 999px;
+  left: 14px;
+  top: 20px;
+  bottom: 20px;
+}
+
+.kkc-info-box span,
+.kkc-info-box strong {
+  padding-left: 10px;
+}
+
+/* Table wrapper */
+.kkc-table-wrap {
+  border-radius: var(--kkc-radius-md);
+  overflow: hidden;
+}
+
+/* Birth chart / houses / interpretation cards */
+.kkc-house-box,
+.kkc-parashara-card,
+.kkc-house-reading-card,
+.kkc-current-dasha {
+  border-radius: var(--kkc-radius-md);
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.05);
+}
+
+.kkc-house-box {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.kkc-house-box:hover,
+.kkc-parashara-card:hover,
+.kkc-house-reading-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+}
+
+/* Dasha pills */
+.kkc-dasha-list span {
+  border-radius: var(--kkc-radius-md);
+}
+
+/* PDF / Consultation buttons */
+.kkc-pdf-tab button,
+.kkc-consultation-tab .kkc-primary-btn,
+.kkc-report-head button,
+.kkc-report-hero-actions button,
+.kkc-report-hero-actions a {
+  border-radius: 999px;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.kkc-pdf-tab button:hover,
+.kkc-consultation-tab .kkc-primary-btn:hover,
+.kkc-report-head button:hover,
+.kkc-report-hero-actions button:hover,
+.kkc-report-hero-actions a:hover {
+  transform: translateY(-1px);
+}
+
+/* Mobile edge safety */
+@media (max-width: 640px) {
+  .kkc-report-hero-card,
+  .kkc-report-head,
+  .kkc-report-section,
+  .kkc-empty-report,
+  .kkc-report-navigation {
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kkc-empty-report::after {
+    right: 20px;
+    font-size: 7rem;
+  }
+}
