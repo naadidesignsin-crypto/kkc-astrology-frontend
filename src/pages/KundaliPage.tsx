@@ -31,6 +31,7 @@ import type {
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
 import PlanetBadge from "../components/PlanetBadge";
 import SouthIndianBirthChart from "../components/SouthIndianBirthChart";
+import KundaliGenerationLoader from "../components/KundaliGenerationLoader";
 
 type KundaliForm = {
   fullName: string;
@@ -247,7 +248,7 @@ function KundaliPage() {
 
     try {
       setLoading(true);
-      setStage("Creating Kundali");
+      setStage("Reading birth details");
       setError("");
 
       setSummary(null);
@@ -270,6 +271,7 @@ function KundaliPage() {
         language: "en",
       };
 
+      setStage("Calculating Lagna and Rashi");
       const generated = await generateKundali(payload);
 
       if (generated.status !== "SUCCESS") {
@@ -278,16 +280,16 @@ function KundaliPage() {
 
       const reportId = generated.id;
 
-      setStage("Reading planetary positions");
+      setStage("Mapping planetary positions");
       await generateSection(reportId, "PLANETARY_POSITIONS");
 
-      setStage("Reading Dasha details");
+      setStage("Preparing Dasha analysis");
       await generateSection(reportId, "DASHA");
 
-      setStage("Reading Dosha details");
+      setStage("Preparing Dosha analysis");
       await generateSection(reportId, "DOSHA");
 
-      setStage("Preparing report tabs");
+      setStage("Building Kundali report");
 
       const [
         summaryData,
@@ -511,13 +513,7 @@ function KundaliPage() {
           </div>
         )}
 
-        {loading && (
-          <div className="kkc-empty-report">
-            <p className="kkc-eyebrow">Processing</p>
-            <h2>{stage || "Generating Kundali"}</h2>
-            <p>Please wait while the astrology report is prepared.</p>
-          </div>
-        )}
+        {loading && <KundaliGenerationLoader stage={stage} />}
 
         {summary && (
           <ReportTabs
@@ -549,6 +545,110 @@ function Info({
       <span>{label}</span>
       <strong>{value || "-"}</strong>
     </div>
+  );
+}
+
+function ReportReadinessOverview({
+  summary,
+  planets,
+  dasha,
+  dosha,
+  houses,
+  navamsa,
+  parashara,
+}: {
+  summary: KundaliSummaryResponse;
+  planets: KundaliPlanetsResponse | null;
+  dasha: KundaliDashaResponse | null;
+  dosha: KundaliDoshaResponse | null;
+  houses: KundaliHouseResponse | null;
+  navamsa: KundaliNavamsaResponse | null;
+  parashara: KundaliParasharaReportResponse | null;
+}) {
+  const items = [
+    {
+      label: "Birth Summary",
+      status: Boolean(summary),
+      detail: "Lagna, Rashi, Nakshatra and Panchanga details",
+    },
+    {
+      label: "Planetary Positions",
+      status: Boolean(planets),
+      detail: "Graha placement, Rashi, Nakshatra and house mapping",
+    },
+    {
+      label: "Birth Chart",
+      status: Boolean(planets),
+      detail: "12-house visual Kundali chart",
+    },
+    {
+      label: "Navamsa",
+      status: Boolean(navamsa),
+      detail: "D9 chart and Navamsa planet mapping",
+    },
+    {
+      label: "Parāśara Reading",
+      status: Boolean(parashara),
+      detail: "Life-area interpretation and guidance",
+    },
+    {
+      label: "House Analysis",
+      status: Boolean(houses),
+      detail: "House-wise meaning and interpretation",
+    },
+    {
+      label: "Dasha",
+      status: Boolean(dasha),
+      detail: "Current and upcoming Vimshottari periods",
+    },
+    {
+      label: "Dosha",
+      status: Boolean(dosha),
+      detail: "Mangal Dosha status, intensity and explanation",
+    },
+  ];
+
+  const readyCount = items.filter((item) => item.status).length;
+
+  return (
+    <section className="report-readiness-card">
+      <div className="report-readiness-head">
+        <div>
+          <p className="report-section-kicker">Report Overview</p>
+          <h3>Kundali sections prepared</h3>
+          <p>
+            {readyCount} of {items.length} report sections are ready for review.
+          </p>
+        </div>
+
+        <div className="report-readiness-score">
+          <strong>
+            {readyCount}/{items.length}
+          </strong>
+          <span>Ready</span>
+        </div>
+      </div>
+
+      <div className="report-readiness-grid">
+        {items.map((item) => (
+          <div
+            className={
+              item.status
+                ? "report-readiness-item ready"
+                : "report-readiness-item pending"
+            }
+            key={item.label}
+          >
+            <span>{item.status ? "✓" : "…"}</span>
+
+            <div>
+              <strong>{item.label}</strong>
+              <p>{item.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -638,6 +738,16 @@ function ReportTabs({
           </a>
         </div>
       </section>
+
+      <ReportReadinessOverview
+        summary={summary}
+        planets={planets}
+        dasha={dasha}
+        dosha={dosha}
+        houses={houses}
+        navamsa={navamsa}
+        parashara={parashara}
+      />
 
       <section className="kkc-report-navigation">
         <div className="kkc-report-navigation-copy">
