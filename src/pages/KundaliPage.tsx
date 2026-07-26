@@ -33,6 +33,7 @@ import PlanetBadge from "../components/PlanetBadge";
 import SouthIndianBirthChart from "../components/SouthIndianBirthChart";
 import KundaliGenerationLoader from "../components/KundaliGenerationLoader";
 import HouseReadingCard from "../components/HouseReadingCard";
+import ParasharaChapterCard from "../components/ParasharaChapterCard";
 
 type KundaliForm = {
   fullName: string;
@@ -906,50 +907,69 @@ function ParasharaTab({
 }: {
   parashara: KundaliParasharaReportResponse;
 }) {
-  return (
-    <article className="kkc-report-section">
-      <h3>Parāśara Interpretation</h3>
+  const sectionCount = parashara.sections?.length || 0;
 
-      <div className="kkc-report-grid">
-        <Info label="Lagna" value={parashara.lagna} />
-        <Info label="Rashi" value={parashara.rashi} />
-        <Info label="Nakshatra" value={parashara.nakshatra} />
-        <Info label="Current Dasha" value={parashara.currentDasha} />
-        <Info label="Navamsa Ascendant" value={parashara.navamsaAscendant} />
+  return (
+    <article className="kkc-report-section parashara-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Parāśara Interpretation</p>
+        <h3>Life-Area Report Chapters</h3>
+        <p>
+          This section converts the Kundali into structured Parāśara-style
+          chapters for career, marriage, finance, health, education,
+          spirituality and remedies.
+        </p>
       </div>
 
-      <div className="kkc-parashara-grid">
-        {parashara.sections.map((section) => (
-          <div className="kkc-parashara-card" key={section.sectionKey}>
-            <h4>{section.title}</h4>
-            <p>{section.summary}</p>
+      <div className="parashara-report-summary">
+        <div>
+          <span>Lagna</span>
+          <strong>{parashara.lagna || "-"}</strong>
+        </div>
 
-            {section.focusAreas.length > 0 && (
-              <div className="kkc-tags">
-                {section.focusAreas.map((item) => (
-                  <small key={item}>{item}</small>
-                ))}
-              </div>
-            )}
+        <div>
+          <span>Rashi</span>
+          <strong>{parashara.rashi || "-"}</strong>
+        </div>
 
-            {section.observations.length > 0 && (
-              <ul>
-                {section.observations.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            )}
+        <div>
+          <span>Nakshatra</span>
+          <strong>{parashara.nakshatra || "-"}</strong>
+        </div>
 
-            <strong>Guidance</strong>
-            <p>{section.guidance}</p>
+        <div>
+          <span>Current Dasha</span>
+          <strong>{parashara.currentDasha || "-"}</strong>
+        </div>
 
-            {section.caution && (
-              <>
-                <strong>Caution</strong>
-                <p>{section.caution}</p>
-              </>
-            )}
-          </div>
+        <div>
+          <span>Navamsa Ascendant</span>
+          <strong>{parashara.navamsaAscendant || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Chapters</span>
+          <strong>{sectionCount}</strong>
+        </div>
+      </div>
+
+      <div className="parashara-section-note">
+        <span>How to read this section</span>
+        <p>
+          Read the chapters in order. Start with Career and Marriage for
+          practical direction, then continue with Finance, Health, Education,
+          Dharma and Remedies.
+        </p>
+      </div>
+
+      <div className="parashara-chapter-list">
+        {parashara.sections.map((section, index) => (
+          <ParasharaChapterCard
+            key={section.sectionKey}
+            section={section}
+            chapterNumber={index + 1}
+            defaultOpen={index === 0}
+          />
         ))}
       </div>
     </article>

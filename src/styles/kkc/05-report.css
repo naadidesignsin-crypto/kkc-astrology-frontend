@@ -3375,3 +3375,383 @@
     font-size: 1.25rem;
   }
 }
+
+/* =====================================================
+   STEP 5 - PARASHARA REPORT CHAPTERS
+   Dark expandable chapter layout
+===================================================== */
+
+.parashara-report-section {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255, 184, 77, 0.09), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #070707 !important;
+}
+
+/* Summary */
+.parashara-report-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.parashara-report-summary div {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010;
+}
+
+.parashara-report-summary span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-report-summary strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.38rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+/* Reader note */
+.parashara-section-note {
+  display: grid;
+  gap: 8px;
+  border-left: 3px solid rgba(255, 207, 122, 0.68);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 207, 122, 0.08),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #101010;
+}
+
+.parashara-section-note span {
+  color: #ffcf7a;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-section-note p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66) !important;
+  line-height: 1.65;
+}
+
+/* Chapter list */
+.parashara-chapter-list {
+  display: grid;
+  gap: 14px;
+}
+
+.parashara-chapter {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.135);
+  border-radius: var(--kkc-radius-lg);
+  background:
+    radial-gradient(circle at 92% 10%, rgba(255, 184, 77, 0.08), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.026)
+    ),
+    #0d0d0d;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.parashara-chapter:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 207, 122, 0.32);
+  box-shadow: 0 30px 78px rgba(0, 0, 0, 0.34);
+}
+
+.parashara-chapter.open {
+  border-color: rgba(255, 207, 122, 0.38);
+}
+
+.parashara-chapter::after {
+  content: "ॐ";
+  position: absolute;
+  right: 22px;
+  bottom: -34px;
+  color: rgba(255, 255, 255, 0.026);
+  font-family: var(--kkc-serif);
+  font-size: 8rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Header button */
+.parashara-chapter-head {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 42px;
+  gap: 18px;
+  align-items: center;
+  border: 0;
+  padding: 24px;
+  background: transparent;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.parashara-chapter-number {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 207, 122, 0.28), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 207, 122, 0.35);
+  color: #ffcf7a;
+  font-family: var(--kkc-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.parashara-chapter-title {
+  display: grid;
+  gap: 6px;
+}
+
+.parashara-chapter-title small {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-chapter-title strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.parashara-chapter-title em {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.86rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.parashara-chapter-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.075);
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Focus preview */
+.parashara-chapter-preview {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 24px 22px 112px;
+}
+
+.parashara-chapter-preview span {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+/* Expanded body */
+.parashara-chapter-body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.105);
+  padding: 24px;
+  animation: parasharaChapterIn 180ms ease both;
+}
+
+.parashara-reading-block {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.018)
+    ),
+    #101010;
+}
+
+.parashara-reading-block span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-reading-block p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.93rem;
+  line-height: 1.75;
+}
+
+.parashara-reading-block ul {
+  margin: 0;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.parashara-reading-block li {
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+
+.parashara-reading-block.guidance {
+  border-left: 3px solid rgba(255, 207, 122, 0.65);
+}
+
+.parashara-reading-block.caution {
+  border-left: 3px solid rgba(255, 140, 120, 0.72);
+}
+
+.parashara-reading-block.caution span {
+  color: #ff9a85;
+}
+
+.parashara-reading-block.main-summary {
+  background:
+    radial-gradient(circle at top right, rgba(255, 207, 122, 0.08), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(255, 255, 255, 0.018)
+    ),
+    #101010;
+}
+
+/* Animation */
+@keyframes parasharaChapterIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Disable old Parashara white-grid visuals if still present */
+.kkc-parashara-grid {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .parashara-report-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .parashara-chapter-head {
+    grid-template-columns: 58px minmax(0, 1fr) 38px;
+    gap: 14px;
+  }
+
+  .parashara-chapter-number {
+    width: 52px;
+    height: 52px;
+    font-size: 1.25rem;
+  }
+
+  .parashara-chapter-title strong {
+    font-size: 1.45rem;
+  }
+
+  .parashara-chapter-preview {
+    padding-left: 96px;
+  }
+}
+
+@media (max-width: 640px) {
+  .parashara-report-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .parashara-chapter-head {
+    grid-template-columns: 46px minmax(0, 1fr) 34px;
+    padding: 18px;
+  }
+
+  .parashara-chapter-number {
+    width: 42px;
+    height: 42px;
+    font-size: 1.05rem;
+  }
+
+  .parashara-chapter-title strong {
+    font-size: 1.28rem;
+  }
+
+  .parashara-chapter-title em {
+    font-size: 0.78rem;
+  }
+
+  .parashara-chapter-preview {
+    padding: 0 18px 18px 78px;
+  }
+
+  .parashara-chapter-body {
+    padding: 18px;
+  }
+}
