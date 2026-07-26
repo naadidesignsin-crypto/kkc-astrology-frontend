@@ -99,3 +99,64 @@ textarea {
   background: var(--kkc-white);
   color: var(--kkc-black);
 }
+
+/* =====================================================
+   TYPOGRAPHY POLISH
+   Display font for spiritual headings.
+   Sans font for readable report data.
+===================================================== */
+
+body {
+  font-family: var(--kkc-sans);
+  font-weight: 500;
+}
+
+.kkc-serif-title,
+.kkc-hero h1,
+.kkc-kundali-copy h1 {
+  font-family: var(--kkc-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+.kkc-section-heading h2,
+.kkc-about h2,
+.kkc-report-section h3,
+.kkc-report-hero-card h2,
+.kkc-report-head h2,
+.kkc-empty-report h2 {
+  font-family: var(--kkc-serif);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.kkc-nav a,
+.kkc-outline-btn,
+.kkc-primary-btn,
+.kkc-white-btn,
+.kkc-footer-btn,
+.kkc-kundali-form button[type="submit"],
+.kkc-tab {
+  font-family: var(--kkc-sans);
+  font-weight: 800;
+  letter-spacing: 0.07em;
+}
+
+.kkc-info-box strong,
+.kkc-kundali-form input,
+.kkc-kundali-form select,
+.kkc-table-wrap td,
+.planet-detail-list .kkc-info-box strong {
+  font-family: var(--kkc-sans);
+  font-weight: 700;
+}
+
+.kkc-info-box span,
+.kkc-kundali-form label,
+.report-section-kicker,
+.kkc-report-label,
+.kkc-eyebrow {
+  font-family: var(--kkc-sans);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}

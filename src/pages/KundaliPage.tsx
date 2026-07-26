@@ -847,29 +847,84 @@ function ParasharaTab({
 
 function HousesTab({ houses }: { houses: KundaliHouseResponse }) {
   return (
-    <article className="kkc-report-section">
-      <h3>House-wise Interpretation</h3>
+    <article className="kkc-report-section houses-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">House-wise Interpretation</p>
+        <h3>12 Houses of the Kundali</h3>
+        <p>
+          Each house explains a specific life area. Planetary placement inside
+          each house affects interpretation, timing, decisions and life events.
+        </p>
+      </div>
 
-      <div className="kkc-house-interpretation-grid">
-        {houses.houses.map((house) => (
-          <div className="kkc-house-reading-card" key={house.houseNumber}>
-            <span>House {house.houseNumber}</span>
-            <h4>{house.houseName}</h4>
-            <strong>{house.mainArea}</strong>
-            <p>{house.meaning}</p>
-            <p>{house.interpretation}</p>
+      <div className="houses-overview-strip">
+        <div>
+          <span>Total Houses</span>
+          <strong>12</strong>
+        </div>
 
-            {house.planets.length > 0 && (
-              <div className="kkc-tags">
-                {house.planets.map((planet) => (
-                  <small key={`${house.houseNumber}-${planet.name}`}>
-                    {planet.name}
-                  </small>
-                ))}
+        <div>
+          <span>Report Type</span>
+          <strong>Parāśara House Reading</strong>
+        </div>
+
+        <div>
+          <span>Planet Mapping</span>
+          <strong>House-wise</strong>
+        </div>
+      </div>
+
+      <div className="professional-houses-grid">
+        {houses.houses.map((house) => {
+          const housePlanets = house.planets ?? [];
+
+          return (
+            <section
+              className="professional-house-card"
+              key={house.houseNumber}
+            >
+              <div className="professional-house-head">
+                <span>House {house.houseNumber}</span>
+                <strong>{house.houseName}</strong>
               </div>
-            )}
-          </div>
-        ))}
+
+              <div className="professional-house-area">
+                <small>Life Area</small>
+                <h4>{house.mainArea || "General Life Area"}</h4>
+              </div>
+
+              <p className="professional-house-meaning">
+                {house.meaning || "House meaning is not available."}
+              </p>
+
+              <div className="professional-house-reading">
+                <small>Interpretation</small>
+                <p>
+                  {house.interpretation ||
+                    "Interpretation is not available for this house."}
+                </p>
+              </div>
+
+              <div className="professional-house-planets">
+                <small>Planets in this house</small>
+
+                {housePlanets.length === 0 ? (
+                  <span className="empty-planet-chip">No planet placed</span>
+                ) : (
+                  <div className="professional-house-planet-list">
+                    {housePlanets.map((planet) => (
+                      <PlanetBadge
+                        key={`${house.houseNumber}-${planet.name}`}
+                        name={planet.name}
+                        compact
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          );
+        })}
       </div>
     </article>
   );

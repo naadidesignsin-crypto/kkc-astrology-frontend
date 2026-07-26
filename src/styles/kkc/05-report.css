@@ -1353,3 +1353,702 @@
   background: transparent !important;
   color: var(--kkc-white) !important;
 }
+
+/* =====================================================
+   PROFESSIONAL REPORT TAB NAVIGATION
+   Desktop: wrapped grid tabs
+   Mobile: compact two-column grid
+===================================================== */
+
+.kkc-report-navigation {
+  position: sticky;
+  top: 82px;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  border-radius: var(--kkc-radius-lg);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34) !important;
+}
+
+.kkc-report-navigation-copy span {
+  display: block;
+  color: var(--kkc-white) !important;
+  font-family: var(--kkc-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.kkc-report-navigation-copy p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+/* No horizontal scroll on desktop */
+.kkc-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(110px, 1fr));
+  gap: 10px;
+  overflow: visible;
+}
+
+.kkc-tab {
+  min-height: 44px;
+  border-radius: 999px;
+  padding: 0 14px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(255, 255, 255, 0.025)
+    ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.74) !important;
+  font-size: 0.68rem;
+  text-align: center;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.kkc-tab:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.42) !important;
+  color: var(--kkc-white) !important;
+}
+
+.kkc-tab.active {
+  background: var(--kkc-white) !important;
+  border-color: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+  box-shadow: 0 12px 28px rgba(255, 255, 255, 0.09);
+}
+
+.kkc-tab:disabled {
+  opacity: 0.32 !important;
+}
+
+/* Tablet */
+@media (max-width: 1080px) {
+  .kkc-report-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-tabs {
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .kkc-report-navigation {
+    position: static;
+    padding: 16px;
+  }
+
+  .kkc-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kkc-tab {
+    min-height: 42px;
+    font-size: 0.64rem;
+  }
+}
+
+/* =====================================================
+   TAB VISIBILITY + DARK REPORT CARD FIX
+   Fixes:
+   - active tab text disappearing on white pill
+   - hover tab text looking unprofessional
+   - Parashara/Navamsa cards showing white blocks
+===================================================== */
+
+/* ---------- Tabs: clean professional behavior ---------- */
+
+.kkc-tab {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.025)
+    ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  box-shadow: none !important;
+}
+
+.kkc-tab:hover:not(:disabled):not(.active) {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.045)
+    ) !important;
+  border-color: rgba(255, 255, 255, 0.38) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Active tab: white pill + black text, always readable */
+.kkc-tab.active,
+.kkc-tab.active:hover,
+.kkc-tab.active:focus,
+.kkc-tab.active:focus-visible {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #050505 !important;
+  box-shadow: 0 12px 28px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Prevent text from becoming invisible in active tab */
+.kkc-tab.active *,
+.kkc-tab.active:hover * {
+  color: #050505 !important;
+}
+
+/* ---------- Report section base dark cards ---------- */
+
+.kkc-report-section,
+.kkc-parashara-card,
+.kkc-house-reading-card,
+.planet-detail-card,
+.dosha-explanation,
+.dosha-status-card div,
+.current-dasha-premium,
+.dasha-period-card,
+.south-chart-shell,
+.south-chart,
+.south-chart-house,
+.south-chart-center {
+  color: #ffffff !important;
+}
+
+/* Main report sections */
+.kkc-report-section {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.065), transparent 28%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.36) !important;
+}
+
+.kkc-report-section h3,
+.kkc-report-section h4,
+.report-section-intro h3,
+.south-chart-title h4,
+.dosha-explanation h4 {
+  color: #ffffff !important;
+}
+
+.kkc-report-section p,
+.report-section-intro p,
+.south-chart-title p,
+.dosha-explanation p {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+.report-section-kicker {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ---------- Parashara cards ---------- */
+
+.kkc-parashara-grid {
+  align-items: stretch;
+}
+
+.kkc-parashara-card {
+  min-height: auto !important;
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 22px 58px rgba(0, 0, 0, 0.28);
+}
+
+.kkc-parashara-card h4 {
+  margin: 0 0 12px;
+  color: #ffffff !important;
+  font-family: var(--kkc-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.kkc-parashara-card p {
+  color: rgba(255, 255, 255, 0.68) !important;
+  line-height: 1.72;
+}
+
+.kkc-parashara-card strong {
+  display: block;
+  margin-top: 18px;
+  color: #ffffff !important;
+}
+
+.kkc-parashara-card ul {
+  margin: 16px 0 0;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+.kkc-parashara-card li {
+  margin-bottom: 8px;
+}
+
+/* ---------- Tags/chips dark theme ---------- */
+
+.kkc-tags small,
+.south-house-planets small,
+.kkc-house-box span {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* ---------- Info boxes dark readable ---------- */
+
+.kkc-info-box {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.kkc-info-box span {
+  color: rgba(255, 255, 255, 0.46) !important;
+}
+
+.kkc-info-box strong {
+  color: #ffffff !important;
+}
+
+/* ---------- Navamsa table dark readable ---------- */
+
+.kkc-table-wrap {
+  background: #0b0b0b !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.kkc-table-wrap th {
+  background: #ffffff !important;
+  color: #050505 !important;
+}
+
+.kkc-table-wrap td {
+  color: rgba(255, 255, 255, 0.76) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+.kkc-table-wrap tbody tr:hover {
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+
+/* ---------- South chart dark professional ---------- */
+
+.south-chart {
+  background:
+    radial-gradient(circle at center, rgba(255, 184, 77, 0.14), transparent 34%),
+    #070707 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+}
+
+.south-chart-center {
+  background:
+    radial-gradient(circle, rgba(255, 184, 77, 0.16), transparent 60%),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.south-chart-center span {
+  color: #ffb84d !important;
+}
+
+.south-chart-center strong {
+  color: #ffffff !important;
+}
+
+.south-chart-house {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #0d0d0d !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.south-house-number {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+/* ---------- Planet cards dark ---------- */
+
+.planet-detail-card {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.12), transparent 32%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.planet-detail-head > span:last-child {
+  background: #ffffff !important;
+  color: #050505 !important;
+}
+
+/* ---------- Dasha / Dosha dark ---------- */
+
+.current-dasha-premium,
+.dasha-period-card.active {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.15), transparent 30%),
+    linear-gradient(135deg, #161616, #050505) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.dasha-period-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.dasha-period-card div:last-child strong,
+.dasha-period-card div:last-child span {
+  color: #ffffff !important;
+}
+
+.dasha-period-card div:last-child span {
+  opacity: 0.68;
+}
+
+.dosha-status-card div,
+.dosha-explanation {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.11), transparent 32%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.dosha-status-card span {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.dosha-status-card strong,
+.dosha-explanation h4 {
+  color: #ffffff !important;
+}
+
+/* ---------- Planet badges ---------- */
+
+.planet-badge strong {
+  color: #ffffff !important;
+}
+
+.planet-badge img {
+  filter: saturate(1.2) contrast(1.08) brightness(1.08);
+}
+
+/* =====================================================
+   PROFESSIONAL HOUSES TAB
+   Dark astrology cards, readable content, planet badges
+===================================================== */
+
+.houses-report-section {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 184, 77, 0.08), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #080808 !important;
+}
+
+.houses-overview-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.houses-overview-strip div {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px 20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010;
+}
+
+.houses-overview-strip span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.houses-overview-strip strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+/* Main houses grid */
+.professional-houses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.professional-house-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+}
+
+.professional-house-card::after {
+  content: "ॐ";
+  position: absolute;
+  right: 20px;
+  bottom: -28px;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: var(--kkc-serif);
+  font-size: 7rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.professional-house-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.professional-house-head span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0 13px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.professional-house-head strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.professional-house-area,
+.professional-house-reading,
+.professional-house-planets,
+.professional-house-meaning {
+  position: relative;
+  z-index: 2;
+}
+
+.professional-house-area {
+  margin-bottom: 16px;
+}
+
+.professional-house-area small,
+.professional-house-reading small,
+.professional-house-planets small {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.professional-house-area h4 {
+  margin: 0;
+  color: #ffcf7a;
+  font-family: var(--kkc-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.professional-house-meaning {
+  margin: 0 0 18px;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.professional-house-reading {
+  border-left: 3px solid rgba(255, 207, 122, 0.6);
+  padding-left: 16px;
+  margin-bottom: 20px;
+}
+
+.professional-house-reading p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.92rem;
+  line-height: 1.72;
+}
+
+.professional-house-planet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.professional-house-planet-list .planet-badge {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.professional-house-planet-list .planet-badge img {
+  width: 24px;
+  height: 24px;
+}
+
+.professional-house-planet-list .planet-badge strong {
+  display: block;
+  color: #ffffff !important;
+  font-size: 0.74rem;
+}
+
+.empty-planet-chip {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.065);
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+/* Hover polish */
+.professional-house-card {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.professional-house-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 207, 122, 0.35);
+  box-shadow: 0 30px 78px rgba(0, 0, 0, 0.34);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .houses-overview-strip,
+  .professional-houses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .professional-house-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .professional-house-card {
+    padding: 22px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .professional-house-head {
+    display: grid;
+  }
+
+  .professional-house-head strong {
+    text-align: left;
+  }
+
+  .professional-house-area h4 {
+    font-size: 1.3rem;
+  }
+}
