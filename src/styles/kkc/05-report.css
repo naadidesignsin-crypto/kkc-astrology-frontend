@@ -2416,3 +2416,504 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================================
+   STEP 3 - PROFESSIONAL BIRTH CHART POLISH
+   Dark South Indian chart, house hierarchy, legend, stats
+===================================================== */
+
+.astrology-chart-section {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255, 184, 77, 0.09), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #070707 !important;
+}
+
+/* Main birth chart wrapper */
+.kundali-chart-experience {
+  display: grid;
+  gap: 26px;
+}
+
+/* Top overview */
+.kundali-chart-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.75fr);
+  gap: 24px;
+  align-items: end;
+}
+
+.kundali-chart-overview-copy h4 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.kundali-chart-overview-copy p {
+  max-width: 680px;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.66) !important;
+  line-height: 1.7;
+}
+
+.kundali-chart-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.kundali-chart-stats div {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: var(--kkc-radius-md);
+  padding: 15px 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010;
+}
+
+.kundali-chart-stats span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kundali-chart-stats strong {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+/* Chart + side panel */
+.kundali-chart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* South Indian chart */
+.kundali-chart-pro {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(128px, 1fr));
+  grid-template-rows: repeat(4, minmax(118px, auto));
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--kkc-radius-lg);
+  background:
+    radial-gradient(circle at center, rgba(255, 184, 77, 0.13), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+    #070707;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.42),
+    inset 0 0 80px rgba(255, 255, 255, 0.025);
+}
+
+.kundali-chart-pro::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: calc(var(--kkc-radius-lg) - 8px);
+  pointer-events: none;
+}
+
+.kundali-chart-pro::after {
+  content: "";
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 184, 77, 0.12), transparent 62%);
+  pointer-events: none;
+}
+
+/* Center */
+.kundali-chart-center {
+  position: relative;
+  z-index: 3;
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(circle, rgba(255, 184, 77, 0.16), transparent 60%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.018)
+    ),
+    #0d0d0d;
+}
+
+.kundali-chart-center span {
+  color: #ffb84d;
+  font-family: var(--kkc-serif);
+  font-size: 4.4rem;
+  line-height: 1;
+  text-shadow: 0 0 24px rgba(255, 184, 77, 0.24);
+}
+
+.kundali-chart-center strong {
+  color: #ffffff;
+  font-family: var(--kkc-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.kundali-chart-center small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* House cells */
+.kundali-house-cell {
+  position: relative;
+  z-index: 2;
+  min-height: 118px;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.02)
+    ),
+    #0d0d0d;
+}
+
+.kundali-house-cell.has-planets {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #111111;
+}
+
+.kundali-house-cell.empty-house {
+  opacity: 0.72;
+}
+
+.kundali-house-kendra {
+  border-color: rgba(255, 207, 122, 0.24);
+}
+
+.kundali-house-trikona {
+  border-color: rgba(134, 210, 255, 0.22);
+}
+
+.kundali-house-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.kundali-house-head span {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.6rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.kundali-house-head strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.kundali-house-area {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.kundali-house-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.kundali-house-planets .planet-badge {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.kundali-house-planets .planet-badge img {
+  width: 22px;
+  height: 22px;
+}
+
+.kundali-house-planets .planet-badge strong {
+  display: block;
+  color: #ffffff !important;
+  font-size: 0.7rem;
+}
+
+.empty-house-chip {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+/* Exact South Indian positions */
+.kundali-house-1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.kundali-house-2 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.kundali-house-3 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.kundali-house-4 {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.kundali-house-5 {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.kundali-house-6 {
+  grid-column: 4;
+  grid-row: 3;
+}
+
+.kundali-house-7 {
+  grid-column: 4;
+  grid-row: 4;
+}
+
+.kundali-house-8 {
+  grid-column: 3;
+  grid-row: 4;
+}
+
+.kundali-house-9 {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.kundali-house-10 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+.kundali-house-11 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.kundali-house-12 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* Side panel */
+.kundali-chart-side-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.kundali-chart-side-panel div {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.026)
+    ),
+    #101010;
+}
+
+.kundali-chart-side-panel span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kundali-chart-side-panel strong {
+  display: block;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.kundali-chart-side-panel p {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+/* Legend */
+.kundali-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.kundali-chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.legend-dot.kendra {
+  background: #ffcf7a;
+}
+
+.legend-dot.trikona {
+  background: #86d2ff;
+}
+
+.legend-dot.regular {
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.legend-dot.planet {
+  background: #ff784f;
+}
+
+/* Responsive */
+@media (max-width: 1120px) {
+  .kundali-chart-layout,
+  .kundali-chart-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .kundali-chart-side-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .kundali-chart-pro {
+    grid-template-columns: repeat(4, minmax(74px, 1fr));
+    grid-template-rows: repeat(4, minmax(96px, auto));
+  }
+
+  .kundali-chart-center span {
+    font-size: 3rem;
+  }
+
+  .kundali-chart-center strong {
+    font-size: 1.2rem;
+  }
+
+  .kundali-house-cell {
+    min-height: 96px;
+    padding: 9px;
+  }
+
+  .kundali-house-head {
+    display: grid;
+    gap: 2px;
+  }
+
+  .kundali-house-head strong {
+    font-size: 0.9rem;
+  }
+
+  .kundali-house-area {
+    display: none;
+  }
+
+  .kundali-house-planets .planet-badge {
+    padding: 4px 6px;
+  }
+
+  .kundali-house-planets .planet-badge strong {
+    display: none;
+  }
+
+  .kundali-chart-stats,
+  .kundali-chart-side-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .kundali-chart-pro {
+    grid-template-columns: repeat(4, minmax(64px, 1fr));
+    grid-template-rows: repeat(4, minmax(86px, auto));
+  }
+
+  .kundali-chart-center span {
+    font-size: 2.5rem;
+  }
+
+  .kundali-house-planets .planet-badge img {
+    width: 18px;
+    height: 18px;
+  }
+}
