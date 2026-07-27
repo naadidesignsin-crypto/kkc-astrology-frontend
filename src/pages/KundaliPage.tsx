@@ -35,6 +35,8 @@ import KundaliGenerationLoader from "../components/KundaliGenerationLoader";
 import HouseReadingCard from "../components/HouseReadingCard";
 import ParasharaChapterCard from "../components/ParasharaChapterCard";
 import ReportConsultationCTA from "../components/ReportConsultationCTA";
+import DarkSelect from "../components/DarkSelect";
+import DarkDatePicker from "../components/DarkDatePicker";
 
 type KundaliForm = {
   fullName: string;
@@ -394,32 +396,24 @@ function KundaliPage() {
             />
           </label>
 
-          <label>
-            Gender
-            <select
-              value={form.gender}
-              onChange={(event) => updateField("gender", event.target.value)}
-              required
-            >
-              <option value="">Select gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </label>
+          <DarkSelect
+            label="Gender"
+            value={form.gender}
+            placeholder="Select gender"
+            options={[
+              { label: "Male", value: "Male" },
+              { label: "Female", value: "Female" },
+            ]}
+            onChange={(value) => updateField("gender", value)}
+          />
 
           <div className="kkc-kundali-form-row">
-            <label>
-              Date of Birth
-              <input
-                type="date"
-                value={form.dateOfBirth}
-                onClick={(event) => openNativePicker(event.currentTarget)}
-                onChange={(event) =>
-                  updateField("dateOfBirth", event.target.value)
-                }
-                required
-              />
-            </label>
+            <DarkDatePicker
+              label="Date of Birth"
+              value={form.dateOfBirth}
+              placeholder="Select date"
+              onChange={(value) => updateField("dateOfBirth", value)}
+            />
 
             <label>
               Time of Birth
@@ -435,7 +429,10 @@ function KundaliPage() {
             </label>
           </div>
 
-          <div className="kkc-location-box" ref={locationBoxRef}>
+          <div
+            className={showLocationResults ? "kkc-location-box open" : "kkc-location-box"}
+            ref={locationBoxRef}
+          >
             <label>
               Birth Place
               <input
@@ -895,12 +892,6 @@ function NavamsaTab({
   navamsa: KundaliNavamsaResponse;
 }) {
   return (
-      <ReportConsultationCTA
-        summary={summary}
-        sectionName="Navamsa D9"
-        title="Need Navamsa interpretation?"
-        description="Get the D9 chart explained for marriage, dharma, inner strength and long-term life direction."
-      />
     <article className="kkc-report-section">
       <h3>Navamsa / D9</h3>
 
@@ -936,6 +927,13 @@ function NavamsaTab({
           </tbody>
         </table>
       </div>
+
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Navamsa D9"
+        title="Need Navamsa interpretation?"
+        description="Get the D9 chart explained for marriage, dharma, inner strength and long-term life direction."
+      />
     </article>
   );
 }

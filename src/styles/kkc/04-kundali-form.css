@@ -326,3 +326,304 @@
 .kkc-kundali-form button[type="submit"]:hover:not(:disabled) {
   transform: translateY(-1px);
 }
+
+/* =====================================================
+   PROFESSIONAL DARK FORM DROPDOWNS
+   Fixes:
+   - Native blue/white select dropdown
+   - Native white date picker
+   - Birthplace dropdown overlap
+===================================================== */
+
+/* Shared custom control */
+.dark-control {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+.dark-control.open {
+  z-index: 500;
+}
+
+.dark-control-label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dark-control-trigger {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--kkc-radius-md);
+  padding: 0 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #141414;
+  color: #ffffff;
+  font-family: var(--kkc-sans);
+  font-size: 0.92rem;
+  font-weight: 750;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dark-control-trigger:hover,
+.dark-control.open .dark-control-trigger {
+  border-color: rgba(255, 207, 122, 0.46);
+  box-shadow: 0 0 0 4px rgba(255, 207, 122, 0.06);
+}
+
+.dark-control-trigger strong {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Custom gender dropdown */
+.dark-select-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 700;
+  overflow: hidden;
+  border: 1px solid rgba(255, 207, 122, 0.28);
+  border-radius: var(--kkc-radius-md);
+  padding: 8px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 207, 122, 0.1), transparent 30%),
+    #050505;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.58);
+}
+
+.dark-select-menu button {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 12px;
+  padding: 0 13px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dark-select-menu button:hover,
+.dark-select-menu button.selected {
+  background: rgba(255, 207, 122, 0.14);
+  color: #ffcf7a;
+}
+
+/* Custom dark calendar */
+.dark-calendar-panel {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
+  z-index: 750;
+  width: min(340px, calc(100vw - 40px));
+  border: 1px solid rgba(255, 207, 122, 0.28);
+  border-radius: var(--kkc-radius-lg);
+  padding: 16px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 207, 122, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #050505;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62);
+}
+
+.dark-calendar-head {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 40px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.dark-calendar-head strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dark-calendar-head button,
+.dark-calendar-actions button {
+  min-height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.075);
+  color: #ffffff;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.dark-calendar-head button:hover,
+.dark-calendar-actions button:hover {
+  border-color: rgba(255, 207, 122, 0.42);
+  color: #ffcf7a;
+}
+
+.dark-calendar-weekdays,
+.dark-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.dark-calendar-weekdays {
+  margin-bottom: 8px;
+}
+
+.dark-calendar-weekdays span {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-align: center;
+}
+
+.dark-calendar-grid button {
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.84rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.dark-calendar-grid button:hover {
+  border-color: rgba(255, 207, 122, 0.38);
+  background: rgba(255, 207, 122, 0.1);
+  color: #ffcf7a;
+}
+
+.dark-calendar-grid button.outside-month {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.dark-calendar-grid button.today {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.dark-calendar-grid button.selected {
+  background: #ffcf7a;
+  color: #050505;
+  border-color: #ffcf7a;
+}
+
+.dark-calendar-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.dark-calendar-actions button {
+  padding: 0 16px;
+}
+
+/* Birthplace dropdown professional fix */
+.kkc-location-box {
+  position: relative;
+  z-index: 30;
+}
+
+.kkc-location-box:focus-within {
+  z-index: 650;
+}
+
+.kkc-location-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 680;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 207, 122, 0.28);
+  border-radius: var(--kkc-radius-md);
+  padding: 8px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 207, 122, 0.1), transparent 30%),
+    #050505;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.58);
+}
+
+.kkc-location-results p {
+  margin: 0;
+  padding: 14px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.kkc-location-results button {
+  width: 100%;
+  min-height: auto;
+  display: grid;
+  gap: 4px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding: 13px 14px;
+  background: transparent;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.kkc-location-results button:hover {
+  border-color: rgba(255, 207, 122, 0.32);
+  background: rgba(255, 207, 122, 0.1);
+}
+
+.kkc-location-results button strong {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.kkc-location-results button span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.kkc-location-status {
+  margin: 8px 0 0;
+  color: rgba(255, 207, 122, 0.76);
+  font-size: 0.78rem;
+}
+
+.kkc-selected-location {
+  margin-top: 12px;
+}
+
+/* Keep dropdowns above submit button */
+.kkc-kundali-form {
+  overflow: visible;
+}
+
+.kkc-kundali-form-row {
+  overflow: visible;
+}

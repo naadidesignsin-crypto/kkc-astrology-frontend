@@ -1,0 +1,713 @@
+/* =====================================================
+   STEP 7 - FINAL MOBILE POLISH
+   Purpose:
+   - Prevent horizontal overflow
+   - Make Kundali form clean on mobile
+   - Make report tabs usable
+   - Make charts/cards readable on mobile
+   - Keep dark premium theme consistent
+===================================================== */
+
+/* ---------- Global overflow safety ---------- */
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Tablet and small laptop ---------- */
+
+@media (max-width: 1080px) {
+  .kkc-kundali-hero,
+  .kkc-report-hero-card,
+  .kkc-report-head,
+  .kkc-empty-report,
+  .kkc-report-section,
+  .report-readiness-card,
+  .kundali-loader-card {
+    width: min(100%, calc(100vw - 32px));
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .kkc-report-grid,
+  .planet-card-grid,
+  .professional-houses-grid,
+  .houses-report-summary,
+  .parashara-report-summary,
+  .report-readiness-grid,
+  .pdf-includes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kkc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kkc-table-wrap table {
+    min-width: 720px;
+  }
+}
+
+/* ---------- Main mobile polish ---------- */
+
+@media (max-width: 760px) {
+  /* Page spacing */
+  .kkc-kundali-page,
+  .kkc-kundali-report {
+    overflow-x: hidden;
+  }
+
+  .kkc-kundali-main,
+  .kkc-kundali-report {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Header */
+  .kkc-kundali-header {
+    min-height: auto;
+    padding: 14px 16px;
+  }
+
+  .kkc-kundali-header nav,
+  .kkc-kundali-header .kkc-nav,
+  .kkc-header-actions {
+    gap: 10px;
+  }
+
+  .kkc-kundali-header img {
+    max-width: 92px;
+    height: auto;
+  }
+
+  .kkc-kundali-header a,
+  .kkc-kundali-header button {
+    min-height: 38px;
+    font-size: 0.72rem;
+  }
+
+  /* Hero */
+  .kkc-kundali-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: 100%;
+    padding: 28px 0 36px;
+  }
+
+  .kkc-kundali-copy {
+    text-align: left;
+  }
+
+  .kkc-kundali-copy h1 {
+    max-width: 100%;
+    font-size: clamp(2.45rem, 13vw, 4rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+  }
+
+  .kkc-kundali-copy p {
+    max-width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.68;
+  }
+
+  .kkc-kundali-highlights,
+  .kkc-kundali-points {
+    grid-template-columns: 1fr;
+  }
+
+  /* Form */
+  .kkc-kundali-form {
+    width: 100%;
+    padding: 22px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kkc-kundali-form-grid,
+  .kkc-form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .kkc-kundali-form label {
+    gap: 8px;
+  }
+
+  .kkc-kundali-form input,
+  .kkc-kundali-form select {
+    min-height: 48px;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .kkc-kundali-form button[type="submit"] {
+    width: 100%;
+    min-height: 52px;
+  }
+
+  .kkc-location-results {
+    max-height: 260px;
+    overflow-y: auto;
+  }
+
+  /* Generation loader */
+  .kundali-loader-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    min-height: auto;
+    padding: 24px;
+  }
+
+  .kundali-loader-orbit {
+    width: 210px;
+    margin: 0 auto;
+  }
+
+  .kundali-loader-content h2 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .kundali-loader-step {
+    grid-template-columns: 34px minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .kundali-loader-step > span {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Report hero */
+  .kkc-report-hero-card,
+  .kkc-report-head,
+  .kkc-empty-report,
+  .kkc-report-section,
+  .report-readiness-card {
+    width: 100%;
+    padding: 22px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kkc-report-hero-card h2,
+  .kkc-report-head h2,
+  .kkc-empty-report h2,
+  .kkc-report-section h3,
+  .report-readiness-head h3 {
+    font-size: clamp(2rem, 10vw, 3.1rem);
+    line-height: 1.02;
+  }
+
+  .kkc-report-hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .kkc-report-hero-actions a,
+  .kkc-report-hero-actions button,
+  .kkc-report-head button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .kkc-report-key-stats,
+  .kkc-report-grid,
+  .report-readiness-grid,
+  .planet-card-grid,
+  .houses-report-summary,
+  .parashara-report-summary,
+  .pdf-includes-grid,
+  .dosha-status-card {
+    grid-template-columns: 1fr;
+  }
+
+  /* Report overview */
+  .report-readiness-head {
+    display: grid;
+    gap: 18px;
+  }
+
+  .report-readiness-score {
+    width: 108px;
+    min-width: 108px;
+    height: 108px;
+  }
+
+  .report-readiness-item {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+
+  /* Tabs */
+  .kkc-report-navigation {
+    position: static;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kkc-report-navigation-copy span {
+    font-size: 1.3rem;
+  }
+
+  .kkc-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .kkc-tab {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 10px;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    white-space: normal;
+    line-height: 1.2;
+  }
+
+  .kkc-tab:hover:not(:disabled):not(.active) {
+    transform: none;
+  }
+
+  /* Birth chart */
+  .kundali-chart-overview,
+  .kundali-chart-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .kundali-chart-stats,
+  .kundali-chart-side-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .kundali-chart-pro {
+    grid-template-columns: repeat(4, minmax(64px, 1fr));
+    grid-template-rows: repeat(4, minmax(86px, auto));
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kundali-house-cell {
+    min-height: 86px;
+    padding: 8px;
+  }
+
+  .kundali-house-head {
+    display: grid;
+    gap: 2px;
+  }
+
+  .kundali-house-head span {
+    font-size: 0.52rem;
+  }
+
+  .kundali-house-head strong {
+    font-size: 0.82rem;
+  }
+
+  .kundali-house-area {
+    display: none;
+  }
+
+  .kundali-chart-center span {
+    font-size: 2.5rem;
+  }
+
+  .kundali-chart-center strong {
+    font-size: 1.05rem;
+  }
+
+  .kundali-chart-center small {
+    font-size: 0.55rem;
+  }
+
+  .kundali-house-planets .planet-badge {
+    padding: 4px 5px;
+  }
+
+  .kundali-house-planets .planet-badge img {
+    width: 17px;
+    height: 17px;
+  }
+
+  .kundali-house-planets .planet-badge strong {
+    display: none;
+  }
+
+  .empty-house-chip {
+    padding: 4px 6px;
+    font-size: 0.62rem;
+  }
+
+  /* Planet cards */
+  .planet-detail-card {
+    padding: 20px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .planet-detail-head {
+    display: grid;
+    gap: 12px;
+  }
+
+  .planet-detail-list {
+    grid-template-columns: 1fr;
+  }
+
+  .planet-detail-head > span:last-child {
+    width: fit-content;
+  }
+
+  /* Houses accordion */
+  .house-accordion-card {
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .house-accordion-button {
+    grid-template-columns: 44px minmax(0, 1fr) 34px;
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .house-number-orb {
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .house-accordion-main strong {
+    font-size: 1.22rem;
+  }
+
+  .house-accordion-main em {
+    font-size: 0.78rem;
+  }
+
+  .house-group-badge {
+    grid-column: 2;
+    width: fit-content;
+    margin-top: 6px;
+    padding: 7px 10px;
+  }
+
+  .house-expand-icon {
+    grid-column: 3;
+    grid-row: 1;
+    width: 34px;
+    height: 34px;
+  }
+
+  .house-quick-planets {
+    padding: 0 18px 18px 74px;
+  }
+
+  .house-expanded-content {
+    padding: 18px;
+  }
+
+  .house-planet-detail-grid,
+  .house-planet-detail-card {
+    grid-template-columns: 1fr;
+  }
+
+  /* Parashara chapters */
+  .parashara-chapter {
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .parashara-chapter-head {
+    grid-template-columns: 44px minmax(0, 1fr) 34px;
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .parashara-chapter-number {
+    width: 42px;
+    height: 42px;
+    font-size: 1.05rem;
+  }
+
+  .parashara-chapter-title strong {
+    font-size: 1.25rem;
+  }
+
+  .parashara-chapter-title em {
+    font-size: 0.78rem;
+  }
+
+  .parashara-chapter-toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .parashara-chapter-preview {
+    padding: 0 18px 18px 74px;
+  }
+
+  .parashara-chapter-body {
+    padding: 18px;
+  }
+
+  /* CTA */
+  .report-consultation-cta {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 22px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .report-consultation-cta a {
+    width: 100%;
+  }
+
+  /* Tables */
+  .kkc-table-wrap {
+    margin-left: -2px;
+    margin-right: -2px;
+    overflow-x: auto;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kkc-table-wrap table {
+    min-width: 680px;
+  }
+
+  .kkc-table-wrap th,
+  .kkc-table-wrap td {
+    padding: 12px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ---------- Extra small phones ---------- */
+
+@media (max-width: 420px) {
+  .kkc-kundali-main,
+  .kkc-kundali-report {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .kkc-kundali-copy h1 {
+    font-size: clamp(2.15rem, 14vw, 3.2rem);
+  }
+
+  .kkc-kundali-form,
+  .kkc-report-hero-card,
+  .kkc-report-head,
+  .kkc-empty-report,
+  .kkc-report-section,
+  .report-readiness-card,
+  .kundali-loader-card {
+    padding: 18px;
+  }
+
+  .kkc-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-tab {
+    min-height: 40px;
+    font-size: 0.64rem;
+  }
+
+  .kundali-chart-pro {
+    grid-template-columns: repeat(4, minmax(56px, 1fr));
+    grid-template-rows: repeat(4, minmax(78px, auto));
+  }
+
+  .kundali-house-cell {
+    min-height: 78px;
+    padding: 6px;
+  }
+
+  .kundali-house-head strong {
+    font-size: 0.72rem;
+  }
+
+  .kundali-chart-center span {
+    font-size: 2rem;
+  }
+
+  .kundali-chart-center strong {
+    font-size: 0.92rem;
+  }
+
+  .kundali-house-planets {
+    gap: 4px;
+  }
+
+  .kundali-house-planets .planet-badge {
+    padding: 3px;
+  }
+
+  .kundali-house-planets .planet-badge img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .house-accordion-button,
+  .parashara-chapter-head {
+    grid-template-columns: 38px minmax(0, 1fr) 32px;
+  }
+
+  .house-number-orb,
+  .parashara-chapter-number {
+    width: 36px;
+    height: 36px;
+  }
+
+  .house-quick-planets,
+  .parashara-chapter-preview {
+    padding-left: 66px;
+  }
+
+  .report-consultation-cta::after,
+  .house-accordion-card::after,
+  .parashara-chapter::after {
+    display: none;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* =====================================================
+   FINAL FORM OVERLAY FIX
+   Fixes:
+   - Date picker overlapping birth place and Generate button
+   - Birthplace dropdown overlapping Generate button
+   - Generate button visually blocking dropdown/calendar clicks
+===================================================== */
+
+.kkc-kundali-form {
+  position: relative;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+.kkc-kundali-form-row {
+  position: relative;
+  z-index: 40;
+  overflow: visible !important;
+}
+
+/* Keep submit button behind dropdown/calendar overlays */
+.kkc-kundali-form button[type="submit"] {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+}
+
+/* Date picker: reserve vertical space while calendar is open */
+.dark-date-picker.open {
+  position: relative;
+  z-index: 9000;
+  margin-bottom: 360px;
+}
+
+.dark-calendar-panel {
+  z-index: 9100 !important;
+  pointer-events: auto;
+}
+
+/* Birthplace: reserve space only when results are visible */
+.kkc-location-box {
+  position: relative;
+  z-index: 30;
+  overflow: visible !important;
+}
+
+.kkc-location-box.open {
+  z-index: 8500;
+  margin-bottom: 300px;
+}
+
+.kkc-location-results {
+  top: 76px !important;
+  z-index: 8600 !important;
+  max-height: 270px;
+  pointer-events: auto;
+}
+
+/* Selected place should not fight with search results */
+.kkc-selected-location {
+  position: relative;
+  z-index: 2;
+}
+
+/* Calendar and location dropdown should visually sit above everything */
+.dark-select-menu,
+.dark-calendar-panel,
+.kkc-location-results {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.72) !important;
+}
+
+/* Mobile tuning */
+@media (max-width: 760px) {
+  .dark-date-picker.open {
+    margin-bottom: 340px;
+  }
+
+  .kkc-location-box.open {
+    margin-bottom: 290px;
+  }
+
+  .kkc-location-results {
+    top: 74px !important;
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 420px) {
+  .dark-date-picker.open {
+    margin-bottom: 325px;
+  }
+
+  .kkc-location-box.open {
+    margin-bottom: 270px;
+  }
+
+  .dark-calendar-panel {
+    width: calc(100vw - 48px);
+  }
+}
