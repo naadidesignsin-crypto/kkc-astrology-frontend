@@ -1,0 +1,162 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--kkc-black);
+  color: var(--kkc-white);
+  font-family: var(--kkc-sans);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.kkc-page {
+  min-height: 100vh;
+  background: var(--kkc-black);
+  color: var(--kkc-white);
+  overflow-x: hidden;
+}
+
+.kkc-container {
+  width: min(var(--kkc-container), calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.kkc-eyebrow {
+  margin: 0 0 18px;
+  color: var(--kkc-white-muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.kkc-serif-title {
+  margin: 0;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+}
+
+.kkc-body-text {
+  color: var(--kkc-white-soft);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.kkc-btn-white,
+.kkc-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 999px;
+  padding: 0 24px;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.kkc-btn-white {
+  border: 1px solid var(--kkc-white);
+  background: var(--kkc-white);
+  color: var(--kkc-black);
+}
+
+.kkc-btn-white:hover {
+  background: transparent;
+  color: var(--kkc-white);
+}
+
+.kkc-btn-outline {
+  border: 1px solid var(--kkc-border-dark);
+  background: transparent;
+  color: var(--kkc-white);
+}
+
+.kkc-btn-outline:hover {
+  border-color: var(--kkc-white);
+  background: var(--kkc-white);
+  color: var(--kkc-black);
+}
+
+/* =====================================================
+   TYPOGRAPHY POLISH
+   Display font for spiritual headings.
+   Sans font for readable report data.
+===================================================== */
+
+body {
+  font-family: var(--kkc-sans);
+  font-weight: 500;
+}
+
+.kkc-serif-title,
+.kkc-hero h1,
+.kkc-kundali-copy h1 {
+  font-family: var(--kkc-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+.kkc-section-heading h2,
+.kkc-about h2,
+.kkc-report-section h3,
+.kkc-report-hero-card h2,
+.kkc-report-head h2,
+.kkc-empty-report h2 {
+  font-family: var(--kkc-serif);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.kkc-nav a,
+.kkc-outline-btn,
+.kkc-primary-btn,
+.kkc-white-btn,
+.kkc-footer-btn,
+.kkc-kundali-form button[type="submit"],
+.kkc-tab {
+  font-family: var(--kkc-sans);
+  font-weight: 800;
+  letter-spacing: 0.07em;
+}
+
+.kkc-info-box strong,
+.kkc-kundali-form input,
+.kkc-kundali-form select,
+.kkc-table-wrap td,
+.planet-detail-list .kkc-info-box strong {
+  font-family: var(--kkc-sans);
+  font-weight: 700;
+}
+
+.kkc-info-box span,
+.kkc-kundali-form label,
+.report-section-kicker,
+.kkc-report-label,
+.kkc-eyebrow {
+  font-family: var(--kkc-sans);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}

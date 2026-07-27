@@ -1,22 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
+import { Link } from "react-router-dom";
 
-import AstrologyServices from "../components/AstrologyServices";
-import AstroBackground from "../components/AstroBackground";
-import NavagrahaOrbit from "../components/NavagrahaOrbit";
-import KundaliChartCard from "../components/KundaliChartCard";
-import KundaliGeneratingLoader from "../components/KundaliGeneratingLoader";
-import type { KundaliGenerationStage } from "../components/KundaliGeneratingLoader";
-import FloatingAstrologyWhatsApp from "../components/FloatingAstrologyWhatsApp";
-import ReportConsultationCard from "../components/ReportConsultationCard";
-import HouseInterpretationSection from "../components/HouseInterpretationSection";
-import GeneratedReportTabs from "../components/GeneratedReportTabs";
-import type { ReportTabId } from "../components/GeneratedReportTabs";
-import NavamsaChartCard from "../components/NavamsaChartCard";
-import ParasharaInterpretationSection from "../components/ParasharaInterpretationSection";
-
-import { uiText } from "../data/kundaliUiText";
-
+import kkcLogo from "../assets/Logo.png";
 import {
   downloadKundaliPdf,
   generateKundali,
@@ -29,12 +15,8 @@ import {
   getPlanets,
   getSummary,
 } from "../services/kundaliApi";
-
 import { searchLocations } from "../services/locationApi";
-
-import type { UiLanguage } from "../types/language";
 import type { LocationSearchResponse } from "../types/location";
-
 import type {
   DashaPeriod,
   KundaliDashaResponse,
@@ -46,31 +28,41 @@ import type {
   KundaliSummaryResponse,
 } from "../types/kundali";
 
-import {
-  toTeluguValue,
-  translateKundaliSentence,
-} from "../utils/kundaliTranslations";
+import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
+import PlanetBadge from "../components/PlanetBadge";
+import SouthIndianBirthChart from "../components/SouthIndianBirthChart";
+import KundaliGenerationLoader from "../components/KundaliGenerationLoader";
+import HouseReadingCard from "../components/HouseReadingCard";
+import ParasharaChapterCard from "../components/ParasharaChapterCard";
+import ReportConsultationCTA from "../components/ReportConsultationCTA";
+import DarkSelect from "../components/DarkSelect";
+import DarkDatePicker from "../components/DarkDatePicker";
 
-import kkcLogo from "../assets/Logo.png";
-
-type DisplayValueFn = (value?: string | number | boolean | null) => string;
-type TextMap = typeof uiText["te"];
-
-const fallbackLocation: LocationSearchResponse = {
-  id: "fallback-hyderabad",
-  displayName: "Hyderabad, Telangana, India",
-  birthPlace: "Hyderabad, Telangana, India",
-  latitude: 17.385,
-  longitude: 78.4867,
-  timezone: "Asia/Kolkata",
-  city: "Hyderabad",
-  state: "Telangana",
-  country: "India",
-  countryCode: "in",
-  source: "Fallback",
+type KundaliForm = {
+  fullName: string;
+  gender: string;
+  dateOfBirth: string;
+  timeOfBirth: string;
+  birthPlace: string;
+  latitude: number;
+  longitude: number;
+  timezone: string;
+  language: string;
 };
 
-const emptyForm = {
+type ReportTabId =
+  | "summary"
+  | "birth-chart"
+  | "navamsa"
+  | "parashara"
+  | "houses"
+  | "planets"
+  | "dasha"
+  | "dosha"
+  | "pdf"
+  | "consultation";
+
+const emptyForm: KundaliForm = {
   fullName: "",
   gender: "",
   dateOfBirth: "",
@@ -82,8 +74,17 @@ const emptyForm = {
   language: "en",
 };
 
+const whatsappNumber =
+  import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919700051668";
+
+const whatsappMessage = encodeURIComponent(
+  "Namaste KKC, I want to book an astrology consultation."
+);
+
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
 function KundaliPage() {
-  const [form, setForm] = useState(emptyForm);
+  const [form, setForm] = useState<KundaliForm>(emptyForm);
 
   const [locationQuery, setLocationQuery] = useState("");
   const [selectedLocation, setSelectedLocation] =
@@ -94,11 +95,9 @@ function KundaliPage() {
   const [showLocationResults, setShowLocationResults] = useState(false);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError, setLocationError] = useState("");
-  const locationBoxRef = useRef<HTMLDivElement | null>(null);
 
   const [loading, setLoading] = useState(false);
-  const [generationStage, setGenerationStage] =
-    useState<KundaliGenerationStage>("creating");
+  const [stage, setStage] = useState("");
   const [error, setError] = useState("");
 
   const [summary, setSummary] = useState<KundaliSummaryResponse | null>(null);
@@ -109,13 +108,11 @@ function KundaliPage() {
   const [navamsa, setNavamsa] = useState<KundaliNavamsaResponse | null>(null);
   const [parashara, setParashara] =
     useState<KundaliParasharaReportResponse | null>(null);
+
   const [activeReportTab, setActiveReportTab] =
     useState<ReportTabId>("summary");
 
-  const [language, setLanguage] = useState<UiLanguage>("en");
-
-  const t = uiText[language];
-  const useTeluguValues = language === "te";
+  const locationBoxRef = useRef<HTMLDivElement | null>(null);
 
   const isFormValid =
     form.fullName.trim().length >= 2 &&
@@ -124,23 +121,14 @@ function KundaliPage() {
     form.timeOfBirth.trim().length > 0 &&
     selectedLocation !== null &&
     Number.isFinite(form.latitude) &&
-    Number.isFinite(form.longitude) &&
-    form.timezone.trim().length > 0;
+    Number.isFinite(form.longitude);
 
   useEffect(() => {
     const cleanQuery = locationQuery.trim();
 
-    const selectedName = selectedLocation?.displayName?.trim();
-    const selectedBirthPlace = selectedLocation?.birthPlace?.trim();
-
-    const isAlreadySelected =
-      selectedLocation &&
-      (cleanQuery === selectedName || cleanQuery === selectedBirthPlace);
-
-    if (isAlreadySelected) {
+    if (selectedLocation && cleanQuery === selectedLocation.displayName) {
       setLocationResults([]);
       setShowLocationResults(false);
-      setLocationError("");
       return;
     }
 
@@ -155,13 +143,13 @@ function KundaliPage() {
 
     const timer = window.setTimeout(() => {
       void fetchLocationResults(cleanQuery, controller.signal);
-    }, 700);
+    }, 650);
 
     return () => {
       window.clearTimeout(timer);
       controller.abort();
     };
-  }, [locationQuery, selectedLocation, language]);
+  }, [locationQuery, selectedLocation]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -196,73 +184,117 @@ function KundaliPage() {
 
       setLocationResults([]);
       setShowLocationResults(true);
-      setLocationError(
-        language === "te"
-          ? "స్థల వివరాలు పొందలేకపోయాం. మళ్లీ ప్రయత్నించండి."
-          : "Unable to fetch location results. Try again."
-      );
+      setLocationError("Unable to fetch location results. Try again.");
     } finally {
       setLocationLoading(false);
     }
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function updateField(name: keyof KundaliForm, value: string) {
+    setError("");
+
+    setForm((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  }
+
+  function handleLocationInput(value: string) {
+    setLocationQuery(value);
+    setSelectedLocation(null);
+    setLocationError("");
+    setError("");
+
+    setForm((current) => ({
+      ...current,
+      birthPlace: value,
+      latitude: 0,
+      longitude: 0,
+      timezone: "Asia/Kolkata",
+    }));
+
+    if (value.trim().length < 3) {
+      setLocationResults([]);
+      setShowLocationResults(false);
+    }
+  }
+
+  function selectLocation(location: LocationSearchResponse) {
+    setSelectedLocation(location);
+    setLocationQuery(location.displayName || location.birthPlace);
+    setLocationResults([]);
+    setShowLocationResults(false);
+    setLocationError("");
+    setError("");
+
+    setForm((current) => ({
+      ...current,
+      birthPlace: location.birthPlace,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      timezone: location.timezone || "Asia/Kolkata",
+    }));
+  }
+
+  function openNativePicker(input: HTMLInputElement) {
+    const pickerInput = input as HTMLInputElement & { showPicker?: () => void };
+    pickerInput.showPicker?.();
+  }
+
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     if (!isFormValid) {
       setError(
-        language === "te"
-          ? "దయచేసి పేరు, లింగం, తేదీ, సమయం మరియు జన్మ స్థలాన్ని పూర్తిగా ఇవ్వండి."
-          : "Please enter name, gender, birth date, birth time, and select birth place from the list."
+        "Enter name, gender, birth date, birth time, and select birth place from the list."
       );
       return;
     }
 
-    setLoading(true);
-    setGenerationStage("creating");
-    setError("");
-
-    setSummary(null);
-    setPlanets(null);
-    setDasha(null);
-    setDosha(null);
-    setHouses(null);
-    setNavamsa(null);
-    setParashara(null);
-    setActiveReportTab("summary");
-
-    const finalLocation = selectedLocation || fallbackLocation;
-
-    const requestPayload = {
-      ...form,
-      fullName: form.fullName.trim(),
-      gender: form.gender.trim(),
-      birthPlace: finalLocation.birthPlace,
-      latitude: finalLocation.latitude,
-      longitude: finalLocation.longitude,
-      timezone: finalLocation.timezone || "Asia/Kolkata",
-      language: "en",
-    };
-
     try {
-      const generated = await generateKundali(requestPayload);
+      setLoading(true);
+      setStage("Reading birth details");
+      setError("");
+
+      setSummary(null);
+      setPlanets(null);
+      setDasha(null);
+      setDosha(null);
+      setHouses(null);
+      setNavamsa(null);
+      setParashara(null);
+      setActiveReportTab("summary");
+
+      const payload = {
+        ...form,
+        fullName: form.fullName.trim(),
+        gender: form.gender.trim(),
+        birthPlace: selectedLocation?.birthPlace || form.birthPlace,
+        latitude: selectedLocation?.latitude || form.latitude,
+        longitude: selectedLocation?.longitude || form.longitude,
+        timezone: selectedLocation?.timezone || form.timezone || "Asia/Kolkata",
+        language: "en",
+      };
+
+      setStage("Calculating Lagna and Rashi");
+      const generated = await generateKundali(payload);
 
       if (generated.status !== "SUCCESS") {
-        throw new Error(generated.errorMessage || t.generationFailed);
+        throw new Error(generated.errorMessage || "Kundali generation failed.");
       }
 
       const reportId = generated.id;
 
-      setGenerationStage("planets");
+      setStage("Mapping planetary positions");
       await generateSection(reportId, "PLANETARY_POSITIONS");
 
-      setGenerationStage("dasha");
+      setStage("Preparing Dasha analysis");
       await generateSection(reportId, "DASHA");
 
-      setGenerationStage("dosha");
+      setStage("Preparing Dosha analysis");
       await generateSection(reportId, "DOSHA");
 
-      setGenerationStage("fetching");
+      setStage("Building Kundali report");
 
       const [
         summaryData,
@@ -289,218 +321,120 @@ function KundaliPage() {
       setHouses(houseData);
       setNavamsa(navamsaData);
       setParashara(parasharaData);
+      setActiveReportTab("summary");
     } catch (err) {
-      setError(err instanceof Error ? err.message : t.errorFallback);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to generate Kundali. Try again."
+      );
     } finally {
       setLoading(false);
+      setStage("");
     }
-  }
-
-  function displayValue(value?: string | number | boolean | null) {
-    if (value === null || value === undefined || value === "") {
-      return "-";
-    }
-
-    return useTeluguValues ? toTeluguValue(value) : String(value);
-  }
-
-  function displaySentence(value?: string | null) {
-    if (!value) {
-      return "-";
-    }
-
-    return language === "te" ? translateKundaliSentence(value) : value;
-  }
-
-  function updateField(name: string, value: string) {
-    setError("");
-
-    setForm((current) => ({
-      ...current,
-      [name]: value,
-    }));
-  }
-
-  function selectLocation(location: LocationSearchResponse) {
-    setSelectedLocation(location);
-    setLocationQuery(location.displayName || location.birthPlace);
-    setLocationResults([]);
-    setShowLocationResults(false);
-    setLocationError("");
-    setError("");
-
-    setForm((current) => ({
-      ...current,
-      birthPlace: location.birthPlace,
-      latitude: location.latitude,
-      longitude: location.longitude,
-      timezone: location.timezone || "Asia/Kolkata",
-    }));
-  }
-
-  function handleLocationInput(value: string) {
-    setLocationQuery(value);
-    setSelectedLocation(null);
-    setLocationError("");
-    setError("");
-
-    if (value.trim().length < 3) {
-      setLocationResults([]);
-      setShowLocationResults(false);
-    }
-
-    setForm((current) => ({
-      ...current,
-      birthPlace: value,
-      latitude: 0,
-      longitude: 0,
-      timezone: "Asia/Kolkata",
-    }));
-  }
-
-  function openNativePicker(input: HTMLInputElement) {
-    const pickerInput = input as HTMLInputElement & { showPicker?: () => void };
-    pickerInput.showPicker?.();
   }
 
   return (
-    <main className="kundali-page">
-      <AstroBackground />
-      <FloatingAstrologyWhatsApp language={language} />
-
-      <header className="site-header">
-        <a href="#top" className="brand-block" aria-label="KKC Astrology Home">
-          <span className="brand-logo-wrap">
-            <img src={kkcLogo} alt="KKC Astrology Logo" className="brand-logo" />
-          </span>
+    <main className="kkc-kundali">
+     <BlackWhiteCosmicBackground />
+      <header className="kkc-header kkc-kundali-header">
+        <Link to="/" className="kkc-brand" aria-label="Go to landing page">
+          <img src={kkcLogo} alt="KKC Logo" />
 
           <span>
-            <strong>{t.brandTitle}</strong>
-            <small>{t.brandSubtitle}</small>
+            <strong>KKC</strong>
+            <small>Kundalini Kriya Chaitanyam</small>
           </span>
-        </a>
+        </Link>
 
-        <nav className="top-nav" aria-label="Main navigation">
-          <a href="#navagraha">{language === "te" ? "నవగ్రహం" : "Navagraha"}</a>
-          <a href="#services">{t.navServices}</a>
-          <a href="#kundali-form">{t.navKundali}</a>
-          <a href="#summary">{t.navSummary}</a>
-          <a href="#kundali-chart">{language === "te" ? "చార్ట్" : "Chart"}</a>
-          <a href="#navamsa">{language === "te" ? "నవాంశం" : "Navamsa"}</a>
-          <a href="#parashara">
-            {language === "te" ? "పరాశర" : "Parāśara"}
-          </a>
-          <a href="#houses">{language === "te" ? "భవాలు" : "Houses"}</a>
-          <a href="#planets">{t.navPlanets}</a>
-          <a href="#dasha">{t.navDasha}</a>
-          <a href="#dosha">{t.navDosha}</a>
-          <a href="#consultation">
-            {language === "te" ? "సంప్రదించండి" : "Consult"}
+        <nav className="kkc-nav" aria-label="Kundali navigation">
+          <Link to="/">Home</Link>
+          <a href="#kundali-form">Generate</a>
+          <a href="#kundali-report">Report</a>
+          <a href={whatsappUrl} target="_blank" rel="noreferrer">
+            Consultation
           </a>
         </nav>
 
-        <button
-          type="button"
-          className="language-toggle"
-          onClick={() =>
-            setLanguage((current) => (current === "te" ? "en" : "te"))
-          }
+        <a
+          className="kkc-outline-btn"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
         >
-          {t.languageButton}
-        </button>
+          Book Consultation
+        </a>
       </header>
 
-      <section className="hero-section" id="top">
-        <div>
-          <p className="eyebrow">{t.eyebrow}</p>
-          <h1>{t.heroTitle}</h1>
-          <p>{t.heroDescription}</p>
+      <section className="kkc-kundali-hero">
+        <div className="kkc-kundali-copy">
+          <p className="kkc-eyebrow">Kundali Generation</p>
+
+          <h1>Generate your Vedic birth chart</h1>
+
+          <p>
+            Enter birth details to generate Lagna, Rashi, Nakshatra, planetary
+            positions, Vimshottari Dasha, Mangal Dosha, Navamsa, Parāśara
+            interpretation, house analysis, and PDF report.
+          </p>
         </div>
 
-        <div className="hero-note">
-          <strong>{t.portalTitle}</strong>
-          <span>{t.portalDescription}</span>
-        </div>
-      </section>
-
-      <div className="astro-orb-card" aria-hidden="true">
-        <div className="astro-orb">
-          <span className="orb-center">ॐ</span>
-          <span className="orb-ring orb-ring-one" />
-          <span className="orb-ring orb-ring-two" />
-          <span className="orb-ring orb-ring-three" />
-          <span className="orb-dot orb-dot-one" />
-          <span className="orb-dot orb-dot-two" />
-          <span className="orb-dot orb-dot-three" />
-        </div>
-      </div>
-
-      <NavagrahaOrbit language={language} />
-
-      <AstrologyServices language={language} />
-
-      <section className="content-grid">
-        <form className="kundali-form" id="kundali-form" onSubmit={handleSubmit}>
-          <h2>{t.formTitle}</h2>
+        <form
+          className="kkc-kundali-form"
+          id="kundali-form"
+          onSubmit={handleSubmit}
+        >
+          <h2>Birth Details</h2>
 
           <label>
-            {t.fullName}
+            Full Name
             <input
               value={form.fullName}
               onChange={(event) => updateField("fullName", event.target.value)}
-              placeholder={
-                language === "te" ? "పూర్తి పేరు ఇవ్వండి" : "Enter full name"
-              }
+              placeholder="Enter full name"
               required
             />
           </label>
 
-          <label>
-            {t.gender}
-            <select
-              value={form.gender}
-              onChange={(event) => updateField("gender", event.target.value)}
-              required
-            >
-              <option value="">
-                {language === "te" ? "లింగం ఎంచుకోండి" : "Select gender"}
-              </option>
-              <option value="Male">{t.male}</option>
-              <option value="Female">{t.female}</option>
-            </select>
-          </label>
+          <DarkSelect
+            label="Gender"
+            value={form.gender}
+            placeholder="Select gender"
+            options={[
+              { label: "Male", value: "Male" },
+              { label: "Female", value: "Female" },
+            ]}
+            onChange={(value) => updateField("gender", value)}
+          />
 
-          <label>
-            {t.dateOfBirth}
-            <input
-              type="date"
+          <div className="kkc-kundali-form-row">
+            <DarkDatePicker
+              label="Date of Birth"
               value={form.dateOfBirth}
-              onChange={(event) =>
-                updateField("dateOfBirth", event.target.value)
-              }
-              onClick={(event) => openNativePicker(event.currentTarget)}
-              required
+              placeholder="Select date"
+              onChange={(value) => updateField("dateOfBirth", value)}
             />
-          </label>
 
-          <label>
-            {t.timeOfBirth}
-            <input
-              type="time"
-              step="1"
-              value={form.timeOfBirth}
-              onChange={(event) =>
-                updateField("timeOfBirth", event.target.value)
-              }
-              onClick={(event) => openNativePicker(event.currentTarget)}
-              required
-            />
-          </label>
+            <label>
+              Time of Birth
+              <input
+                type="time"
+                value={form.timeOfBirth}
+                onClick={(event) => openNativePicker(event.currentTarget)}
+                onChange={(event) =>
+                  updateField("timeOfBirth", event.target.value)
+                }
+                required
+              />
+            </label>
+          </div>
 
-          <label className="dynamic-location-label">
-            {language === "te" ? "జన్మ స్థలం" : "Birth Place"}
-
-            <div className="dynamic-location-box" ref={locationBoxRef}>
+          <div
+            className={showLocationResults ? "kkc-location-box open" : "kkc-location-box"}
+            ref={locationBoxRef}
+          >
+            <label>
+              Birth Place
               <input
                 value={locationQuery}
                 onChange={(event) => handleLocationInput(event.target.value)}
@@ -509,444 +443,93 @@ function KundaliPage() {
                     setShowLocationResults(true);
                   }
                 }}
-                placeholder={
-                  language === "te"
-                    ? "నగరం / గ్రామం / స్థలం టైప్ చేయండి"
-                    : "Type city / village / birth place"
-                }
+                placeholder="Type city / village / birth place"
                 autoComplete="off"
                 required
               />
+            </label>
 
-              {locationLoading && (
-                <span className="location-search-status">
-                  {language === "te" ? "శోధిస్తున్నాం..." : "Searching..."}
-                </span>
-              )}
+            {locationLoading && (
+              <p className="kkc-location-status">Searching location...</p>
+            )}
 
-              {showLocationResults && (
-                <div className="dynamic-location-results">
-                  {locationError && <p>{locationError}</p>}
+            {showLocationResults && (
+              <div className="kkc-location-results">
+                {locationError && <p>{locationError}</p>}
 
-                  {!locationError &&
-                    !locationLoading &&
-                    !selectedLocation &&
-                    locationQuery.trim().length >= 3 &&
-                    locationResults.length === 0 && (
-                      <p>
-                        {language === "te"
-                          ? "స్థలం కనిపించలేదు. మరింత స్పష్టంగా టైప్ చేయండి."
-                          : "No location found. Type a more specific place name."}
-                      </p>
-                    )}
+                {!locationError &&
+                  !locationLoading &&
+                  locationResults.length === 0 && (
+                    <p>No location found. Type a more specific place name.</p>
+                  )}
 
-                  {!locationError &&
-                    locationResults.map((location) => (
-                      <button
-                        type="button"
-                        key={location.id}
-                        onClick={() => selectLocation(location)}
-                      >
-                        <strong>{location.birthPlace}</strong>
-                        <span>{location.displayName}</span>
-                      </button>
-                    ))}
-                </div>
-              )}
-            </div>
-          </label>
+                {!locationError &&
+                  locationResults.map((location) => (
+                    <button
+                      type="button"
+                      key={location.id}
+                      onClick={() => selectLocation(location)}
+                    >
+                      <strong>{location.birthPlace}</strong>
+                      <span>{location.displayName}</span>
+                    </button>
+                  ))}
+              </div>
+            )}
 
-          {selectedLocation && (
-            <div className="selected-location-card">
-              <span>
-                {language === "te"
-                  ? "ఎంచుకున్న జన్మ స్థలం"
-                  : "Selected Birth Place"}
-              </span>
+            {selectedLocation && (
+              <div className="kkc-selected-location">
+                <strong>Selected Birth Place</strong>
+                <span>{selectedLocation.birthPlace}</span>
+                <small>Latitude, longitude and timezone auto-filled.</small>
+              </div>
+            )}
+          </div>
 
-              <strong>{selectedLocation.birthPlace}</strong>
-
-              <small>
-                {language === "te"
-                  ? "అక్షాంశం, రేఖాంశం మరియు టైమ్‌జోన్ ఆటోమేటిక్‌గా తీసుకున్నాం."
-                  : "Latitude, longitude, and timezone are auto-filled."}
-              </small>
-            </div>
-          )}
-
-          <details className="advanced-location-details">
-            <summary>
-              {language === "te" ? "అడ్వాన్స్డ్ వివరాలు" : "Advanced Details"}
-            </summary>
-
-            <div className="advanced-location-grid">
-              <Info
-                label={t.birthPlace}
-                value={selectedLocation?.birthPlace || form.birthPlace || "-"}
-              />
-              <Info
-                label={t.latitude}
-                value={selectedLocation ? form.latitude : "-"}
-              />
-              <Info
-                label={t.longitude}
-                value={selectedLocation ? form.longitude : "-"}
-              />
-              <Info
-                label={t.timezone}
-                value={selectedLocation ? form.timezone : "-"}
-              />
-            </div>
-          </details>
+          {error && <p className="kkc-form-error">{error}</p>}
 
           <button type="submit" disabled={loading || !isFormValid}>
-            {loading ? t.generating : t.generate}
+            {loading ? stage || "Generating..." : "Generate Kundali"}
           </button>
 
           {!isFormValid && (
-            <p className="form-helper-message">
-              {language === "te"
-                ? "జాతకం రూపొందించడానికి పేరు, లింగం, తేదీ, సమయం మరియు జన్మ స్థలాన్ని పూర్తి చేయండి."
-                : "Complete name, gender, birth date, birth time, and select birth place to generate Kundali."}
-            </p>
+            <small className="kkc-form-helper">
+              Complete all required fields and select birth place from the list.
+            </small>
           )}
-
-          {error && <p className="error-message">{error}</p>}
         </form>
+      </section>
 
-        <section className="result-panel">
-          {!summary && !loading && (
-            <div className="empty-card">
-              <h2>{t.emptyTitle}</h2>
-              <p>{t.emptyDescription}</p>
-            </div>
-          )}
+      <section className="kkc-kundali-report" id="kundali-report">
+        {!summary && !loading && (
+          <div className="kkc-empty-report">
+            <p className="kkc-eyebrow">Kundali Report</p>
+            <h2>Your generated report will appear here</h2>
+            <p>
+              After generation, report tabs will show summary, birth chart,
+              Navamsa, Parāśara, houses, planets, Dasha, Dosha, PDF and
+              consultation.
+            </p>
+          </div>
+        )}
 
-          {loading && (
-            <KundaliGeneratingLoader
-              language={language}
-              stage={generationStage}
-            />
-          )}
+        {loading && <KundaliGenerationLoader stage={stage} />}
 
-          {summary && (
-            <GeneratedReportTabs
-              language={language}
-              activeTab={activeReportTab}
-              onTabChange={setActiveReportTab}
-              tabs={[
-                {
-                  id: "summary",
-                  labelEn: "Summary",
-                  labelTe: "సారాంశం",
-                  content: (
-                    <SummaryCard
-                      summary={summary}
-                      t={t}
-                      displayValue={displayValue}
-                    />
-                  ),
-                },
-                {
-                  id: "birth-chart",
-                  labelEn: "Birth Chart",
-                  labelTe: "జన్మ చార్ట్",
-                  disabled: !planets,
-                  content: planets ? (
-                    <KundaliChartCard planets={planets} language={language} />
-                  ) : null,
-                },
-                {
-                  id: "navamsa",
-                  labelEn: "Navamsa",
-                  labelTe: "నవాంశం",
-                  disabled: !navamsa,
-                  content: navamsa ? (
-                    <NavamsaChartCard navamsa={navamsa} language={language} />
-                  ) : null,
-                },
-                {
-                  id: "parashara",
-                  labelEn: "Parāśara",
-                  labelTe: "పరాశర",
-                  disabled: !parashara,
-                  content: parashara ? (
-                    <ParasharaInterpretationSection
-                      parashara={parashara}
-                      language={language}
-                    />
-                  ) : null,
-                },
-                {
-                  id: "houses",
-                  labelEn: "Houses",
-                  labelTe: "భవాలు",
-                  disabled: !houses,
-                  content: houses ? (
-                    <HouseInterpretationSection
-                      houses={houses}
-                      language={language}
-                    />
-                  ) : null,
-                },
-                {
-                  id: "planets",
-                  labelEn: "Planets",
-                  labelTe: "గ్రహాలు",
-                  disabled: !planets,
-                  content: planets ? (
-                    <PlanetTable
-                      planets={planets}
-                      t={t}
-                      displayValue={displayValue}
-                    />
-                  ) : null,
-                },
-                {
-                  id: "dasha",
-                  labelEn: "Dasha",
-                  labelTe: "దశ",
-                  disabled: !dasha,
-                  content: dasha ? (
-                    <DashaCard
-                      dasha={dasha}
-                      t={t}
-                      displayValue={displayValue}
-                    />
-                  ) : null,
-                },
-                {
-                  id: "dosha",
-                  labelEn: "Dosha",
-                  labelTe: "దోషం",
-                  disabled: !dosha,
-                  content: dosha ? (
-                    <DoshaCard
-                      dosha={dosha}
-                      t={t}
-                      displayValue={displayValue}
-                      displaySentence={displaySentence}
-                    />
-                  ) : null,
-                },
-                {
-                  id: "pdf",
-                  labelEn: "PDF",
-                  labelTe: "PDF",
-                  content: (
-                    <PdfDownloadCard summary={summary} language={language} />
-                  ),
-                },
-                {
-                  id: "consultation",
-                  labelEn: "Consult",
-                  labelTe: "సంప్రదించండి",
-                  content: (
-                    <ReportConsultationCard
-                      language={language}
-                      summary={summary}
-                      planets={planets}
-                      dasha={dasha}
-                      dosha={dosha}
-                    />
-                  ),
-                },
-              ]}
-            />
-          )}
-        </section>
+        {summary && (
+          <ReportTabs
+            summary={summary}
+            planets={planets}
+            dasha={dasha}
+            dosha={dosha}
+            houses={houses}
+            navamsa={navamsa}
+            parashara={parashara}
+            activeTab={activeReportTab}
+            setActiveTab={setActiveReportTab}
+          />
+        )}
       </section>
     </main>
-  );
-}
-
-function SummaryCard({
-  summary,
-  t,
-  displayValue,
-}: {
-  summary: KundaliSummaryResponse;
-  t: TextMap;
-  displayValue: DisplayValueFn;
-}) {
-  return (
-    <div className="result-card" id="summary">
-      <h2>{t.summaryTitle}</h2>
-
-      <div className="detail-grid">
-        <Info label={t.name} value={summary.fullName} />
-        <Info label={t.birthPlace} value={summary.birthPlace} />
-        <Info label={t.lagna} value={displayValue(summary.ascendant)} />
-        <Info label={t.rashi} value={displayValue(summary.rashi)} />
-        <Info label={t.nakshatra} value={displayValue(summary.nakshatra)} />
-        <Info label={t.charan} value={summary.charan} />
-        <Info label={t.signLord} value={displayValue(summary.signLord)} />
-        <Info
-          label={t.nakshatraLord}
-          value={displayValue(summary.nakshatraLord)}
-        />
-        <Info label={t.tithi} value={displayValue(summary.tithi)} />
-        <Info label={t.yoga} value={displayValue(summary.yoga)} />
-        <Info label={t.karan} value={displayValue(summary.karan)} />
-        <Info label={t.masa} value={displayValue(summary.masa)} />
-        <Info label={t.sunrise} value={summary.sunrise} />
-        <Info label={t.sunset} value={summary.sunset} />
-      </div>
-    </div>
-  );
-}
-
-function PlanetTable({
-  planets,
-  t,
-  displayValue,
-}: {
-  planets: KundaliPlanetsResponse;
-  t: TextMap;
-  displayValue: DisplayValueFn;
-}) {
-  return (
-    <div className="result-card" id="planets">
-      <h2>{t.planetsTitle}</h2>
-
-      <div className="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>{t.planet}</th>
-              <th>{t.degree}</th>
-              <th>{t.rashi}</th>
-              <th>{t.nakshatra}</th>
-              <th>{t.house}</th>
-              <th>{t.retrograde}</th>
-              <th>{t.combust}</th>
-              <th>{t.state}</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {planets.planets.map((planet) => (
-              <tr key={`${planet.name}-${planet.longitude}`}>
-                <td>{displayValue(planet.name)}</td>
-                <td>{planet.degree}</td>
-                <td>{displayValue(planet.rashi)}</td>
-                <td>{displayValue(planet.nakshatra)}</td>
-                <td>{planet.house}</td>
-                <td>{planet.retrograde ? t.yes : t.no}</td>
-                <td>{planet.combust ? t.yes : t.no}</td>
-                <td>{displayValue(planet.planetState)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-function DashaCard({
-  dasha,
-  t,
-  displayValue,
-}: {
-  dasha: KundaliDashaResponse;
-  t: TextMap;
-  displayValue: DisplayValueFn;
-}) {
-  return (
-    <div className="result-card" id="dasha">
-      <h2>{t.dashaTitle}</h2>
-
-      {dasha.currentDasha && (
-        <div className="highlight-box">
-          <strong>
-            {t.currentDasha}: {displayValue(dasha.currentDasha.planet)}
-          </strong>
-          <span>
-            {dasha.currentDasha.startDate} {t.from}{" "}
-            {dasha.currentDasha.endDate} {t.to}
-          </span>
-        </div>
-      )}
-
-      <div className="dasha-list">
-        {dasha.dashaPeriods.map((period: DashaPeriod) => (
-          <div
-            className={period.active ? "dasha-item active" : "dasha-item"}
-            key={`${period.planet}-${period.startDate}`}
-          >
-            <strong>{displayValue(period.planet)}</strong>
-            <span>
-              {period.startDate} → {period.endDate}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function DoshaCard({
-  dosha,
-  t,
-  displayValue,
-  displaySentence,
-}: {
-  dosha: KundaliDoshaResponse;
-  t: TextMap;
-  displayValue: DisplayValueFn;
-  displaySentence: (value?: string | null) => string;
-}) {
-  return (
-    <div className="result-card" id="dosha">
-      <h2>{t.doshaTitle}</h2>
-
-      <div className="detail-grid">
-        <Info
-          label={t.mangalDosha}
-          value={dosha.mangalDoshaPresent ? t.present : t.notPresent}
-        />
-        <Info label={t.type} value={displayValue(dosha.type)} />
-        <Info label={t.intensity} value={displayValue(dosha.intensity)} />
-      </div>
-
-      <p className="description-text">{displaySentence(dosha.reason)}</p>
-      <p className="description-text muted">{displaySentence(dosha.info)}</p>
-    </div>
-  );
-}
-
-function PdfDownloadCard({
-  summary,
-  language,
-}: {
-  summary: KundaliSummaryResponse;
-  language: UiLanguage;
-}) {
-  const isTelugu = language === "te";
-
-  return (
-    <div className="result-card pdf-download-card">
-      <div>
-        <p className="eyebrow">{isTelugu ? "PDF రిపోర్ట్" : "PDF Report"}</p>
-
-        <h2>
-          {isTelugu
-            ? "జాతక PDF రిపోర్ట్ డౌన్‌లోడ్ చేయండి"
-            : "Download Kundali PDF Report"}
-        </h2>
-
-        <p>
-          {isTelugu
-            ? "జాతక సారాంశం, గ్రహ స్థానాలు, భవాలు, దశ మరియు దోష వివరాలతో PDF పొందండి."
-            : "Get a PDF with Kundali summary, planetary positions, houses, Dasha, and Dosha details."}
-        </p>
-      </div>
-
-      <button type="button" onClick={() => downloadKundaliPdf(summary.id)}>
-        {isTelugu ? "PDF డౌన్‌లోడ్" : "Download PDF"}
-      </button>
-    </div>
   );
 }
 
@@ -958,10 +541,776 @@ function Info({
   value?: string | number | null;
 }) {
   return (
-    <div className="info-item">
+    <div className="kkc-info-box">
       <span>{label}</span>
       <strong>{value || "-"}</strong>
     </div>
+  );
+}
+
+function ReportReadinessOverview({
+  summary,
+  planets,
+  dasha,
+  dosha,
+  houses,
+  navamsa,
+  parashara,
+}: {
+  summary: KundaliSummaryResponse;
+  planets: KundaliPlanetsResponse | null;
+  dasha: KundaliDashaResponse | null;
+  dosha: KundaliDoshaResponse | null;
+  houses: KundaliHouseResponse | null;
+  navamsa: KundaliNavamsaResponse | null;
+  parashara: KundaliParasharaReportResponse | null;
+}) {
+  const items = [
+    {
+      label: "Birth Summary",
+      status: Boolean(summary),
+      detail: "Lagna, Rashi, Nakshatra and Panchanga details",
+    },
+    {
+      label: "Planetary Positions",
+      status: Boolean(planets),
+      detail: "Graha placement, Rashi, Nakshatra and house mapping",
+    },
+    {
+      label: "Birth Chart",
+      status: Boolean(planets),
+      detail: "12-house visual Kundali chart",
+    },
+    {
+      label: "Navamsa",
+      status: Boolean(navamsa),
+      detail: "D9 chart and Navamsa planet mapping",
+    },
+    {
+      label: "Parāśara Reading",
+      status: Boolean(parashara),
+      detail: "Life-area interpretation and guidance",
+    },
+    {
+      label: "House Analysis",
+      status: Boolean(houses),
+      detail: "House-wise meaning and interpretation",
+    },
+    {
+      label: "Dasha",
+      status: Boolean(dasha),
+      detail: "Current and upcoming Vimshottari periods",
+    },
+    {
+      label: "Dosha",
+      status: Boolean(dosha),
+      detail: "Mangal Dosha status, intensity and explanation",
+    },
+  ];
+
+  const readyCount = items.filter((item) => item.status).length;
+
+  return (
+    <section className="report-readiness-card">
+      <div className="report-readiness-head">
+        <div>
+          <p className="report-section-kicker">Report Overview</p>
+          <h3>Kundali sections prepared</h3>
+          <p>
+            {readyCount} of {items.length} report sections are ready for review.
+          </p>
+        </div>
+
+        <div className="report-readiness-score">
+          <strong>
+            {readyCount}/{items.length}
+          </strong>
+          <span>Ready</span>
+        </div>
+      </div>
+
+      <div className="report-readiness-grid">
+        {items.map((item) => (
+          <div
+            className={
+              item.status
+                ? "report-readiness-item ready"
+                : "report-readiness-item pending"
+            }
+            key={item.label}
+          >
+            <span>{item.status ? "✓" : "…"}</span>
+
+            <div>
+              <strong>{item.label}</strong>
+              <p>{item.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ReportTabs({
+  summary,
+  planets,
+  dasha,
+  dosha,
+  houses,
+  navamsa,
+  parashara,
+  activeTab,
+  setActiveTab,
+}: {
+  summary: KundaliSummaryResponse;
+  planets: KundaliPlanetsResponse | null;
+  dasha: KundaliDashaResponse | null;
+  dosha: KundaliDoshaResponse | null;
+  houses: KundaliHouseResponse | null;
+  navamsa: KundaliNavamsaResponse | null;
+  parashara: KundaliParasharaReportResponse | null;
+  activeTab: ReportTabId;
+  setActiveTab: (tab: ReportTabId) => void;
+}) {
+  const tabs: { id: ReportTabId; label: string; disabled?: boolean }[] = [
+    { id: "summary", label: "Summary" },
+    { id: "birth-chart", label: "Birth Chart", disabled: !planets },
+    { id: "navamsa", label: "Navamsa", disabled: !navamsa },
+    { id: "parashara", label: "Parāśara", disabled: !parashara },
+    { id: "houses", label: "Houses", disabled: !houses },
+    { id: "planets", label: "Planets", disabled: !planets },
+    { id: "dasha", label: "Dasha", disabled: !dasha },
+    { id: "dosha", label: "Dosha", disabled: !dosha },
+    { id: "pdf", label: "PDF" },
+    { id: "consultation", label: "Consultation" },
+  ];
+
+  const consultationMessage = encodeURIComponent(
+    `Namaste KKC, I want consultation for Kundali report ID ${summary.id}. Name: ${summary.fullName}`
+  );
+
+  const consultationUrl = `https://wa.me/${whatsappNumber}?text=${consultationMessage}`;
+
+  return (
+    <div className="kkc-report-experience">
+      <section className="kkc-report-hero-card">
+        <div className="kkc-report-hero-content">
+          <p className="kkc-report-label">Generated Kundali Report</p>
+
+          <h2>{summary.fullName}</h2>
+
+          <p className="kkc-report-subtitle">
+            {summary.birthPlace} • {summary.dateOfBirth} •{" "}
+            {summary.timeOfBirth}
+          </p>
+
+          <dl className="kkc-report-key-stats">
+            <div>
+              <dt>Ascendant</dt>
+              <dd>{summary.ascendant || "-"}</dd>
+            </div>
+
+            <div>
+              <dt>Rashi</dt>
+              <dd>{summary.rashi || "-"}</dd>
+            </div>
+
+            <div>
+              <dt>Nakshatra</dt>
+              <dd>{summary.nakshatra || "-"}</dd>
+            </div>
+
+            <div>
+              <dt>Current Dasha</dt>
+              <dd>{parashara?.currentDasha || dasha?.currentDasha?.planet || "-"}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="kkc-report-hero-actions">
+          <button type="button" onClick={() => downloadKundaliPdf(summary.id)}>
+            Download PDF
+          </button>
+
+          <a href={consultationUrl} target="_blank" rel="noreferrer">
+            Consult on WhatsApp
+          </a>
+        </div>
+      </section>
+
+      <ReportReadinessOverview
+        summary={summary}
+        planets={planets}
+        dasha={dasha}
+        dosha={dosha}
+        houses={houses}
+        navamsa={navamsa}
+        parashara={parashara}
+      />
+
+      <section className="kkc-report-navigation">
+        <div className="kkc-report-navigation-copy">
+          <span>Explore Report</span>
+          <p>
+            Move through each section without scrolling through a long report.
+          </p>
+        </div>
+
+        <div className="kkc-tabs" role="tablist" aria-label="Kundali report tabs">
+          {tabs.map((tab) => (
+            <button
+              type="button"
+              key={tab.id}
+              className={activeTab === tab.id ? "kkc-tab active" : "kkc-tab"}
+              disabled={tab.disabled}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <div className="kkc-tab-panel">
+        {activeTab === "summary" && <SummaryTab summary={summary} />}
+
+        {activeTab === "birth-chart" && planets && (
+          <BirthChartTab summary={summary} planets={planets} />
+        )}
+
+        {activeTab === "navamsa" && navamsa && (
+          <NavamsaTab summary={summary} navamsa={navamsa} />
+        )}
+
+        {activeTab === "parashara" && parashara && (
+          <ParasharaTab summary={summary} parashara={parashara} />
+        )}
+
+        {activeTab === "houses" && houses && (
+          <HousesTab summary={summary} houses={houses} />
+        )}
+
+        {activeTab === "planets" && planets && (
+          <PlanetsTab summary={summary} planets={planets} />
+        )}
+
+        {activeTab === "dasha" && dasha && (
+          <DashaTab summary={summary} dasha={dasha} />
+        )}
+
+        {activeTab === "dosha" && dosha && (
+          <DoshaTab summary={summary} dosha={dosha} />
+        )}
+
+        {activeTab === "pdf" && <PdfTab summary={summary} />}
+
+        {activeTab === "consultation" && (
+          <ConsultationTab summary={summary} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function SummaryTab({ summary }: { summary: KundaliSummaryResponse }) {
+  return (
+    <>
+      <div className="kkc-report-grid">
+        <Info label="Ascendant" value={summary.ascendant} />
+        <Info label="Rashi" value={summary.rashi} />
+        <Info label="Sign Lord" value={summary.signLord} />
+        <Info label="Nakshatra" value={summary.nakshatra} />
+        <Info label="Nakshatra Lord" value={summary.nakshatraLord} />
+        <Info label="Charan" value={summary.charan} />
+        <Info label="Tithi" value={summary.tithi} />
+        <Info label="Yoga" value={summary.yoga} />
+        <Info label="Karan" value={summary.karan} />
+        <Info label="Masa" value={summary.masa} />
+        <Info label="Sunrise" value={summary.sunrise} />
+        <Info label="Sunset" value={summary.sunset} />
+      </div>
+
+      <article className="kkc-report-section">
+        <h3>Birth Details</h3>
+
+        <div className="kkc-report-grid">
+          <Info label="Name" value={summary.fullName} />
+          <Info label="Gender" value={summary.gender} />
+          <Info label="Date of Birth" value={summary.dateOfBirth} />
+          <Info label="Time of Birth" value={summary.timeOfBirth} />
+          <Info label="Birth Place" value={summary.birthPlace} />
+          <Info label="Provider" value={summary.provider} />
+        </div>
+      </article>
+
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Kundali Summary"
+        title="Need the birth summary explained?"
+        description="Get Lagna, Rashi, Nakshatra, Tithi and other birth details explained in simple language."
+      />
+    </>
+  );
+}
+
+function BirthChartTab({
+  summary,
+  planets,
+}: {
+  summary: KundaliSummaryResponse;
+  planets: KundaliPlanetsResponse;
+}) {
+  return (
+    <article className="kkc-report-section astrology-chart-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Birth Chart</p>
+        <h3>Rashi Chart / 12 Houses</h3>
+        <p>
+          This chart shows house-wise planetary placement generated from the
+          birth details. Each planet is shown with its visual icon for easier
+          reading.
+        </p>
+      </div>
+
+      <SouthIndianBirthChart planets={planets} />
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Birth Chart"
+        title="Need help reading this birth chart?"
+        description="Get the 12-house chart, planet placements, career houses, marriage houses and core life areas explained clearly."
+      />
+    </article>
+  );
+}
+
+function NavamsaTab({
+  summary,
+  navamsa,
+}: {
+  summary: KundaliSummaryResponse;
+  navamsa: KundaliNavamsaResponse;
+}) {
+  return (
+    <article className="kkc-report-section">
+      <h3>Navamsa / D9</h3>
+
+      <div className="kkc-report-grid">
+        <Info label="Navamsa Ascendant" value={navamsa.navamsaAscendant} />
+        <Info label="Status" value={navamsa.status} />
+      </div>
+
+      <div className="kkc-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Planet</th>
+              <th>Birth Rashi</th>
+              <th>Birth House</th>
+              <th>Navamsa Number</th>
+              <th>Navamsa Rashi</th>
+              <th>Navamsa House</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {navamsa.planets.map((planet) => (
+              <tr key={`${planet.planetName}-${planet.navamsaNumber}`}>
+                <td>{planet.planetName}</td>
+                <td>{planet.birthRashi}</td>
+                <td>{planet.birthHouse || "-"}</td>
+                <td>{planet.navamsaNumber}</td>
+                <td>{planet.navamsaRashi}</td>
+                <td>{planet.navamsaHouse || "-"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Navamsa D9"
+        title="Need Navamsa interpretation?"
+        description="Get the D9 chart explained for marriage, dharma, inner strength and long-term life direction."
+      />
+    </article>
+  );
+}
+
+function ParasharaTab({
+  summary,
+  parashara,
+}: {
+  summary: KundaliSummaryResponse;
+  parashara: KundaliParasharaReportResponse;
+}) {
+  const sectionCount = parashara.sections?.length || 0;
+
+  return (
+    <article className="kkc-report-section parashara-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Parāśara Interpretation</p>
+        <h3>Life-Area Report Chapters</h3>
+        <p>
+          This section converts the Kundali into structured Parāśara-style
+          chapters for career, marriage, finance, health, education,
+          spirituality and remedies.
+        </p>
+      </div>
+
+      <div className="parashara-report-summary">
+        <div>
+          <span>Lagna</span>
+          <strong>{parashara.lagna || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Rashi</span>
+          <strong>{parashara.rashi || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Nakshatra</span>
+          <strong>{parashara.nakshatra || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Current Dasha</span>
+          <strong>{parashara.currentDasha || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Navamsa Ascendant</span>
+          <strong>{parashara.navamsaAscendant || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Chapters</span>
+          <strong>{sectionCount}</strong>
+        </div>
+      </div>
+
+      <div className="parashara-section-note">
+        <span>How to read this section</span>
+        <p>
+          Read the chapters in order. Start with Career and Marriage for
+          practical direction, then continue with Finance, Health, Education,
+          Dharma and Remedies.
+        </p>
+      </div>
+
+      <div className="parashara-chapter-list">
+        {parashara.sections.map((section, index) => (
+          <ParasharaChapterCard
+            key={section.sectionKey}
+            section={section}
+            chapterNumber={index + 1}
+            defaultOpen={index === 0}
+          />
+        ))}
+      </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Parashara Interpretation"
+        title="Need a full Parāśara reading?"
+        description="Get career, marriage, finance, health, education, spirituality and remedies interpreted together."
+      />
+    </article>
+  );
+}
+
+function HousesTab({
+  summary,
+  houses,
+}: {
+  summary: KundaliSummaryResponse;
+  houses: KundaliHouseResponse;
+}) {
+  const occupiedHouses = houses.houses.filter(
+    (house) => house.planets && house.planets.length > 0
+  );
+
+  const totalPlanetsInHouses = houses.houses.reduce(
+    (count, house) => count + (house.planets?.length || 0),
+    0
+  );
+
+  return (
+    <article className="kkc-report-section houses-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">House-wise Interpretation</p>
+        <h3>12 Houses of the Kundali</h3>
+        <p>
+          Each house represents a specific life area. Expand a house to read its
+          meaning, interpretation and planet placements.
+        </p>
+      </div>
+
+      <div className="houses-report-summary">
+        <div>
+          <span>Total Houses</span>
+          <strong>12</strong>
+        </div>
+
+        <div>
+          <span>Occupied Houses</span>
+          <strong>{occupiedHouses.length}</strong>
+        </div>
+
+        <div>
+          <span>Planet Placements</span>
+          <strong>{totalPlanetsInHouses}</strong>
+        </div>
+
+        <div>
+          <span>Reading Style</span>
+          <strong>Parāśara</strong>
+        </div>
+      </div>
+
+      <div className="houses-section-note">
+        <span>How to read this section</span>
+        <p>
+          Start with House 1, 4, 7 and 10 for core life direction. Then read
+          House 5 and 9 for dharma, intelligence and fortune.
+        </p>
+      </div>
+
+      <div className="house-accordion-grid">
+        {houses.houses.map((house) => (
+          <HouseReadingCard
+            key={house.houseNumber}
+            house={house}
+            defaultOpen={house.houseNumber === 1}
+          />
+        ))}
+      </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="House-wise Interpretation"
+        title="Need house-wise guidance?"
+        description="Get each important house explained for personality, career, marriage, finance, health and spiritual direction."
+      />
+    </article>
+  );
+}
+
+function PlanetsTab({
+  summary,
+  planets,
+}: {
+  summary: KundaliSummaryResponse;
+  planets: KundaliPlanetsResponse;
+}) {
+  return (
+    <article className="kkc-report-section planets-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Planetary Positions</p>
+        <h3>Planet Details</h3>
+        <p>
+          Planetary position, Rashi, Nakshatra, house placement and motion
+          details.
+        </p>
+      </div>
+
+      <div className="planet-card-grid">
+        {planets.planets.map((planet) => (
+          <div className="planet-detail-card" key={`${planet.name}-${planet.house}`}>
+            <div className="planet-detail-head">
+              <PlanetBadge name={planet.name} />
+              <span>House {planet.house || "-"}</span>
+            </div>
+
+            <div className="planet-detail-list">
+              <Info label="Rashi" value={planet.rashi} />
+              <Info label="Rashi Lord" value={planet.rashiLord} />
+              <Info label="Nakshatra" value={planet.nakshatra} />
+              <Info label="Nakshatra Lord" value={planet.nakshatraLord} />
+              <Info label="Degree" value={planet.degree} />
+              <Info label="Charan" value={planet.charan} />
+              <Info label="Retrograde" value={planet.retrograde ? "Yes" : "No"} />
+              <Info label="Combust" value={planet.combust ? "Yes" : "No"} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Planetary Positions"
+        title="Need planet placement interpretation?"
+        description="Get Rashi, Nakshatra, house placement, retrograde and combust details explained in practical terms."
+      />
+    </article>
+  );
+}
+
+function DashaTab({
+  summary,
+  dasha,
+}: {
+  summary: KundaliSummaryResponse;
+  dasha: KundaliDashaResponse;
+}) {
+  return (
+    <article className="kkc-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Vimshottari Dasha</p>
+        <h3>Dasha Timeline</h3>
+        <p>
+          Current and upcoming planetary periods based on Vimshottari Dasha.
+        </p>
+      </div>
+
+      {dasha.currentDasha && (
+        <div className="current-dasha-premium">
+          <PlanetBadge name={dasha.currentDasha.planet} />
+          <div>
+            <span>Current Dasha</span>
+            <strong>{dasha.currentDasha.planet}</strong>
+            <p>
+              {dasha.currentDasha.startDate} → {dasha.currentDasha.endDate}
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="dasha-timeline">
+        {dasha.dashaPeriods.map((period: DashaPeriod) => (
+          <div
+            key={`${period.planet}-${period.startDate}`}
+            className={period.active ? "dasha-period-card active" : "dasha-period-card"}
+          >
+            <PlanetBadge name={period.planet} compact />
+
+            <div>
+              <strong>{period.planet}</strong>
+              <span>
+                {period.startDate} → {period.endDate}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Vimshottari Dasha"
+        title="Need Dasha timing guidance?"
+        description="Get current and upcoming Dasha periods interpreted for decisions, timing and life direction."
+      />
+    </article>
+  );
+}
+
+function DoshaTab({
+  summary,
+  dosha,
+}: {
+  summary: KundaliSummaryResponse;
+  dosha: KundaliDoshaResponse;
+}) {
+  return (
+    <article className="kkc-report-section">
+      <div className="report-section-intro">
+        <p className="report-section-kicker">Dosha Analysis</p>
+        <h3>Mangal Dosha</h3>
+        <p>
+          Mangal Dosha status, intensity, type and explanation based on the
+          generated Kundali.
+        </p>
+      </div>
+
+      <div className="dosha-status-card">
+        <div>
+          <span>Status</span>
+          <strong>
+            {dosha.mangalDoshaPresent ? "Mangal Dosha Present" : "Mangal Dosha Not Present"}
+          </strong>
+        </div>
+
+        <div>
+          <span>Type</span>
+          <strong>{dosha.type || "-"}</strong>
+        </div>
+
+        <div>
+          <span>Intensity</span>
+          <strong>{dosha.intensity || "-"}</strong>
+        </div>
+      </div>
+
+      <div className="dosha-explanation">
+        <h4>Reason</h4>
+        <p>{dosha.reason || "Reason not available."}</p>
+
+        <h4>Additional Information</h4>
+        <p>{dosha.info || "Additional information not available."}</p>
+      </div>
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Mangal Dosha Analysis"
+        title="Need Dosha explanation?"
+        description="Get Mangal Dosha status, intensity, impact and suitable guidance explained clearly."
+      />
+    </article>
+  );
+}
+
+function PdfTab({ summary }: { summary: KundaliSummaryResponse }) {
+  return (
+    <article className="kkc-report-section kkc-pdf-tab">
+      <p className="kkc-eyebrow">PDF Report</p>
+      <h3>Download complete Kundali report</h3>
+      <p>
+        Download Kundali summary, planetary positions, birth chart, Navamsa,
+        Parāśara chapters, house analysis, Dasha and Dosha details.
+      </p>
+
+      <div className="pdf-includes-grid">
+        <span>✓ Birth Summary</span>
+        <span>✓ Birth Chart</span>
+        <span>✓ Planetary Positions</span>
+        <span>✓ Navamsa / D9</span>
+        <span>✓ Parāśara Reading</span>
+        <span>✓ House Analysis</span>
+        <span>✓ Vimshottari Dasha</span>
+        <span>✓ Mangal Dosha</span>
+      </div>
+
+      <button type="button" onClick={() => downloadKundaliPdf(summary.id)}>
+        Download Complete Report
+      </button>
+
+      <ReportConsultationCTA
+        summary={summary}
+        sectionName="Complete PDF Report"
+        title="Need this PDF explained personally?"
+        description="Share the downloaded Kundali report with KKC and get a guided explanation section by section."
+      />
+    </article>
+  );
+}
+
+function ConsultationTab({ summary }: { summary: KundaliSummaryResponse }) {
+  const message = encodeURIComponent(
+    `Namaste KKC, I want consultation for Kundali report ID ${summary.id}. Name: ${summary.fullName}`
+  );
+
+  const consultationUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+  return (
+    <article className="kkc-report-section kkc-consultation-tab">
+      <p className="kkc-eyebrow">Consultation</p>
+      <h3>Need personal interpretation?</h3>
+      <p>
+        Share this Kundali report with KKC for detailed astrology consultation,
+        remedies, Dasha guidance, marriage matching, or life direction.
+      </p>
+
+      <a className="kkc-primary-btn" href={consultationUrl} target="_blank" rel="noreferrer">
+        Consult on WhatsApp
+      </a>
+    </article>
   );
 }
 

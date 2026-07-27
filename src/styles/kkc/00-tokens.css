@@ -1,0 +1,55 @@
+:root {
+  --kkc-black: #020202;
+  --kkc-black-soft: #080808;
+  --kkc-black-panel: #101010;
+
+  --kkc-white: #ffffff;
+  --kkc-white-soft: rgba(255, 255, 255, 0.78);
+  --kkc-white-muted: rgba(255, 255, 255, 0.58);
+  --kkc-white-faint: rgba(255, 255, 255, 0.18);
+
+  --kkc-light-bg: #f5f4f0;
+  --kkc-light-card: #ffffff;
+  --kkc-dark-text: #101010;
+  --kkc-dark-muted: rgba(0, 0, 0, 0.62);
+  --kkc-dark-line: rgba(0, 0, 0, 0.1);
+
+  --kkc-border-dark: rgba(255, 255, 255, 0.16);
+  --kkc-border-light: rgba(0, 0, 0, 0.1);
+
+  --kkc-display: "Cinzel", Georgia, "Times New Roman", serif;
+  --kkc-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --kkc-sans: "Manrope", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --kkc-container: 1180px;
+}
+
+/* =====================================================
+   Shape + shadow tokens
+===================================================== */
+
+:root {
+  --kkc-radius-xs: 10px;
+  --kkc-radius-sm: 14px;
+  --kkc-radius-md: 20px;
+  --kkc-radius-lg: 28px;
+  --kkc-radius-xl: 36px;
+
+  --kkc-shadow-dark-card: 0 28px 90px rgba(0, 0, 0, 0.38);
+  --kkc-shadow-light-card: 0 22px 60px rgba(0, 0, 0, 0.08);
+
+  --kkc-glass-dark:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.04)
+    );
+
+  --kkc-glass-light:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f4f2ec
+    );
+}

@@ -1,0 +1,856 @@
+/* =====================================================
+   03-layout.css
+   Landing page layout + shared header/footer
+   Black-white client reference style
+===================================================== */
+
+/* Shared Header */
+.kkc-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 50;
+  width: min(var(--kkc-container), calc(100% - 32px));
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+  padding: 26px 0;
+}
+
+.kkc-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--kkc-white);
+}
+
+.kkc-brand img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(1.2);
+}
+
+.kkc-brand strong {
+  display: block;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.kkc-brand small {
+  display: block;
+  margin-top: 4px;
+  color: var(--kkc-white-soft);
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kkc-nav {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.kkc-nav a {
+  position: relative;
+  color: var(--kkc-white-soft);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.kkc-nav a:hover {
+  color: var(--kkc-white);
+}
+
+.kkc-nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 0;
+  height: 1px;
+  background: var(--kkc-white);
+  transform: translateX(-50%);
+  transition: width 180ms ease;
+}
+
+.kkc-nav a:hover::after {
+  width: 100%;
+}
+
+/* Landing Hero */
+.kkc-landing {
+  position: relative;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.kkc-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+  align-items: center;
+  min-height: 760px;
+  padding: 124px max(32px, calc((100vw - var(--kkc-container)) / 2)) 84px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.54)),
+    radial-gradient(circle at 76% 45%, rgba(255, 255, 255, 0.14), transparent 32%),
+    #020202;
+  overflow: hidden;
+}
+
+.kkc-hero-content,
+.kkc-hero-visual {
+  position: relative;
+  z-index: 2;
+}
+
+.kkc-hero h1 {
+  max-width: 640px;
+  margin: 0;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: clamp(3.1rem, 6.2vw, 5.8rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.kkc-hero p:not(.kkc-eyebrow) {
+  max-width: 480px;
+  margin: 26px 0 0;
+  color: var(--kkc-white-soft);
+  font-size: 0.98rem;
+  line-height: 1.78;
+}
+
+.kkc-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.kkc-primary-btn,
+.kkc-white-btn,
+.kkc-footer-btn,
+.kkc-outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 999px;
+  padding: 0 24px;
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.kkc-primary-btn,
+.kkc-white-btn,
+.kkc-footer-btn {
+  border: 1px solid var(--kkc-white);
+  background: var(--kkc-white);
+  color: var(--kkc-black);
+}
+
+.kkc-primary-btn:hover,
+.kkc-white-btn:hover,
+.kkc-footer-btn:hover {
+  background: transparent;
+  color: var(--kkc-white);
+}
+
+.kkc-outline-btn {
+  border: 1px solid var(--kkc-border-dark);
+  background: transparent;
+  color: var(--kkc-white);
+}
+
+.kkc-outline-btn:hover {
+  border-color: var(--kkc-white);
+  background: var(--kkc-white);
+  color: var(--kkc-black);
+}
+
+.kkc-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--kkc-white);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kkc-play-btn span {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--kkc-border-dark);
+  border-radius: 50%;
+}
+
+/* Hero Zodiac */
+.kkc-hero-visual {
+  display: grid;
+  place-items: center;
+  min-height: 520px;
+}
+
+.kkc-zodiac {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(520px, 78vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 42%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.055), transparent 65%);
+  filter: grayscale(1);
+}
+
+.kkc-zodiac::before,
+.kkc-zodiac::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+}
+
+.kkc-zodiac::before {
+  inset: 7%;
+}
+
+.kkc-zodiac::after {
+  inset: 24%;
+}
+
+.kkc-zodiac-center {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.86);
+  font-family: var(--kkc-serif);
+  font-size: 5.4rem;
+}
+
+.zodiac-icon {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 1.6rem;
+}
+
+.z1 { top: 8%; left: 45%; }
+.z2 { top: 15%; right: 26%; }
+.z3 { top: 29%; right: 12%; }
+.z4 { top: 46%; right: 7%; }
+.z5 { bottom: 28%; right: 12%; }
+.z6 { bottom: 14%; right: 27%; }
+.z7 { bottom: 8%; left: 45%; }
+.z8 { bottom: 14%; left: 27%; }
+.z9 { bottom: 28%; left: 12%; }
+.z10 { top: 46%; left: 7%; }
+.z11 { top: 29%; left: 12%; }
+.z12 { top: 15%; left: 26%; }
+
+/* Landing Sections */
+.kkc-services,
+/* Testimonials - black client style */
+.kkc-testimonials {
+  background: var(--kkc-black);
+  color: var(--kkc-white);
+  padding: 76px max(28px, calc((100vw - var(--kkc-container)) / 2));
+  border-top: 1px solid var(--kkc-border-dark);
+  border-bottom: 1px solid var(--kkc-border-dark);
+}
+
+.kkc-testimonials .kkc-section-heading p {
+  color: var(--kkc-white-muted);
+}
+
+.kkc-testimonials .kkc-section-heading h2 {
+  color: var(--kkc-white);
+}
+
+.kkc-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.kkc-testimonial-card {
+  min-height: 220px;
+  border: 1px solid var(--kkc-border-dark);
+  padding: 32px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+  color: var(--kkc-white);
+  text-align: center;
+}
+
+.kkc-testimonial-card span {
+  color: rgba(255, 255, 255, 0.18);
+  font-family: var(--kkc-serif);
+  font-size: 4rem;
+  line-height: 0.5;
+}
+
+.kkc-testimonial-card p {
+  color: var(--kkc-white-soft);
+  line-height: 1.7;
+}
+
+.kkc-testimonial-card strong {
+  display: block;
+  margin-top: 22px;
+  color: var(--kkc-white);
+}
+
+.kkc-section-heading {
+  max-width: 740px;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+.kkc-section-heading p {
+  margin: 0 0 14px;
+  color: rgba(0, 0, 0, 0.48);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.kkc-section-heading.dark p {
+  color: var(--kkc-white-muted);
+}
+
+.kkc-section-heading h2 {
+  margin: 0;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.1rem, 4vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.kkc-section-heading.dark h2 {
+  color: var(--kkc-white);
+}
+
+.kkc-service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.kkc-service-card {
+  min-height: 282px;
+  border: 1px solid var(--kkc-dark-line);
+  padding: 34px 26px;
+  background: var(--kkc-light-card);
+  text-align: center;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.045);
+}
+
+.kkc-service-icon {
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 24px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 50%;
+  color: #222222;
+  font-size: 2.1rem;
+}
+
+.kkc-service-card h3 {
+  margin: 0;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.26rem;
+  font-weight: 500;
+}
+
+.kkc-service-card p {
+  margin: 16px 0 18px;
+  color: var(--kkc-dark-muted);
+  font-size: 0.92rem;
+  line-height: 1.72;
+}
+
+.kkc-service-card a {
+  color: var(--kkc-dark-text);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* =====================================================
+   Visible Hero Planet Orbit
+   Used in LandingPage hero section
+===================================================== */
+
+.kkc-planet-orbit {
+  --orbit-size: min(520px, 78vw);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--orbit-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.kkc-planet-orbit::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 42%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.055), transparent 66%);
+}
+
+.kkc-planet-ring {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+.kkc-planet-ring-one {
+  inset: 4%;
+}
+
+.kkc-planet-ring-two {
+  inset: 22%;
+}
+
+.kkc-planet-ring-three {
+  inset: 40%;
+}
+
+.kkc-planet-center {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 148px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 0 54px rgba(255, 255, 255, 0.08),
+    inset 0 0 34px rgba(255, 255, 255, 0.04);
+}
+
+.kkc-planet-center span {
+  font-family: var(--kkc-serif);
+  font-size: 5.2rem;
+  line-height: 1;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f7d56f 32%,
+    #ff9f43 58%,
+    #ffffff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(247, 213, 111, 0.22));
+}
+
+.kkc-planet-track {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: 50%;
+  animation: kkcPlanetTrackRotate 52s linear infinite;
+}
+
+.kkc-planet-item {
+  --angle: calc((360deg / var(--planet-count)) * var(--planet-index));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: -29px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.68));
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.08),
+    inset 0 0 16px rgba(255, 255, 255, 0.08);
+  transform:
+    rotate(var(--angle))
+    translateX(calc(var(--orbit-size) * 0.42))
+    rotate(calc(-1 * var(--angle)));
+}
+
+.kkc-planet-item img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: saturate(1.18) contrast(1.08) brightness(1.06);
+  opacity: 0.96;
+  animation: kkcPlanetIconCounterRotate 52s linear infinite;
+}
+
+@keyframes kkcPlanetTrackRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes kkcPlanetIconCounterRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .kkc-planet-orbit {
+    --orbit-size: min(390px, 90vw);
+  }
+
+  .kkc-planet-center {
+    width: 112px;
+    height: 112px;
+  }
+
+  .kkc-planet-center span {
+    font-size: 4rem;
+  }
+
+  .kkc-planet-item {
+    width: 44px;
+    height: 44px;
+    margin: -22px;
+  }
+
+  .kkc-planet-item img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .kkc-planet-track,
+  .kkc-planet-item img {
+    animation: none;
+  }
+}
+/* About */
+.kkc-about {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  align-items: center;
+  gap: 60px;
+  background: var(--kkc-black);
+  color: var(--kkc-white);
+  padding: 88px max(32px, calc((100vw - var(--kkc-container)) / 2));
+  border-top: 1px solid var(--kkc-border-dark);
+  border-bottom: 1px solid var(--kkc-border-dark);
+}
+
+.kkc-about h2 {
+  margin: 0;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.kkc-about p:not(.kkc-eyebrow) {
+  max-width: 520px;
+  color: var(--kkc-white-soft);
+  line-height: 1.78;
+}
+
+.kkc-about-image {
+  min-height: 430px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.76)),
+    radial-gradient(circle at 58% 34%, rgba(255, 255, 255, 0.18), transparent 28%),
+    linear-gradient(135deg, #353535, #090909);
+  filter: grayscale(1);
+  display: grid;
+  place-items: center;
+}
+
+.kkc-about-fallback {
+  text-align: center;
+}
+
+.kkc-about-fallback span {
+  display: block;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--kkc-serif);
+  font-size: 5rem;
+}
+
+.kkc-about-fallback strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+/* Why */
+.kkc-why {
+  background: var(--kkc-black-soft);
+  color: var(--kkc-white);
+  padding: 76px max(28px, calc((100vw - var(--kkc-container)) / 2));
+  border-bottom: 1px solid var(--kkc-border-dark);
+}
+
+.kkc-why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  text-align: center;
+}
+
+.kkc-why-card {
+  position: relative;
+  padding: 18px 24px;
+}
+
+.kkc-why-card:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  right: -14px;
+  width: 1px;
+  height: 60%;
+  background: var(--kkc-border-dark);
+}
+
+.kkc-why-card span {
+  color: var(--kkc-white);
+  font-size: 2.5rem;
+}
+
+.kkc-why-card h3 {
+  margin: 20px 0 10px;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.kkc-why-card p {
+  color: var(--kkc-white-soft);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+/* Testimonials */
+.kkc-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.kkc-testimonial-card {
+  min-height: 220px;
+  padding: 32px;
+  background: var(--kkc-light-card);
+  text-align: center;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.05);
+}
+
+.kkc-testimonial-card span {
+  color: rgba(0, 0, 0, 0.18);
+  font-family: var(--kkc-serif);
+  font-size: 4rem;
+  line-height: 0.5;
+}
+
+.kkc-testimonial-card p {
+  color: var(--kkc-dark-muted);
+  line-height: 1.7;
+}
+
+.kkc-testimonial-card strong {
+  display: block;
+  margin-top: 22px;
+  color: var(--kkc-dark-text);
+}
+
+/* Footer */
+.kkc-footer {
+  display: grid;
+  grid-template-columns: 1.25fr 0.8fr 0.9fr 1fr;
+  gap: 44px;
+  background: #111111;
+  color: var(--kkc-white);
+  padding: 62px max(28px, calc((100vw - var(--kkc-container)) / 2)) 48px;
+}
+
+.kkc-footer img {
+  width: 82px;
+  filter: grayscale(1) brightness(1.25);
+}
+
+.kkc-footer h4 {
+  margin: 0 0 18px;
+  color: var(--kkc-white);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kkc-footer p,
+.kkc-footer a {
+  display: block;
+  color: var(--kkc-white-soft);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  margin: 7px 0;
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+  .kkc-header {
+    position: relative;
+    left: auto;
+    transform: none;
+    grid-template-columns: 1fr auto;
+    margin: 0 auto;
+  }
+
+  .kkc-nav {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .kkc-hero,
+  .kkc-about {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-service-grid,
+  .kkc-why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kkc-why-card::after {
+    display: none;
+  }
+
+  .kkc-footer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .kkc-outline-btn {
+    display: none;
+  }
+
+  .kkc-hero {
+    min-height: auto;
+    padding: 54px 22px 70px;
+  }
+
+  .kkc-hero h1 {
+    font-size: clamp(2.7rem, 15vw, 4.2rem);
+  }
+
+  .kkc-service-grid,
+  .kkc-why-grid,
+  .kkc-testimonial-grid,
+  .kkc-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-about {
+    padding: 64px 22px;
+  }
+
+  .kkc-about-image {
+    min-height: 300px;
+  }
+}
+
+/* =====================================================
+   LANDING REALISTIC SOFT EDGES
+===================================================== */
+
+.kkc-service-card,
+.kkc-testimonial-card,
+.kkc-about-image {
+  border-radius: var(--kkc-radius-md);
+}
+
+.kkc-service-card,
+.kkc-testimonial-card {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.kkc-service-card:hover,
+.kkc-testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.09);
+}
+
+.kkc-about-image {
+  overflow: hidden;
+}

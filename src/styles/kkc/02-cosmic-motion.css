@@ -1,0 +1,206 @@
+.bw-cosmic-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(255, 255, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 14% 30%, rgba(255, 255, 255, 0.045), transparent 24%),
+    linear-gradient(180deg, #020202 0%, #090909 52%, #020202 100%);
+}
+
+.bw-cosmic-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.82), transparent 52%, rgba(0, 0, 0, 0.66)),
+    radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.42) 72%);
+}
+
+.bw-stars {
+  position: absolute;
+  inset: -20%;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.4px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.32) 0 1px, transparent 1.8px);
+  background-size: 130px 130px, 230px 230px;
+  opacity: 0.34;
+  animation: bwStarDrift 52s linear infinite;
+}
+
+.bw-stars-two {
+  opacity: 0.22;
+  background-size: 190px 190px, 300px 300px;
+  animation-duration: 78s;
+  animation-direction: reverse;
+}
+
+.bw-orbit-system {
+  position: absolute;
+  right: clamp(-160px, 4vw, 80px);
+  top: 12vh;
+  width: min(620px, 72vw);
+  aspect-ratio: 1;
+  opacity: 0.48;
+  animation: bwFloat 8s ease-in-out infinite;
+}
+
+.bw-orbit {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+.bw-orbit-one {
+  inset: 4%;
+}
+
+.bw-orbit-two {
+  inset: 23%;
+}
+
+.bw-orbit-three {
+  inset: 41%;
+}
+
+.bw-om {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 126px;
+  height: 126px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--kkc-serif);
+  font-size: 4.5rem;
+  transform: translate(-50%, -50%);
+}
+
+.bw-planet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.62);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.25rem;
+}
+
+.bw-planet img {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+  filter: grayscale(1) brightness(1.65) contrast(1.15);
+  opacity: 0.86;
+}
+
+.bw-planet-1 { animation: bwOrbit1 28s linear infinite; }
+.bw-planet-2 { animation: bwOrbit2 32s linear infinite; }
+.bw-planet-3 { animation: bwOrbit3 36s linear infinite; }
+.bw-planet-4 { animation: bwOrbit4 40s linear infinite; }
+.bw-planet-5 { animation: bwOrbit5 44s linear infinite; }
+.bw-planet-6 { animation: bwOrbit6 48s linear infinite; }
+.bw-planet-7 { animation: bwOrbit7 54s linear infinite; }
+.bw-planet-8 { animation: bwOrbit8 60s linear infinite; }
+
+@keyframes bwStarDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-120px, 90px, 0);
+  }
+}
+
+@keyframes bwFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(16px);
+  }
+}
+
+@keyframes bwOrbit1 {
+  from { transform: rotate(0deg) translateX(290px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(290px) rotate(-360deg); }
+}
+
+@keyframes bwOrbit2 {
+  from { transform: rotate(45deg) translateX(265px) rotate(-45deg); }
+  to { transform: rotate(405deg) translateX(265px) rotate(-405deg); }
+}
+
+@keyframes bwOrbit3 {
+  from { transform: rotate(90deg) translateX(240px) rotate(-90deg); }
+  to { transform: rotate(450deg) translateX(240px) rotate(-450deg); }
+}
+
+@keyframes bwOrbit4 {
+  from { transform: rotate(135deg) translateX(215px) rotate(-135deg); }
+  to { transform: rotate(495deg) translateX(215px) rotate(-495deg); }
+}
+
+@keyframes bwOrbit5 {
+  from { transform: rotate(180deg) translateX(190px) rotate(-180deg); }
+  to { transform: rotate(540deg) translateX(190px) rotate(-540deg); }
+}
+
+@keyframes bwOrbit6 {
+  from { transform: rotate(225deg) translateX(165px) rotate(-225deg); }
+  to { transform: rotate(585deg) translateX(165px) rotate(-585deg); }
+}
+
+@keyframes bwOrbit7 {
+  from { transform: rotate(270deg) translateX(140px) rotate(-270deg); }
+  to { transform: rotate(630deg) translateX(140px) rotate(-630deg); }
+}
+
+@keyframes bwOrbit8 {
+  from { transform: rotate(315deg) translateX(118px) rotate(-315deg); }
+  to { transform: rotate(675deg) translateX(118px) rotate(-675deg); }
+}
+
+@media (max-width: 900px) {
+  .bw-orbit-system {
+    right: -260px;
+    width: 560px;
+    opacity: 0.26;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bw-stars,
+  .bw-orbit-system,
+  .bw-planet {
+    animation: none;
+  }
+}
+
+.bw-cosmic-bg,
+.bw-cosmic-bg * {
+  user-select: none;
+}
+
+.bw-cosmic-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  overflow: hidden;
+}

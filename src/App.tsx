@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
 import KundaliPage from "./pages/KundaliPage";
-import "./styles/clientTheme.css";
+import "./styles/kkc/index.css";
 
 function App() {
   return (

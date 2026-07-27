@@ -1,0 +1,3907 @@
+/* =====================================================
+   05-report.css
+   Generated report + tabs
+===================================================== */
+
+.kkc-kundali-report {
+  padding: 86px max(24px, calc((100vw - var(--kkc-container)) / 2)) 110px;
+  background:
+    radial-gradient(circle at top right, rgba(0, 0, 0, 0.05), transparent 30%),
+    linear-gradient(180deg, #f7f6f2 0%, #ebe8df 100%);
+  color: var(--kkc-dark-text);
+}
+
+.kkc-report-experience,
+.kkc-report-wrap {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 26px;
+}
+
+.kkc-report-hero-card,
+.kkc-report-head {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 34px;
+  align-items: center;
+  min-height: 300px;
+  padding: 52px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.64)),
+    radial-gradient(circle at 78% 48%, rgba(255, 255, 255, 0.18), transparent 34%),
+    #080808;
+  color: var(--kkc-white);
+  box-shadow: 0 34px 80px rgba(0, 0, 0, 0.18);
+}
+
+.kkc-report-hero-card::before,
+.kkc-report-head::before {
+  content: "ॐ";
+  position: absolute;
+  right: 120px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.07);
+  font-family: var(--kkc-serif);
+  font-size: 13rem;
+  line-height: 1;
+}
+
+.kkc-report-label,
+.kkc-report-head .kkc-eyebrow {
+  margin: 0 0 14px;
+  color: var(--kkc-white-muted);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.kkc-report-hero-card h2,
+.kkc-report-head h2 {
+  margin: 0;
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.8rem, 5vw, 5.4rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+.kkc-report-subtitle,
+.kkc-report-head p {
+  margin: 18px 0 0;
+  color: var(--kkc-white-soft);
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.kkc-report-key-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 760px;
+  margin: 34px 0 0;
+}
+
+.kkc-report-key-stats div {
+  border: 1px solid var(--kkc-border-dark);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.kkc-report-key-stats dt {
+  margin-bottom: 8px;
+  color: var(--kkc-white-muted);
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.kkc-report-key-stats dd {
+  margin: 0;
+  color: var(--kkc-white);
+  font-size: 0.98rem;
+  font-weight: 850;
+}
+
+.kkc-report-hero-actions {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 12px;
+  min-width: 190px;
+}
+
+.kkc-report-hero-actions button,
+.kkc-report-hero-actions a,
+.kkc-report-head button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 999px;
+  padding: 0 22px;
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.kkc-report-hero-actions button,
+.kkc-report-head button {
+  border: 1px solid var(--kkc-white);
+  background: var(--kkc-white);
+  color: var(--kkc-black);
+}
+
+.kkc-report-hero-actions a {
+  border: 1px solid var(--kkc-border-dark);
+  background: transparent;
+  color: var(--kkc-white);
+}
+
+/* Tabs */
+.kkc-report-navigation {
+  position: sticky;
+  top: 82px;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--kkc-dark-line);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+}
+
+.kkc-report-navigation-copy span {
+  display: block;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.kkc-report-navigation-copy p {
+  margin: 5px 0 0;
+  color: var(--kkc-dark-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.kkc-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.kkc-tab {
+  min-height: 42px;
+  border: 1px solid var(--kkc-dark-line);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: var(--kkc-light-card);
+  color: var(--kkc-dark-muted);
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.kkc-tab:hover:not(:disabled),
+.kkc-tab.active {
+  border-color: var(--kkc-dark-text);
+  background: var(--kkc-dark-text);
+  color: var(--kkc-white);
+}
+
+.kkc-tab:disabled {
+  cursor: not-allowed;
+  opacity: 0.34;
+}
+
+.kkc-tab-panel {
+  display: grid;
+  gap: 24px;
+}
+
+.kkc-report-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.kkc-info-box {
+  position: relative;
+  min-height: 100px;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 20px 22px 20px 26px;
+  border: 1px solid var(--kkc-dark-line);
+  background: var(--kkc-light-card);
+}
+
+.kkc-info-box::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 3px;
+  background: var(--kkc-dark-text);
+}
+
+.kkc-info-box span {
+  color: rgba(0, 0, 0, 0.48);
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.kkc-info-box strong {
+  color: var(--kkc-dark-text);
+  font-size: 0.98rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.kkc-report-section {
+  padding: 42px;
+  border: 1px solid var(--kkc-dark-line);
+  background: var(--kkc-light-card);
+}
+
+.kkc-report-section h3 {
+  margin: 0 0 28px;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: clamp(2rem, 3.5vw, 3.3rem);
+  font-weight: 500;
+  line-height: 1.03;
+}
+
+.kkc-report-section p {
+  color: var(--kkc-dark-muted);
+  line-height: 1.75;
+}
+
+.kkc-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--kkc-dark-line);
+  background: var(--kkc-light-card);
+}
+
+.kkc-table-wrap table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+}
+
+.kkc-table-wrap th {
+  background: var(--kkc-dark-text);
+  color: var(--kkc-white);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kkc-table-wrap th,
+.kkc-table-wrap td {
+  padding: 15px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--kkc-dark-line);
+}
+
+.kkc-table-wrap td {
+  color: var(--kkc-dark-muted);
+  font-size: 0.9rem;
+}
+
+.kkc-birth-chart-grid,
+.kkc-parashara-grid,
+.kkc-house-interpretation-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.kkc-birth-chart-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.kkc-parashara-grid,
+.kkc-house-interpretation-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kkc-house-box,
+.kkc-parashara-card,
+.kkc-house-reading-card,
+.kkc-current-dasha {
+  border: 1px solid var(--kkc-dark-line);
+  background: var(--kkc-light-card);
+}
+
+.kkc-house-box {
+  min-height: 118px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 18px;
+}
+
+.kkc-house-box span,
+.kkc-tags small {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #f1eee8;
+  color: var(--kkc-dark-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.kkc-parashara-card,
+.kkc-house-reading-card,
+.kkc-current-dasha {
+  padding: 24px;
+}
+
+.kkc-parashara-card h4,
+.kkc-house-reading-card h4 {
+  margin: 0 0 12px;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.kkc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.kkc-dasha-list {
+  display: grid;
+  gap: 10px;
+}
+
+.kkc-dasha-list span {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid var(--kkc-dark-line);
+  padding: 12px 16px;
+  background: var(--kkc-light-card);
+  color: var(--kkc-dark-muted);
+}
+
+.kkc-dasha-list span.active {
+  background: var(--kkc-dark-text);
+  color: var(--kkc-white);
+}
+
+.kkc-pdf-tab,
+.kkc-consultation-tab {
+  text-align: center;
+}
+
+.kkc-pdf-tab button,
+.kkc-consultation-tab .kkc-primary-btn {
+  min-height: 48px;
+  border: 1px solid var(--kkc-dark-text);
+  border-radius: 999px;
+  padding: 0 26px;
+  background: var(--kkc-dark-text);
+  color: var(--kkc-white);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.kkc-empty-report {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 54px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.58)),
+    #090909;
+  color: var(--kkc-white);
+}
+
+.kkc-empty-report h2 {
+  color: var(--kkc-white);
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  font-weight: 500;
+}
+
+.kkc-empty-report p {
+  max-width: 680px;
+  color: var(--kkc-white-soft);
+  line-height: 1.75;
+}
+
+@media (max-width: 1080px) {
+  .kkc-report-hero-card,
+  .kkc-report-head,
+  .kkc-report-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-report-key-stats,
+  .kkc-report-grid,
+  .kkc-birth-chart-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kkc-parashara-grid,
+  .kkc-house-interpretation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .kkc-kundali-report {
+    padding: 44px 14px 70px;
+  }
+
+  .kkc-report-hero-card,
+  .kkc-report-head,
+  .kkc-report-section,
+  .kkc-empty-report {
+    padding: 26px;
+  }
+
+  .kkc-report-key-stats,
+  .kkc-report-grid,
+  .kkc-birth-chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-report-navigation {
+    position: static;
+  }
+}
+
+/* =====================================================
+   REPORT REALISTIC SOFT EDGES
+===================================================== */
+
+.kkc-kundali-report {
+  background:
+    radial-gradient(circle at top right, rgba(0, 0, 0, 0.04), transparent 32%),
+    linear-gradient(180deg, #f7f6f2 0%, #ebe8df 100%);
+}
+
+/* Empty report card */
+.kkc-empty-report {
+  border-radius: var(--kkc-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--kkc-shadow-light-card);
+}
+
+.kkc-empty-report::after {
+  content: "ॐ";
+  position: absolute;
+  right: 72px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.06);
+  font-family: var(--kkc-serif);
+  font-size: 10rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.kkc-empty-report {
+  position: relative;
+}
+
+/* Generated report hero */
+.kkc-report-hero-card,
+.kkc-report-head {
+  border-radius: var(--kkc-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--kkc-shadow-light-card);
+}
+
+.kkc-report-hero-card::after,
+.kkc-report-head::after {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: calc(var(--kkc-radius-lg) - 8px);
+  pointer-events: none;
+}
+
+/* Tabs wrapper */
+.kkc-report-navigation {
+  border-radius: var(--kkc-radius-lg);
+  overflow: hidden;
+}
+
+.kkc-tabs {
+  padding-bottom: 2px;
+}
+
+.kkc-tab {
+  border-radius: 999px;
+}
+
+/* White report sections */
+.kkc-report-section {
+  border-radius: var(--kkc-radius-lg);
+  background: var(--kkc-glass-light);
+  box-shadow: var(--kkc-shadow-light-card);
+}
+
+.kkc-info-box {
+  border-radius: var(--kkc-radius-md);
+  background: var(--kkc-glass-light);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.055);
+}
+
+.kkc-info-box::before {
+  border-radius: 999px;
+  left: 14px;
+  top: 20px;
+  bottom: 20px;
+}
+
+.kkc-info-box span,
+.kkc-info-box strong {
+  padding-left: 10px;
+}
+
+/* Table wrapper */
+.kkc-table-wrap {
+  border-radius: var(--kkc-radius-md);
+  overflow: hidden;
+}
+
+/* Birth chart / houses / interpretation cards */
+.kkc-house-box,
+.kkc-parashara-card,
+.kkc-house-reading-card,
+.kkc-current-dasha {
+  border-radius: var(--kkc-radius-md);
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.05);
+}
+
+.kkc-house-box {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.kkc-house-box:hover,
+.kkc-parashara-card:hover,
+.kkc-house-reading-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+}
+
+/* Dasha pills */
+.kkc-dasha-list span {
+  border-radius: var(--kkc-radius-md);
+}
+
+/* PDF / Consultation buttons */
+.kkc-pdf-tab button,
+.kkc-consultation-tab .kkc-primary-btn,
+.kkc-report-head button,
+.kkc-report-hero-actions button,
+.kkc-report-hero-actions a {
+  border-radius: 999px;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.kkc-pdf-tab button:hover,
+.kkc-consultation-tab .kkc-primary-btn:hover,
+.kkc-report-head button:hover,
+.kkc-report-hero-actions button:hover,
+.kkc-report-hero-actions a:hover {
+  transform: translateY(-1px);
+}
+
+/* Mobile edge safety */
+@media (max-width: 640px) {
+  .kkc-report-hero-card,
+  .kkc-report-head,
+  .kkc-report-section,
+  .kkc-empty-report,
+  .kkc-report-navigation {
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kkc-empty-report::after {
+    right: 20px;
+    font-size: 7rem;
+  }
+}
+
+/* =====================================================
+   PROFESSIONAL ASTROLOGY REPORT VISUALS
+   Planet images, chart layout, colorful spiritual elements
+===================================================== */
+
+/* Section intro */
+.report-section-intro {
+  max-width: 780px;
+  margin-bottom: 30px;
+}
+
+.report-section-kicker {
+  margin: 0 0 10px;
+  color: rgba(0, 0, 0, 0.52);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.report-section-intro h3 {
+  margin-bottom: 14px;
+}
+
+.report-section-intro p {
+  max-width: 720px;
+}
+
+/* Planet badge */
+.planet-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+}
+
+.planet-badge img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: saturate(1.14) contrast(1.05);
+}
+
+.planet-badge strong {
+  color: var(--kkc-dark-text);
+  font-weight: 950;
+}
+
+.planet-badge.compact {
+  gap: 7px;
+}
+
+.planet-badge.compact img {
+  width: 26px;
+  height: 26px;
+}
+
+.planet-badge.compact strong {
+  font-size: 0.78rem;
+}
+
+.planet-badge.fallback {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #f0eee8;
+}
+
+.planet-badge.fallback span {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 950;
+}
+
+/* South Indian chart */
+.south-chart-shell {
+  display: grid;
+  gap: 24px;
+}
+
+.south-chart-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.south-chart-title > span {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #f6d365, #fda085);
+  color: #111111;
+  font-family: var(--kkc-serif);
+  font-size: 2.4rem;
+}
+
+.south-chart-title h4 {
+  margin: 0;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.south-chart-title p {
+  margin: 4px 0 0;
+  color: var(--kkc-dark-muted);
+}
+
+.south-chart {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  grid-template-rows: repeat(4, minmax(120px, auto));
+  gap: 0;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.14);
+  border-radius: var(--kkc-radius-lg);
+  background:
+    radial-gradient(circle at center, rgba(246, 211, 101, 0.16), transparent 32%),
+    #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
+}
+
+.south-chart-center {
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.11);
+  background:
+    radial-gradient(circle, rgba(253, 160, 133, 0.18), transparent 58%),
+    #f7f4eb;
+}
+
+.south-chart-center span {
+  color: #d87935;
+  font-family: var(--kkc-serif);
+  font-size: 4rem;
+}
+
+.south-chart-center strong {
+  color: var(--kkc-dark-text);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.south-chart-house {
+  min-height: 120px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.11);
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.south-house-number {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.64rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.south-house-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.south-house-planets small {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #f0eee8;
+  color: var(--kkc-dark-muted);
+  font-weight: 850;
+}
+
+/* South chart house positions */
+.chart-house-1 { grid-column: 1; grid-row: 1; }
+.chart-house-2 { grid-column: 2; grid-row: 1; }
+.chart-house-3 { grid-column: 3; grid-row: 1; }
+.chart-house-4 { grid-column: 4; grid-row: 1; }
+.chart-house-5 { grid-column: 4; grid-row: 2; }
+.chart-house-6 { grid-column: 4; grid-row: 3; }
+.chart-house-7 { grid-column: 4; grid-row: 4; }
+.chart-house-8 { grid-column: 3; grid-row: 4; }
+.chart-house-9 { grid-column: 2; grid-row: 4; }
+.chart-house-10 { grid-column: 1; grid-row: 4; }
+.chart-house-11 { grid-column: 1; grid-row: 3; }
+.chart-house-12 { grid-column: 1; grid-row: 2; }
+
+/* Planet cards */
+.planet-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.planet-detail-card {
+  border: 1px solid var(--kkc-dark-line);
+  border-radius: var(--kkc-radius-lg);
+  padding: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(246, 211, 101, 0.13), transparent 30%),
+    #ffffff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.06);
+}
+
+.planet-detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.planet-detail-head > span:last-child {
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.planet-detail-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.planet-detail-list .kkc-info-box {
+  min-height: 78px;
+  box-shadow: none;
+}
+
+/* Dasha */
+.current-dasha-premium {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: var(--kkc-radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  background:
+    linear-gradient(135deg, #111111, #2a251d);
+  color: #ffffff;
+}
+
+.current-dasha-premium .planet-badge strong {
+  color: #ffffff;
+}
+
+.current-dasha-premium span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.current-dasha-premium strong {
+  display: block;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.current-dasha-premium p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.dasha-timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.dasha-period-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--kkc-dark-line);
+  border-radius: var(--kkc-radius-md);
+  padding: 14px 16px;
+  background: #ffffff;
+}
+
+.dasha-period-card.active {
+  border-color: #111111;
+  background:
+    linear-gradient(135deg, #111111, #2a251d);
+}
+
+.dasha-period-card.active strong,
+.dasha-period-card.active span,
+.dasha-period-card.active .planet-badge strong {
+  color: #ffffff;
+}
+
+.dasha-period-card div:last-child {
+  display: grid;
+  gap: 4px;
+}
+
+.dasha-period-card div:last-child strong {
+  color: var(--kkc-dark-text);
+}
+
+.dasha-period-card div:last-child span {
+  color: var(--kkc-dark-muted);
+  font-size: 0.84rem;
+}
+
+/* Dosha */
+.dosha-status-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.dosha-status-card div {
+  border-radius: var(--kkc-radius-lg);
+  padding: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(246, 211, 101, 0.15), transparent 34%),
+    #ffffff;
+  border: 1px solid var(--kkc-dark-line);
+}
+
+.dosha-status-card span {
+  display: block;
+  color: rgba(0, 0, 0, 0.48);
+  font-size: 0.66rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dosha-status-card strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.dosha-explanation {
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid var(--kkc-dark-line);
+}
+
+.dosha-explanation h4 {
+  margin: 0 0 8px;
+  color: var(--kkc-dark-text);
+  font-family: var(--kkc-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.dosha-explanation p + h4 {
+  margin-top: 24px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .planet-card-grid,
+  .planet-detail-list,
+  .dosha-status-card {
+    grid-template-columns: 1fr;
+  }
+
+  .south-chart {
+    grid-template-columns: repeat(4, minmax(90px, 1fr));
+    grid-template-rows: repeat(4, minmax(100px, auto));
+  }
+}
+
+@media (max-width: 640px) {
+  .south-chart {
+    grid-template-columns: repeat(4, minmax(72px, 1fr));
+    grid-template-rows: repeat(4, minmax(92px, auto));
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .south-chart-house {
+    padding: 9px;
+  }
+
+  .south-chart-center span {
+    font-size: 2.8rem;
+  }
+
+  .planet-badge strong {
+    display: none;
+  }
+
+  .planet-detail-head .planet-badge strong {
+    display: block;
+  }
+}
+
+/* =====================================================
+   DARK KUNDALI REPORT THEME
+   Purpose:
+   - Remove white report background
+   - Make all report tabs black + white
+   - Keep planet images colorful
+   - Make astrology report look premium, not like dashboard cards
+===================================================== */
+
+/* Full report area */
+.kkc-kundali-report {
+  background:
+    radial-gradient(circle at 82% 8%, rgba(255, 255, 255, 0.08), transparent 30%),
+    radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.04), transparent 24%),
+    linear-gradient(180deg, #020202 0%, #090909 52%, #020202 100%) !important;
+  color: var(--kkc-white) !important;
+}
+
+/* Report header already black, make it more integrated */
+.kkc-report-hero-card,
+.kkc-report-head,
+.kkc-empty-report {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #070707 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--kkc-white) !important;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.42) !important;
+}
+
+.kkc-report-hero-card h2,
+.kkc-report-head h2,
+.kkc-empty-report h2 {
+  color: var(--kkc-white) !important;
+}
+
+.kkc-report-subtitle,
+.kkc-report-head p,
+.kkc-empty-report p {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+/* Report key stats inside top report card */
+.kkc-report-key-stats div {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.kkc-report-key-stats dt {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.kkc-report-key-stats dd {
+  color: var(--kkc-white) !important;
+}
+
+/* Tabs wrapper */
+.kkc-report-navigation {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34) !important;
+}
+
+.kkc-report-navigation-copy span {
+  color: var(--kkc-white) !important;
+}
+
+.kkc-report-navigation-copy p {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Tabs */
+.kkc-tab {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.kkc-tab:hover:not(:disabled),
+.kkc-tab.active {
+  background: var(--kkc-white) !important;
+  border-color: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+.kkc-tab:disabled {
+  opacity: 0.32 !important;
+}
+
+/* Every report section */
+.kkc-report-section {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.055), transparent 30%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--kkc-white) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34) !important;
+}
+
+.kkc-report-section h3,
+.kkc-report-section h4,
+.report-section-intro h3 {
+  color: var(--kkc-white) !important;
+}
+
+.kkc-report-section p,
+.report-section-intro p {
+  color: rgba(255, 255, 255, 0.66) !important;
+}
+
+.report-section-kicker {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Info boxes */
+.kkc-info-box {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: none !important;
+}
+
+.kkc-info-box::before {
+  background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.28)) !important;
+}
+
+.kkc-info-box span {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.kkc-info-box strong {
+  color: var(--kkc-white) !important;
+}
+
+/* Planet badges */
+.planet-badge strong {
+  color: var(--kkc-white) !important;
+}
+
+.planet-badge.fallback {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--kkc-white) !important;
+}
+
+.planet-badge.fallback span {
+  background: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+/* South Indian chart dark theme */
+.south-chart {
+  background:
+    radial-gradient(circle at center, rgba(255, 199, 86, 0.14), transparent 34%),
+    #070707 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42) !important;
+}
+
+.south-chart-center {
+  background:
+    radial-gradient(circle, rgba(255, 178, 74, 0.18), transparent 62%),
+    #111111 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.south-chart-center span {
+  color: #ffb84d !important;
+  text-shadow: 0 0 18px rgba(255, 184, 77, 0.22);
+}
+
+.south-chart-center strong {
+  color: var(--kkc-white) !important;
+}
+
+.south-chart-house {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02)),
+    #0d0d0d !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.south-house-number {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.south-house-planets small {
+  background: rgba(255, 255, 255, 0.09) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* Planet detail cards */
+.planet-detail-card {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #0b0b0b !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--kkc-white) !important;
+}
+
+.planet-detail-head > span:last-child {
+  background: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+/* Dasha */
+.current-dasha-premium,
+.dasha-period-card.active {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.16), transparent 30%),
+    linear-gradient(135deg, #151515, #050505) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.dasha-period-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.dasha-period-card div:last-child strong,
+.dasha-period-card div:last-child span {
+  color: var(--kkc-white) !important;
+}
+
+.dasha-period-card div:last-child span {
+  opacity: 0.66;
+}
+
+/* Dosha */
+.dosha-status-card div,
+.dosha-explanation {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.dosha-status-card span {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.dosha-status-card strong,
+.dosha-explanation h4 {
+  color: var(--kkc-white) !important;
+}
+
+/* Tables dark theme */
+.kkc-table-wrap {
+  background: #0b0b0b !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.kkc-table-wrap th {
+  background: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+.kkc-table-wrap td {
+  color: rgba(255, 255, 255, 0.72) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+.kkc-table-wrap tbody tr:hover {
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+
+/* PDF / Consultation cards */
+.kkc-pdf-tab button,
+.kkc-consultation-tab .kkc-primary-btn {
+  background: var(--kkc-white) !important;
+  border-color: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+}
+
+.kkc-pdf-tab button:hover,
+.kkc-consultation-tab .kkc-primary-btn:hover {
+  background: transparent !important;
+  color: var(--kkc-white) !important;
+}
+
+/* =====================================================
+   PROFESSIONAL REPORT TAB NAVIGATION
+   Desktop: wrapped grid tabs
+   Mobile: compact two-column grid
+===================================================== */
+
+.kkc-report-navigation {
+  position: sticky;
+  top: 82px;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  border-radius: var(--kkc-radius-lg);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34) !important;
+}
+
+.kkc-report-navigation-copy span {
+  display: block;
+  color: var(--kkc-white) !important;
+  font-family: var(--kkc-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.kkc-report-navigation-copy p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+/* No horizontal scroll on desktop */
+.kkc-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(110px, 1fr));
+  gap: 10px;
+  overflow: visible;
+}
+
+.kkc-tab {
+  min-height: 44px;
+  border-radius: 999px;
+  padding: 0 14px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(255, 255, 255, 0.025)
+    ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.74) !important;
+  font-size: 0.68rem;
+  text-align: center;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.kkc-tab:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.42) !important;
+  color: var(--kkc-white) !important;
+}
+
+.kkc-tab.active {
+  background: var(--kkc-white) !important;
+  border-color: var(--kkc-white) !important;
+  color: var(--kkc-black) !important;
+  box-shadow: 0 12px 28px rgba(255, 255, 255, 0.09);
+}
+
+.kkc-tab:disabled {
+  opacity: 0.32 !important;
+}
+
+/* Tablet */
+@media (max-width: 1080px) {
+  .kkc-report-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-tabs {
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .kkc-report-navigation {
+    position: static;
+    padding: 16px;
+  }
+
+  .kkc-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kkc-tab {
+    min-height: 42px;
+    font-size: 0.64rem;
+  }
+}
+
+/* =====================================================
+   TAB VISIBILITY + DARK REPORT CARD FIX
+   Fixes:
+   - active tab text disappearing on white pill
+   - hover tab text looking unprofessional
+   - Parashara/Navamsa cards showing white blocks
+===================================================== */
+
+/* ---------- Tabs: clean professional behavior ---------- */
+
+.kkc-tab {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.025)
+    ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  box-shadow: none !important;
+}
+
+.kkc-tab:hover:not(:disabled):not(.active) {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.045)
+    ) !important;
+  border-color: rgba(255, 255, 255, 0.38) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Active tab: white pill + black text, always readable */
+.kkc-tab.active,
+.kkc-tab.active:hover,
+.kkc-tab.active:focus,
+.kkc-tab.active:focus-visible {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #050505 !important;
+  box-shadow: 0 12px 28px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Prevent text from becoming invisible in active tab */
+.kkc-tab.active *,
+.kkc-tab.active:hover * {
+  color: #050505 !important;
+}
+
+/* ---------- Report section base dark cards ---------- */
+
+.kkc-report-section,
+.kkc-parashara-card,
+.kkc-house-reading-card,
+.planet-detail-card,
+.dosha-explanation,
+.dosha-status-card div,
+.current-dasha-premium,
+.dasha-period-card,
+.south-chart-shell,
+.south-chart,
+.south-chart-house,
+.south-chart-center {
+  color: #ffffff !important;
+}
+
+/* Main report sections */
+.kkc-report-section {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.065), transparent 28%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #080808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.36) !important;
+}
+
+.kkc-report-section h3,
+.kkc-report-section h4,
+.report-section-intro h3,
+.south-chart-title h4,
+.dosha-explanation h4 {
+  color: #ffffff !important;
+}
+
+.kkc-report-section p,
+.report-section-intro p,
+.south-chart-title p,
+.dosha-explanation p {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+.report-section-kicker {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ---------- Parashara cards ---------- */
+
+.kkc-parashara-grid {
+  align-items: stretch;
+}
+
+.kkc-parashara-card {
+  min-height: auto !important;
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 22px 58px rgba(0, 0, 0, 0.28);
+}
+
+.kkc-parashara-card h4 {
+  margin: 0 0 12px;
+  color: #ffffff !important;
+  font-family: var(--kkc-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.kkc-parashara-card p {
+  color: rgba(255, 255, 255, 0.68) !important;
+  line-height: 1.72;
+}
+
+.kkc-parashara-card strong {
+  display: block;
+  margin-top: 18px;
+  color: #ffffff !important;
+}
+
+.kkc-parashara-card ul {
+  margin: 16px 0 0;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+.kkc-parashara-card li {
+  margin-bottom: 8px;
+}
+
+/* ---------- Tags/chips dark theme ---------- */
+
+.kkc-tags small,
+.south-house-planets small,
+.kkc-house-box span {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* ---------- Info boxes dark readable ---------- */
+
+.kkc-info-box {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.kkc-info-box span {
+  color: rgba(255, 255, 255, 0.46) !important;
+}
+
+.kkc-info-box strong {
+  color: #ffffff !important;
+}
+
+/* ---------- Navamsa table dark readable ---------- */
+
+.kkc-table-wrap {
+  background: #0b0b0b !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.kkc-table-wrap th {
+  background: #ffffff !important;
+  color: #050505 !important;
+}
+
+.kkc-table-wrap td {
+  color: rgba(255, 255, 255, 0.76) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
+
+.kkc-table-wrap tbody tr:hover {
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+
+/* ---------- South chart dark professional ---------- */
+
+.south-chart {
+  background:
+    radial-gradient(circle at center, rgba(255, 184, 77, 0.14), transparent 34%),
+    #070707 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+}
+
+.south-chart-center {
+  background:
+    radial-gradient(circle, rgba(255, 184, 77, 0.16), transparent 60%),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.south-chart-center span {
+  color: #ffb84d !important;
+}
+
+.south-chart-center strong {
+  color: #ffffff !important;
+}
+
+.south-chart-house {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #0d0d0d !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+}
+
+.south-house-number {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+/* ---------- Planet cards dark ---------- */
+
+.planet-detail-card {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.12), transparent 32%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.planet-detail-head > span:last-child {
+  background: #ffffff !important;
+  color: #050505 !important;
+}
+
+/* ---------- Dasha / Dosha dark ---------- */
+
+.current-dasha-premium,
+.dasha-period-card.active {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.15), transparent 30%),
+    linear-gradient(135deg, #161616, #050505) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.dasha-period-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.dasha-period-card div:last-child strong,
+.dasha-period-card div:last-child span {
+  color: #ffffff !important;
+}
+
+.dasha-period-card div:last-child span {
+  opacity: 0.68;
+}
+
+.dosha-status-card div,
+.dosha-explanation {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.11), transparent 32%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.dosha-status-card span {
+  color: rgba(255, 255, 255, 0.48) !important;
+}
+
+.dosha-status-card strong,
+.dosha-explanation h4 {
+  color: #ffffff !important;
+}
+
+/* ---------- Planet badges ---------- */
+
+.planet-badge strong {
+  color: #ffffff !important;
+}
+
+.planet-badge img {
+  filter: saturate(1.2) contrast(1.08) brightness(1.08);
+}
+
+/* =====================================================
+   PROFESSIONAL HOUSES TAB
+   Dark astrology cards, readable content, planet badges
+===================================================== */
+
+.houses-report-section {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 184, 77, 0.08), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #080808 !important;
+}
+
+.houses-overview-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.houses-overview-strip div {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px 20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010;
+}
+
+.houses-overview-strip span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.houses-overview-strip strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+/* Main houses grid */
+.professional-houses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.professional-house-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.03)
+    ),
+    #101010;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+}
+
+.professional-house-card::after {
+  content: "ॐ";
+  position: absolute;
+  right: 20px;
+  bottom: -28px;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: var(--kkc-serif);
+  font-size: 7rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.professional-house-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.professional-house-head span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0 13px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.professional-house-head strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.professional-house-area,
+.professional-house-reading,
+.professional-house-planets,
+.professional-house-meaning {
+  position: relative;
+  z-index: 2;
+}
+
+.professional-house-area {
+  margin-bottom: 16px;
+}
+
+.professional-house-area small,
+.professional-house-reading small,
+.professional-house-planets small {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.professional-house-area h4 {
+  margin: 0;
+  color: #ffcf7a;
+  font-family: var(--kkc-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.professional-house-meaning {
+  margin: 0 0 18px;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.professional-house-reading {
+  border-left: 3px solid rgba(255, 207, 122, 0.6);
+  padding-left: 16px;
+  margin-bottom: 20px;
+}
+
+.professional-house-reading p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.92rem;
+  line-height: 1.72;
+}
+
+.professional-house-planet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.professional-house-planet-list .planet-badge {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.professional-house-planet-list .planet-badge img {
+  width: 24px;
+  height: 24px;
+}
+
+.professional-house-planet-list .planet-badge strong {
+  display: block;
+  color: #ffffff !important;
+  font-size: 0.74rem;
+}
+
+.empty-planet-chip {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.065);
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+/* Hover polish */
+.professional-house-card {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.professional-house-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 207, 122, 0.35);
+  box-shadow: 0 30px 78px rgba(0, 0, 0, 0.34);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .houses-overview-strip,
+  .professional-houses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .professional-house-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .professional-house-card {
+    padding: 22px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .professional-house-head {
+    display: grid;
+  }
+
+  .professional-house-head strong {
+    text-align: left;
+  }
+
+  .professional-house-area h4 {
+    font-size: 1.3rem;
+  }
+}
+
+/* =====================================================
+   GENERATION LOADER + REPORT OVERVIEW
+   Professional report experience
+===================================================== */
+
+/* ---------- Generation Loader ---------- */
+
+.kundali-loader-card {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 44px;
+  align-items: center;
+  min-height: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-lg);
+  padding: 46px;
+  background:
+    radial-gradient(circle at 18% 50%, rgba(255, 184, 77, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #080808;
+  color: #ffffff;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.4);
+}
+
+.kundali-loader-orbit {
+  position: relative;
+  width: 280px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.loader-ring {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+}
+
+.loader-ring-one {
+  inset: 2%;
+}
+
+.loader-ring-two {
+  inset: 20%;
+}
+
+.loader-ring-three {
+  inset: 38%;
+}
+
+.loader-om {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 184, 77, 0.22), rgba(255, 255, 255, 0.035));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffcf7a;
+  font-family: var(--kkc-serif);
+  font-size: 3.5rem;
+  text-shadow: 0 0 22px rgba(255, 184, 77, 0.22);
+}
+
+.loader-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  margin: -6.5px;
+  border-radius: 50%;
+  background: #ffcf7a;
+  box-shadow: 0 0 18px rgba(255, 207, 122, 0.42);
+}
+
+.loader-dot-one {
+  animation: loaderOrbitOne 4.5s linear infinite;
+}
+
+.loader-dot-two {
+  animation: loaderOrbitTwo 6.5s linear infinite;
+}
+
+.loader-dot-three {
+  animation: loaderOrbitThree 8s linear infinite;
+}
+
+.kundali-loader-content h2 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.3rem, 4vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.kundali-loader-content > p {
+  max-width: 620px;
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.75;
+}
+
+.kundali-loader-steps {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.kundali-loader-step {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--kkc-radius-md);
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.kundali-loader-step > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.kundali-loader-step strong {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.92rem;
+}
+
+.kundali-loader-step p {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.kundali-loader-step.active {
+  border-color: rgba(255, 207, 122, 0.36);
+  background:
+    radial-gradient(circle at top right, rgba(255, 207, 122, 0.12), transparent 30%),
+    rgba(255, 255, 255, 0.055);
+}
+
+.kundali-loader-step.active > span,
+.kundali-loader-step.done > span {
+  background: #ffcf7a;
+  color: #050505;
+}
+
+.kundali-loader-step.active strong,
+.kundali-loader-step.done strong {
+  color: #ffffff;
+}
+
+.kundali-loader-step.done {
+  opacity: 0.9;
+}
+
+@keyframes loaderOrbitOne {
+  from {
+    transform: rotate(0deg) translateX(134px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(134px) rotate(-360deg);
+  }
+}
+
+@keyframes loaderOrbitTwo {
+  from {
+    transform: rotate(90deg) translateX(104px) rotate(-90deg);
+  }
+
+  to {
+    transform: rotate(450deg) translateX(104px) rotate(-450deg);
+  }
+}
+
+@keyframes loaderOrbitThree {
+  from {
+    transform: rotate(180deg) translateX(74px) rotate(-180deg);
+  }
+
+  to {
+    transform: rotate(540deg) translateX(74px) rotate(-540deg);
+  }
+}
+
+/* ---------- Report Readiness Overview ---------- */
+
+.report-readiness-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-lg);
+  padding: 32px;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255, 184, 77, 0.09), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #080808;
+  color: #ffffff;
+  box-shadow: 0 28px 76px rgba(0, 0, 0, 0.32);
+}
+
+.report-readiness-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.report-readiness-head h3 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  font-weight: 600;
+  line-height: 1.06;
+}
+
+.report-readiness-head p {
+  max-width: 640px;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.65;
+}
+
+.report-readiness-score {
+  display: grid;
+  place-items: center;
+  min-width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 207, 122, 0.18), rgba(255, 255, 255, 0.035));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.report-readiness-score strong {
+  color: #ffcf7a;
+  font-family: var(--kkc-serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.report-readiness-score span {
+  margin-top: -16px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.report-readiness-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.report-readiness-item {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--kkc-radius-md);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.report-readiness-item > span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.report-readiness-item.ready > span {
+  background: #ffcf7a;
+  color: #050505;
+}
+
+.report-readiness-item strong {
+  color: #ffffff;
+  font-size: 0.88rem;
+}
+
+.report-readiness-item p {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1080px) {
+  .kundali-loader-card {
+    grid-template-columns: 1fr;
+  }
+
+  .kundali-loader-orbit {
+    margin: 0 auto;
+  }
+
+  .report-readiness-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .kundali-loader-card,
+  .report-readiness-card {
+    padding: 24px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .kundali-loader-orbit {
+    width: 220px;
+  }
+
+  .report-readiness-head {
+    display: grid;
+  }
+
+  .report-readiness-score {
+    width: 104px;
+    min-width: 104px;
+    height: 104px;
+  }
+
+  .report-readiness-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   STEP 3 - PROFESSIONAL BIRTH CHART POLISH
+   Dark South Indian chart, house hierarchy, legend, stats
+===================================================== */
+
+.astrology-chart-section {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255, 184, 77, 0.09), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #070707 !important;
+}
+
+/* Main birth chart wrapper */
+.kundali-chart-experience {
+  display: grid;
+  gap: 26px;
+}
+
+/* Top overview */
+.kundali-chart-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.75fr);
+  gap: 24px;
+  align-items: end;
+}
+
+.kundali-chart-overview-copy h4 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.kundali-chart-overview-copy p {
+  max-width: 680px;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.66) !important;
+  line-height: 1.7;
+}
+
+.kundali-chart-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.kundali-chart-stats div {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: var(--kkc-radius-md);
+  padding: 15px 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010;
+}
+
+.kundali-chart-stats span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kundali-chart-stats strong {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+/* Chart + side panel */
+.kundali-chart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* South Indian chart */
+.kundali-chart-pro {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(128px, 1fr));
+  grid-template-rows: repeat(4, minmax(118px, auto));
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--kkc-radius-lg);
+  background:
+    radial-gradient(circle at center, rgba(255, 184, 77, 0.13), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+    #070707;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.42),
+    inset 0 0 80px rgba(255, 255, 255, 0.025);
+}
+
+.kundali-chart-pro::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: calc(var(--kkc-radius-lg) - 8px);
+  pointer-events: none;
+}
+
+.kundali-chart-pro::after {
+  content: "";
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 184, 77, 0.12), transparent 62%);
+  pointer-events: none;
+}
+
+/* Center */
+.kundali-chart-center {
+  position: relative;
+  z-index: 3;
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(circle, rgba(255, 184, 77, 0.16), transparent 60%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.018)
+    ),
+    #0d0d0d;
+}
+
+.kundali-chart-center span {
+  color: #ffb84d;
+  font-family: var(--kkc-serif);
+  font-size: 4.4rem;
+  line-height: 1;
+  text-shadow: 0 0 24px rgba(255, 184, 77, 0.24);
+}
+
+.kundali-chart-center strong {
+  color: #ffffff;
+  font-family: var(--kkc-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.kundali-chart-center small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* House cells */
+.kundali-house-cell {
+  position: relative;
+  z-index: 2;
+  min-height: 118px;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.02)
+    ),
+    #0d0d0d;
+}
+
+.kundali-house-cell.has-planets {
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.1), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #111111;
+}
+
+.kundali-house-cell.empty-house {
+  opacity: 0.72;
+}
+
+.kundali-house-kendra {
+  border-color: rgba(255, 207, 122, 0.24);
+}
+
+.kundali-house-trikona {
+  border-color: rgba(134, 210, 255, 0.22);
+}
+
+.kundali-house-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.kundali-house-head span {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.6rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.kundali-house-head strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.kundali-house-area {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.kundali-house-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.kundali-house-planets .planet-badge {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.kundali-house-planets .planet-badge img {
+  width: 22px;
+  height: 22px;
+}
+
+.kundali-house-planets .planet-badge strong {
+  display: block;
+  color: #ffffff !important;
+  font-size: 0.7rem;
+}
+
+.empty-house-chip {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+/* Exact South Indian positions */
+.kundali-house-1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.kundali-house-2 {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.kundali-house-3 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.kundali-house-4 {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.kundali-house-5 {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+.kundali-house-6 {
+  grid-column: 4;
+  grid-row: 3;
+}
+
+.kundali-house-7 {
+  grid-column: 4;
+  grid-row: 4;
+}
+
+.kundali-house-8 {
+  grid-column: 3;
+  grid-row: 4;
+}
+
+.kundali-house-9 {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.kundali-house-10 {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+.kundali-house-11 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.kundali-house-12 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* Side panel */
+.kundali-chart-side-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.kundali-chart-side-panel div {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.026)
+    ),
+    #101010;
+}
+
+.kundali-chart-side-panel span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kundali-chart-side-panel strong {
+  display: block;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.kundali-chart-side-panel p {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+/* Legend */
+.kundali-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.kundali-chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.legend-dot.kendra {
+  background: #ffcf7a;
+}
+
+.legend-dot.trikona {
+  background: #86d2ff;
+}
+
+.legend-dot.regular {
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.legend-dot.planet {
+  background: #ff784f;
+}
+
+/* Responsive */
+@media (max-width: 1120px) {
+  .kundali-chart-layout,
+  .kundali-chart-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .kundali-chart-side-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .kundali-chart-pro {
+    grid-template-columns: repeat(4, minmax(74px, 1fr));
+    grid-template-rows: repeat(4, minmax(96px, auto));
+  }
+
+  .kundali-chart-center span {
+    font-size: 3rem;
+  }
+
+  .kundali-chart-center strong {
+    font-size: 1.2rem;
+  }
+
+  .kundali-house-cell {
+    min-height: 96px;
+    padding: 9px;
+  }
+
+  .kundali-house-head {
+    display: grid;
+    gap: 2px;
+  }
+
+  .kundali-house-head strong {
+    font-size: 0.9rem;
+  }
+
+  .kundali-house-area {
+    display: none;
+  }
+
+  .kundali-house-planets .planet-badge {
+    padding: 4px 6px;
+  }
+
+  .kundali-house-planets .planet-badge strong {
+    display: none;
+  }
+
+  .kundali-chart-stats,
+  .kundali-chart-side-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .kundali-chart-pro {
+    grid-template-columns: repeat(4, minmax(64px, 1fr));
+    grid-template-rows: repeat(4, minmax(86px, auto));
+  }
+
+  .kundali-chart-center span {
+    font-size: 2.5rem;
+  }
+
+  .kundali-house-planets .planet-badge img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* =====================================================
+   STEP 4 - EXPANDABLE HOUSES TAB
+   Dark professional accordion cards
+===================================================== */
+
+.houses-report-section {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255, 184, 77, 0.09), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #070707 !important;
+}
+
+/* Summary cards */
+.houses-report-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.houses-report-summary div {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010;
+}
+
+.houses-report-summary span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.houses-report-summary strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+/* Reader note */
+.houses-section-note {
+  display: grid;
+  gap: 8px;
+  border-left: 3px solid rgba(255, 207, 122, 0.68);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 207, 122, 0.08),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #101010;
+}
+
+.houses-section-note span {
+  color: #ffcf7a;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.houses-section-note p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66) !important;
+  line-height: 1.65;
+}
+
+/* Accordion layout */
+.house-accordion-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.house-accordion-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.135);
+  border-radius: var(--kkc-radius-lg);
+  background:
+    radial-gradient(circle at 92% 10%, rgba(255, 184, 77, 0.08), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.026)
+    ),
+    #0d0d0d;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.house-accordion-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 207, 122, 0.32);
+  box-shadow: 0 30px 78px rgba(0, 0, 0, 0.34);
+}
+
+.house-accordion-card.open {
+  border-color: rgba(255, 207, 122, 0.38);
+}
+
+.house-accordion-card::after {
+  content: "ॐ";
+  position: absolute;
+  right: 22px;
+  bottom: -28px;
+  color: rgba(255, 255, 255, 0.028);
+  font-family: var(--kkc-serif);
+  font-size: 7rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Header button */
+.house-accordion-button {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto 42px;
+  gap: 16px;
+  align-items: center;
+  border: 0;
+  padding: 22px;
+  background: transparent;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.house-number-orb {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 207, 122, 0.28), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 207, 122, 0.35);
+  color: #ffcf7a;
+  font-family: var(--kkc-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+}
+
+.house-accordion-main {
+  display: grid;
+  gap: 5px;
+}
+
+.house-accordion-main small {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.house-accordion-main strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.house-accordion-main em {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.82rem;
+  font-style: normal;
+  line-height: 1.4;
+}
+
+/* House group badge */
+.house-group-badge {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.house-group-badge.kendra {
+  border-color: rgba(255, 207, 122, 0.34);
+  color: #ffcf7a;
+}
+
+.house-group-badge.trikona {
+  border-color: rgba(134, 210, 255, 0.32);
+  color: #86d2ff;
+}
+
+.house-group-badge.upachaya {
+  border-color: rgba(163, 255, 190, 0.28);
+  color: #a3ffbe;
+}
+
+.house-group-badge.dusthana {
+  border-color: rgba(255, 140, 120, 0.28);
+  color: #ff9a85;
+}
+
+.house-group-badge.moksha {
+  border-color: rgba(207, 171, 255, 0.28);
+  color: #d6b7ff;
+}
+
+.house-group-badge.artha {
+  border-color: rgba(255, 226, 133, 0.28);
+  color: #ffe285;
+}
+
+.house-expand-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.075);
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Quick planet row */
+.house-quick-planets {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 0 22px 20px 96px;
+}
+
+.house-quick-planets .planet-badge {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.075);
+}
+
+.house-quick-planets .planet-badge img {
+  width: 24px;
+  height: 24px;
+}
+
+.house-quick-planets .planet-badge strong {
+  display: block;
+  color: #ffffff !important;
+  font-size: 0.74rem;
+}
+
+.house-empty-chip {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+/* Expanded content */
+.house-expanded-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.105);
+  padding: 22px;
+  animation: houseExpandIn 180ms ease both;
+}
+
+.house-reading-block {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.018)
+    ),
+    #101010;
+}
+
+.house-reading-block span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.house-reading-block h4 {
+  margin: 0;
+  color: #ffcf7a !important;
+  font-family: var(--kkc-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.house-reading-block p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68) !important;
+  font-size: 0.92rem;
+  line-height: 1.72;
+}
+
+.house-reading-block.interpretation {
+  border-left: 3px solid rgba(255, 207, 122, 0.6);
+}
+
+/* Planet details inside expanded house */
+.house-planet-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.house-planet-detail-card {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.85fr) repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--kkc-radius-md);
+  padding: 14px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 184, 77, 0.08), transparent 28%),
+    rgba(255, 255, 255, 0.04);
+}
+
+.house-planet-detail-card div {
+  display: grid;
+  gap: 5px;
+}
+
+.house-planet-detail-card div span {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.6rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.house-planet-detail-card div strong {
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+/* No-planet visual reduction */
+.house-accordion-card.no-planets {
+  opacity: 0.82;
+}
+
+.house-accordion-card.no-planets.open {
+  opacity: 1;
+}
+
+/* Animation */
+@keyframes houseExpandIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .houses-report-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .house-planet-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .house-planet-detail-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .houses-report-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .house-accordion-button {
+    grid-template-columns: 46px minmax(0, 1fr) 36px;
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .house-number-orb {
+    width: 42px;
+    height: 42px;
+    font-size: 1.25rem;
+  }
+
+  .house-group-badge {
+    grid-column: 2;
+    width: fit-content;
+    margin-top: 6px;
+  }
+
+  .house-expand-icon {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .house-quick-planets {
+    padding: 0 18px 18px 76px;
+  }
+
+  .house-expanded-content {
+    padding: 18px;
+  }
+
+  .house-accordion-main strong {
+    font-size: 1.25rem;
+  }
+}
+
+/* =====================================================
+   STEP 5 - PARASHARA REPORT CHAPTERS
+   Dark expandable chapter layout
+===================================================== */
+
+.parashara-report-section {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(255, 184, 77, 0.09), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #070707 !important;
+}
+
+/* Summary */
+.parashara-report-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.parashara-report-summary div {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010;
+}
+
+.parashara-report-summary span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-report-summary strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.38rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+/* Reader note */
+.parashara-section-note {
+  display: grid;
+  gap: 8px;
+  border-left: 3px solid rgba(255, 207, 122, 0.68);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 207, 122, 0.08),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #101010;
+}
+
+.parashara-section-note span {
+  color: #ffcf7a;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-section-note p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66) !important;
+  line-height: 1.65;
+}
+
+/* Chapter list */
+.parashara-chapter-list {
+  display: grid;
+  gap: 14px;
+}
+
+.parashara-chapter {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.135);
+  border-radius: var(--kkc-radius-lg);
+  background:
+    radial-gradient(circle at 92% 10%, rgba(255, 184, 77, 0.08), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.026)
+    ),
+    #0d0d0d;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.parashara-chapter:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 207, 122, 0.32);
+  box-shadow: 0 30px 78px rgba(0, 0, 0, 0.34);
+}
+
+.parashara-chapter.open {
+  border-color: rgba(255, 207, 122, 0.38);
+}
+
+.parashara-chapter::after {
+  content: "ॐ";
+  position: absolute;
+  right: 22px;
+  bottom: -34px;
+  color: rgba(255, 255, 255, 0.026);
+  font-family: var(--kkc-serif);
+  font-size: 8rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Header button */
+.parashara-chapter-head {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 42px;
+  gap: 18px;
+  align-items: center;
+  border: 0;
+  padding: 24px;
+  background: transparent;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.parashara-chapter-number {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 207, 122, 0.28), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 207, 122, 0.35);
+  color: #ffcf7a;
+  font-family: var(--kkc-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.parashara-chapter-title {
+  display: grid;
+  gap: 6px;
+}
+
+.parashara-chapter-title small {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-chapter-title strong {
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.parashara-chapter-title em {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.86rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.parashara-chapter-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.075);
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Focus preview */
+.parashara-chapter-preview {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 24px 22px 112px;
+}
+
+.parashara-chapter-preview span {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+/* Expanded body */
+.parashara-chapter-body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.105);
+  padding: 24px;
+  animation: parasharaChapterIn 180ms ease both;
+}
+
+.parashara-reading-block {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--kkc-radius-md);
+  padding: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.018)
+    ),
+    #101010;
+}
+
+.parashara-reading-block span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.parashara-reading-block p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.93rem;
+  line-height: 1.75;
+}
+
+.parashara-reading-block ul {
+  margin: 0;
+  padding-left: 20px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.parashara-reading-block li {
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+
+.parashara-reading-block.guidance {
+  border-left: 3px solid rgba(255, 207, 122, 0.65);
+}
+
+.parashara-reading-block.caution {
+  border-left: 3px solid rgba(255, 140, 120, 0.72);
+}
+
+.parashara-reading-block.caution span {
+  color: #ff9a85;
+}
+
+.parashara-reading-block.main-summary {
+  background:
+    radial-gradient(circle at top right, rgba(255, 207, 122, 0.08), transparent 30%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(255, 255, 255, 0.018)
+    ),
+    #101010;
+}
+
+/* Animation */
+@keyframes parasharaChapterIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Disable old Parashara white-grid visuals if still present */
+.kkc-parashara-grid {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .parashara-report-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .parashara-chapter-head {
+    grid-template-columns: 58px minmax(0, 1fr) 38px;
+    gap: 14px;
+  }
+
+  .parashara-chapter-number {
+    width: 52px;
+    height: 52px;
+    font-size: 1.25rem;
+  }
+
+  .parashara-chapter-title strong {
+    font-size: 1.45rem;
+  }
+
+  .parashara-chapter-preview {
+    padding-left: 96px;
+  }
+}
+
+@media (max-width: 640px) {
+  .parashara-report-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .parashara-chapter-head {
+    grid-template-columns: 46px minmax(0, 1fr) 34px;
+    padding: 18px;
+  }
+
+  .parashara-chapter-number {
+    width: 42px;
+    height: 42px;
+    font-size: 1.05rem;
+  }
+
+  .parashara-chapter-title strong {
+    font-size: 1.28rem;
+  }
+
+  .parashara-chapter-title em {
+    font-size: 0.78rem;
+  }
+
+  .parashara-chapter-preview {
+    padding: 0 18px 18px 78px;
+  }
+
+  .parashara-chapter-body {
+    padding: 18px;
+  }
+}
+
+/* =====================================================
+   STEP 6 - CONSULTATION CTA BLOCKS
+   Reusable conversion blocks for report sections
+===================================================== */
+
+.report-consultation-cta {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 28px;
+  border: 1px solid rgba(255, 207, 122, 0.2);
+  border-radius: var(--kkc-radius-lg);
+  padding: 26px;
+  background:
+    radial-gradient(circle at 92% 12%, rgba(255, 207, 122, 0.13), transparent 32%),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.085),
+      rgba(255, 255, 255, 0.025)
+    ),
+    #101010;
+  color: #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.26);
+}
+
+.report-consultation-cta::after {
+  content: "ॐ";
+  position: absolute;
+  right: 34px;
+  bottom: -38px;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: var(--kkc-serif);
+  font-size: 8rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.report-consultation-cta > * {
+  position: relative;
+  z-index: 2;
+}
+
+.report-consultation-cta h4 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(1.55rem, 2.4vw, 2.3rem);
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+.report-consultation-cta p:not(.report-section-kicker) {
+  max-width: 680px;
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.66) !important;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.report-consultation-cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 1px solid #ffcf7a;
+  border-radius: 999px;
+  padding: 0 24px;
+  background: #ffcf7a;
+  color: #050505;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.report-consultation-cta a:hover {
+  transform: translateY(-1px);
+  background: transparent;
+  color: #ffcf7a;
+}
+
+/* PDF includes */
+.pdf-includes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.pdf-includes-grid span {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: var(--kkc-radius-md);
+  padding: 14px 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.028)
+    ),
+    #101010;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+/* Avoid double-heavy spacing inside PDF tab */
+.kkc-pdf-tab .report-consultation-cta {
+  margin-top: 30px;
+  text-align: left;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .report-consultation-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .report-consultation-cta a {
+    width: fit-content;
+  }
+
+  .pdf-includes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .report-consultation-cta {
+    padding: 22px;
+    border-radius: var(--kkc-radius-md);
+  }
+
+  .report-consultation-cta a {
+    width: 100%;
+  }
+
+  .pdf-includes-grid {
+    grid-template-columns: 1fr;
+  }
+}
