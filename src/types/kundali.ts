@@ -163,3 +163,37 @@ export type KundaliParasharaReportResponse = {
 
   sections: ParasharaSectionResponse[];
 };
+
+export type KundaliStatus = "PENDING" | "SUCCESS" | "FAILED";
+
+export type AdminKundaliReportListItem = {
+  id: number;
+  fullName: string;
+  gender: string | null;
+  dateOfBirth: string;
+  timeOfBirth: string;
+  birthPlace: string;
+  provider: string | null;
+  status: KundaliStatus;
+  ascendant: string | null;
+  rashi: string | null;
+  nakshatra: string | null;
+  currentDasha: string | null;
+  createdAt: string;
+};
+
+export type AdminKundaliReportPageResponse = {
+  content: AdminKundaliReportListItem[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+};
+
+export type AdminDeleteKundaliReportResponse = {
+  success: boolean;
+  message: string;
+  reportId: number | null;
+  deletedSections: number;
+  deletedReports: number;
+};
