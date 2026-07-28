@@ -272,3 +272,36 @@ body {
     font-size: 0.7rem;
   }
 }
+
+/* =====================================================
+   FOOTER CONSULTATION BUTTON FIX
+===================================================== */
+
+.kkc-footer .kkc-footer-btn,
+.kkc-footer .kkc-white-btn,
+.kkc-footer .kkc-btn-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  width: fit-content;
+  min-width: 210px;
+  border: 1px solid #ffffff;
+  border-radius: 999px;
+  padding: 0 24px;
+  background: #ffffff;
+  color: #050505 !important;
+  font-family: var(--kkc-sans);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.kkc-footer .kkc-footer-btn:hover,
+.kkc-footer .kkc-white-btn:hover,
+.kkc-footer .kkc-btn-white:hover {
+  background: transparent;
+  color: #ffffff !important;
+}
