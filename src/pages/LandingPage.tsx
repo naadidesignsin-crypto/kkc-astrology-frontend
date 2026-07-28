@@ -338,7 +338,7 @@ function LandingPage() {
 
         <div>
           <h4>Contact Us</h4>
-          <p>+91 XXXXXXXXXX</p>
+          <p>+91 7981041123</p>
           <p>info@kkc.org</p>
           <p>India</p>
 
