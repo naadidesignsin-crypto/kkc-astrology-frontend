@@ -4,15 +4,6 @@ import kkcLogo from "../assets/Logo.png";
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
 import PlanetOrbit from "../components/PlanetOrbit";
 
-const whatsappNumber =
-  import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919700051668";
-
-const whatsappMessage = encodeURIComponent(
-  "Namaste KKC, I want to book an astrology consultation."
-);
-
-const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-
 const services = [
   {
     title: "Kundali Generation",
@@ -20,35 +11,31 @@ const services = [
       "Generate a private KKC Order ID with basic birth details. Advanced report sections unlock only after admin approval.",
     icon: "☉",
     link: "/kundali",
-    external: false,
     cta: "Generate Kundali",
   },
   {
     title: "Astrology Consultation",
     description:
-      "Receive guided consultation based on birth details, planetary positions, timing and life direction.",
+      "Start by generating your KKC Order ID. Consultation uses your generated Kundali details for accurate guidance.",
     icon: "◎",
-    link: whatsappUrl,
-    external: true,
-    cta: "Book Consultation",
+    link: "/kundali",
+    cta: "Generate Order ID First",
   },
   {
     title: "Devotional Events",
     description:
       "Participate in spiritual gatherings, devotional activities and KKC community events.",
     icon: "◌",
-    link: whatsappUrl,
-    external: true,
-    cta: "Ask on WhatsApp",
+    link: "/kundali",
+    cta: "Start with Kundali",
   },
   {
     title: "Spiritual Guidance",
     description:
-      "Get practical guidance rooted in Vedic wisdom, conscious living and inner discipline.",
+      "Get practical guidance rooted in Vedic wisdom, conscious living and inner discipline after generating your Order ID.",
     icon: "✦",
-    link: whatsappUrl,
-    external: true,
-    cta: "Get Guidance",
+    link: "/kundali",
+    cta: "Generate Order ID",
   },
 ];
 
@@ -63,13 +50,13 @@ const kundaliSteps = [
     number: "02",
     title: "Get KKC Order ID",
     description:
-      "The system generates a unique Order ID for reopening the report later.",
+      "The system generates a unique Order ID for consultation and report access.",
   },
   {
     number: "03",
-    title: "Admin Reviews Access",
+    title: "Use Order ID for Consultation",
     description:
-      "Admin checks the report request and approves the required report sections.",
+      "Consultation requests are sent with Order ID, report ID and birth details.",
   },
   {
     number: "04",
@@ -93,9 +80,9 @@ const whyChoose = [
     icon: "♢",
   },
   {
-    title: "Clear Approval Flow",
+    title: "Order ID Consultation",
     description:
-      "Detailed sections are not exposed automatically. Admin controls what is visible to the user.",
+      "Consultation is connected to the generated report, not a generic message without birth data.",
     icon: "☆",
   },
   {
@@ -141,14 +128,9 @@ function LandingPage() {
           <a href="#contact">Contact</a>
         </nav>
 
-        <a
-          className="kkc-outline-btn"
-          href={whatsappUrl}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Book Consultation
-        </a>
+        <Link className="kkc-outline-btn" to="/kundali">
+          Generate Order ID
+        </Link>
       </header>
 
       <section className="kkc-hero kkc-hero-premium" id="home">
@@ -160,8 +142,8 @@ function LandingPage() {
           <h1>Kundalini Kriya Chaitanyam</h1>
 
           <p>
-            Generate your Kundali with a private KKC Order ID and receive
-            guided astrology consultation based on approved report sections.
+            Generate your Kundali with a private KKC Order ID. Consultation
+            requests are sent using your Order ID and birth details.
           </p>
 
           <div className="kkc-hero-actions">
@@ -169,21 +151,16 @@ function LandingPage() {
               Generate Kundali
             </Link>
 
-            <a
-              className="kkc-play-btn"
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <Link className="kkc-play-btn" to="/kundali">
               <span>✦</span>
-              Book Consultation
-            </a>
+              Generate Order ID for Consultation
+            </Link>
           </div>
 
           <div className="kkc-hero-trust-row">
             <span>Private Order ID access</span>
+            <span>Consultation uses report data</span>
             <span>Admin-approved report tabs</span>
-            <span>Consultation-ready flow</span>
           </div>
         </div>
 
@@ -215,13 +192,7 @@ function LandingPage() {
 
               <p>{service.description}</p>
 
-              {service.external ? (
-                <a href={service.link} target="_blank" rel="noreferrer">
-                  {service.cta} →
-                </a>
-              ) : (
-                <Link to={service.link}>{service.cta} →</Link>
-              )}
+              <Link to={service.link}>{service.cta} →</Link>
             </article>
           ))}
         </div>
@@ -231,11 +202,12 @@ function LandingPage() {
         <div className="kkc-kundali-flow-copy">
           <p className="kkc-eyebrow">KKC Order ID Flow</p>
 
-          <h2>Generate once. Reopen by Order ID. Unlock after approval.</h2>
+          <h2>Generate Order ID first. Use report data for consultation.</h2>
 
           <p>
-            Kundali reports are not exposed openly. Every user gets a generated
-            Order ID. Admin approval controls which sections become visible.
+            KKC consultation is connected to the generated Kundali report. The
+            user first generates an Order ID, then consultation messages include
+            Order ID, report ID, name and birth details.
           </p>
 
           <div className="kkc-kundali-flow-actions">
@@ -288,7 +260,7 @@ function LandingPage() {
       <section className="kkc-why" id="guidance">
         <SectionHeading
           eyebrow="Why choose KKC"
-          title="Clear process. Private access. Practical guidance."
+          title="Clear process. Private access. Order-based consultation."
           dark
         />
 
@@ -319,25 +291,20 @@ function LandingPage() {
       <section className="kkc-consultation-band">
         <div>
           <p className="kkc-eyebrow">Need personal guidance?</p>
-          <h2>Book a KKC astrology consultation</h2>
+          <h2>Generate Order ID before consultation</h2>
           <p>
-            Share your Order ID or birth details and get a guided explanation
-            through consultation.
+            Consultation requests should include Order ID and birth details.
+            Generate a Kundali first or search an existing report.
           </p>
         </div>
 
         <div className="kkc-consultation-actions">
-          <a
-            className="kkc-white-btn"
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Book on WhatsApp
-          </a>
+          <Link className="kkc-white-btn" to="/kundali">
+            Generate Order ID
+          </Link>
 
           <Link className="kkc-outline-btn" to="/kundali">
-            Generate Kundali First
+            Search Existing Report
           </Link>
         </div>
       </section>
@@ -363,32 +330,21 @@ function LandingPage() {
 
         <div>
           <h4>Our Services</h4>
-          <a href={whatsappUrl} target="_blank" rel="noreferrer">
-            Astrology Consultation
-          </a>
+          <Link to="/kundali">Astrology Consultation</Link>
           <Link to="/kundali">Kundali Generation</Link>
-          <a href={whatsappUrl} target="_blank" rel="noreferrer">
-            Online Consultation
-          </a>
-          <a href={whatsappUrl} target="_blank" rel="noreferrer">
-            Spiritual Guidance
-          </a>
+          <Link to="/kundali">Online Consultation</Link>
+          <Link to="/kundali">Spiritual Guidance</Link>
         </div>
 
         <div>
           <h4>Contact Us</h4>
-          <p>+91 XXXXXXXXXX</p>
+          <p>+91 7981041123</p>
           <p>info@kkc.org</p>
           <p>India</p>
 
-          <a
-            className="kkc-footer-btn"
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Book Consultation
-          </a>
+          <Link className="kkc-footer-btn" to="/kundali">
+            Generate Order ID
+          </Link>
         </div>
       </footer>
     </main>
