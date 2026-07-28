@@ -164,7 +164,7 @@ export type KundaliParasharaReportResponse = {
   sections: ParasharaSectionResponse[];
 };
 
-export type KundaliStatus = "PENDING" | "SUCCESS" | "FAILED";
+
 
 export type AdminKundaliReportListItem = {
   id: number;
