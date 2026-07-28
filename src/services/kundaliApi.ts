@@ -30,6 +30,14 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+function cleanOrderId(orderId: string) {
+  return orderId.trim().toUpperCase();
+}
+
+function orderQuery(orderId: string) {
+  return `orderId=${encodeURIComponent(cleanOrderId(orderId))}`;
+}
+
 export function generateKundali(
   payload: KundaliGenerateRequest
 ): Promise<KundaliGenerateResponse> {
@@ -39,43 +47,53 @@ export function generateKundali(
   });
 }
 
-export function getSummary(reportId: number): Promise<KundaliSummaryResponse> {
+export function getSummary(
+  reportId: number,
+  orderId: string
+): Promise<KundaliSummaryResponse> {
   return request<KundaliSummaryResponse>(
-    `/api/kundali/reports/${reportId}/summary`
+    `/api/kundali/reports/${reportId}/summary?${orderQuery(orderId)}`
   );
 }
 
 export function getReportByOrderId(
   orderId: string
 ): Promise<KundaliSummaryResponse> {
-  const cleanOrderId = orderId.trim().toUpperCase();
-
   return request<KundaliSummaryResponse>(
-    `/api/kundali/orders/${encodeURIComponent(cleanOrderId)}/summary`
+    `/api/kundali/orders/${encodeURIComponent(cleanOrderId(orderId))}/summary`
   );
 }
 
-export function getPlanets(reportId: number): Promise<KundaliPlanetsResponse> {
+export function getPlanets(
+  reportId: number,
+  orderId: string
+): Promise<KundaliPlanetsResponse> {
   return request<KundaliPlanetsResponse>(
-    `/api/kundali/reports/${reportId}/planets`
+    `/api/kundali/reports/${reportId}/planets?${orderQuery(orderId)}`
   );
 }
 
-export function getDasha(reportId: number): Promise<KundaliDashaResponse> {
+export function getDasha(
+  reportId: number,
+  orderId: string
+): Promise<KundaliDashaResponse> {
   return request<KundaliDashaResponse>(
-    `/api/kundali/reports/${reportId}/dasha`
+    `/api/kundali/reports/${reportId}/dasha?${orderQuery(orderId)}`
   );
 }
 
-export function getDosha(reportId: number): Promise<KundaliDoshaResponse> {
+export function getDosha(
+  reportId: number,
+  orderId: string
+): Promise<KundaliDoshaResponse> {
   return request<KundaliDoshaResponse>(
-    `/api/kundali/reports/${reportId}/dosha`
+    `/api/kundali/reports/${reportId}/dosha?${orderQuery(orderId)}`
   );
 }
 
-export async function downloadKundaliPdf(reportId: number) {
+export async function downloadKundaliPdf(reportId: number, orderId: string) {
   const response = await fetch(
-    `${API_BASE_URL}/api/kundali/reports/${reportId}/pdf`
+    `${API_BASE_URL}/api/kundali/reports/${reportId}/pdf?${orderQuery(orderId)}`
   );
 
   if (!response.ok) {
@@ -88,7 +106,7 @@ export async function downloadKundaliPdf(reportId: number) {
 
   const link = document.createElement("a");
   link.href = url;
-  link.download = `kkc-kundali-report-${reportId}.pdf`;
+  link.download = `kkc-kundali-report-${cleanOrderId(orderId)}.pdf`;
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -97,25 +115,28 @@ export async function downloadKundaliPdf(reportId: number) {
 }
 
 export async function getHouses(
-  reportId: number
+  reportId: number,
+  orderId: string
 ): Promise<KundaliHouseResponse> {
   return request<KundaliHouseResponse>(
-    `/api/kundali/reports/${reportId}/houses`
+    `/api/kundali/reports/${reportId}/houses?${orderQuery(orderId)}`
   );
 }
 
 export async function getNavamsa(
-  reportId: number
+  reportId: number,
+  orderId: string
 ): Promise<KundaliNavamsaResponse> {
   return request<KundaliNavamsaResponse>(
-    `/api/kundali/reports/${reportId}/navamsa`
+    `/api/kundali/reports/${reportId}/navamsa?${orderQuery(orderId)}`
   );
 }
 
 export async function getParashara(
-  reportId: number
+  reportId: number,
+  orderId: string
 ): Promise<KundaliParasharaReportResponse> {
   return request<KundaliParasharaReportResponse>(
-    `/api/kundali/reports/${reportId}/parashara`
+    `/api/kundali/reports/${reportId}/parashara?${orderQuery(orderId)}`
   );
 }

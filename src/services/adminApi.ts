@@ -80,7 +80,8 @@ export async function verifyAdminLogin(username: string, password: string) {
 export function getAdminKundaliReports(
   page = 0,
   size = 20,
-  status?: KundaliStatus | ""
+  status?: KundaliStatus | "",
+  search?: string
 ): Promise<AdminKundaliReportPageResponse> {
   const params = new URLSearchParams({
     page: String(page),
@@ -89,6 +90,10 @@ export function getAdminKundaliReports(
 
   if (status) {
     params.set("status", status);
+  }
+
+  if (search?.trim()) {
+    params.set("search", search.trim());
   }
 
   return adminRequest(`/api/admin/kundali/reports?${params.toString()}`);
