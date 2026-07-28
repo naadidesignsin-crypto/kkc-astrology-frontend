@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
@@ -7,6 +8,25 @@ import AdminKundaliReportsPage from "./pages/AdminKundaliReportsPage";
 import "./styles/kkc/index.css";
 
 function App() {
+    useEffect(() => {
+        const loader = document.getElementById("kkc-initial-loader");
+
+        if (!loader) {
+          return;
+        }
+
+        const timer = window.setTimeout(() => {
+          loader.classList.add("kkc-initial-loader-hidden");
+
+          window.setTimeout(() => {
+            loader.remove();
+          }, 650);
+        }, 1100);
+
+        return () => {
+          window.clearTimeout(timer);
+        };
+      }, []);
   return (
     <BrowserRouter>
       <Routes>
