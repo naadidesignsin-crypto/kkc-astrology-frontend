@@ -139,7 +139,7 @@ function LandingPage() {
             Vedic Astrology • Kundali Reports • Consultation
           </p>
 
-          <h1>Vedic Astrology Consultation and Kundali Guidance</h1>
+          <h1>Kundalini Kriya Chaitanyam</h1>
 
           <p>
             Generate your Kundali with a private KKC Order ID. Consultation
