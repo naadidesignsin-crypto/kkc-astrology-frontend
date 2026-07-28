@@ -1,11 +1,13 @@
 import type {
   AdminDeleteKundaliReportResponse,
+  AdminKundaliReportApprovalRequest,
   AdminKundaliReportPageResponse,
+  KundaliGenerateResponse,
   KundaliStatus,
 } from "../types/kundali";
 
 const API_BASE_URL =
-  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8080";
+  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8081";
 
 const ADMIN_AUTH_KEY = "kkc_admin_basic_auth";
 
@@ -90,6 +92,16 @@ export function getAdminKundaliReports(
   }
 
   return adminRequest(`/api/admin/kundali/reports?${params.toString()}`);
+}
+
+export function updateAdminKundaliReportAccess(
+  reportId: number,
+  payload: AdminKundaliReportApprovalRequest
+): Promise<KundaliGenerateResponse> {
+  return adminRequest(`/api/admin/kundali/reports/${reportId}/access`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
 }
 
 export function deleteAdminKundaliReport(

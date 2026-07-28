@@ -7,11 +7,46 @@ import {
   deleteAllAdminKundaliReports,
   getAdminAuth,
   getAdminKundaliReports,
+  updateAdminKundaliReportAccess,
 } from "../services/adminApi";
 import type {
+  AdminKundaliReportApprovalRequest,
   AdminKundaliReportListItem,
   KundaliStatus,
 } from "../types/kundali";
+
+const accessFields: {
+  key: keyof AdminKundaliReportApprovalRequest;
+  label: string;
+}[] = [
+  { key: "showSummary", label: "Summary / Basic Birth Details" },
+  { key: "showConsultation", label: "Consultation" },
+  { key: "showBirthChart", label: "Birth Chart" },
+  { key: "showPlanets", label: "Planets" },
+  { key: "showHouses", label: "Houses" },
+  { key: "showNavamsa", label: "Navamsa" },
+  { key: "showParashara", label: "Parāśara" },
+  { key: "showDasha", label: "Dasha" },
+  { key: "showDosha", label: "Dosha" },
+  { key: "showPdf", label: "PDF" },
+];
+
+function toAccessPayload(
+  report: AdminKundaliReportListItem
+): AdminKundaliReportApprovalRequest {
+  return {
+    showSummary: report.showSummary,
+    showConsultation: report.showConsultation,
+    showBirthChart: report.showBirthChart,
+    showPlanets: report.showPlanets,
+    showHouses: report.showHouses,
+    showNavamsa: report.showNavamsa,
+    showParashara: report.showParashara,
+    showDasha: report.showDasha,
+    showDosha: report.showDosha,
+    showPdf: report.showPdf,
+  };
+}
 
 function AdminKundaliReportsPage() {
   const navigate = useNavigate();
@@ -21,6 +56,10 @@ function AdminKundaliReportsPage() {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
+  const [selectedReport, setSelectedReport] =
+    useState<AdminKundaliReportListItem | null>(null);
+  const [accessDraft, setAccessDraft] =
+    useState<AdminKundaliReportApprovalRequest | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState("");
@@ -60,9 +99,82 @@ function AdminKundaliReportsPage() {
     }
   }
 
+  function openAccessEditor(report: AdminKundaliReportListItem) {
+    setSelectedReport(report);
+    setAccessDraft(toAccessPayload(report));
+    setError("");
+  }
+
+  function applyBasicApproval() {
+    setAccessDraft({
+      showSummary: true,
+      showConsultation: true,
+      showBirthChart: false,
+      showPlanets: false,
+      showHouses: false,
+      showNavamsa: false,
+      showParashara: false,
+      showDasha: false,
+      showDosha: false,
+      showPdf: false,
+    });
+  }
+
+  function applyStandardApproval() {
+    setAccessDraft({
+      showSummary: true,
+      showConsultation: true,
+      showBirthChart: true,
+      showPlanets: true,
+      showHouses: true,
+      showNavamsa: false,
+      showParashara: false,
+      showDasha: false,
+      showDosha: false,
+      showPdf: false,
+    });
+  }
+
+  function applyFullApproval() {
+    setAccessDraft({
+      showSummary: true,
+      showConsultation: true,
+      showBirthChart: true,
+      showPlanets: true,
+      showHouses: true,
+      showNavamsa: true,
+      showParashara: true,
+      showDasha: true,
+      showDosha: true,
+      showPdf: true,
+    });
+  }
+
+  async function saveAccess() {
+    if (!selectedReport || !accessDraft) {
+      return;
+    }
+
+    try {
+      setActionLoading(true);
+      setError("");
+
+      await updateAdminKundaliReportAccess(selectedReport.id, accessDraft);
+      setSelectedReport(null);
+      setAccessDraft(null);
+      await loadReports(page, status);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to update report access."
+      );
+    } finally {
+      setActionLoading(false);
+    }
+  }
+
   async function handleDeleteReport(report: AdminKundaliReportListItem) {
     const confirmed = window.confirm(
-      `Delete Kundali report #${report.id} for ${report.fullName}?`
+      `Delete Kundali report #${report.id} / Order ID ${report.orderId} for ${report.fullName}?`
     );
 
     if (!confirmed) {
@@ -130,7 +242,8 @@ function AdminKundaliReportsPage() {
             <p className="report-section-kicker">Admin Reports</p>
             <h1>Kundali generated reports</h1>
             <p>
-              Private report list. Only admin users should access this section.
+              Private admin area. Reports are listed by Order ID and section
+              visibility is controlled by admin approval.
             </p>
           </div>
 
@@ -182,13 +295,12 @@ function AdminKundaliReportsPage() {
             <table className="kkc-admin-table">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Order ID</th>
                   <th>Name</th>
                   <th>Birth Details</th>
                   <th>Place</th>
-                  <th>Rashi</th>
-                  <th>Nakshatra</th>
                   <th>Status</th>
+                  <th>Visible Sections</th>
                   <th>Created</th>
                   <th>Action</th>
                 </tr>
@@ -197,34 +309,67 @@ function AdminKundaliReportsPage() {
               <tbody>
                 {reports.map((report) => (
                   <tr key={report.id}>
-                    <td>#{report.id}</td>
+                    <td>
+                      <strong>{report.orderId}</strong>
+                      <span>Report #{report.id}</span>
+                    </td>
+
                     <td>
                       <strong>{report.fullName}</strong>
                       <span>{report.gender || "-"}</span>
                     </td>
+
                     <td>
                       {report.dateOfBirth}
                       <br />
                       {report.timeOfBirth}
                     </td>
+
                     <td>{report.birthPlace}</td>
-                    <td>{report.rashi || "-"}</td>
-                    <td>{report.nakshatra || "-"}</td>
+
                     <td>
                       <span className={`admin-status ${report.status.toLowerCase()}`}>
                         {report.status}
                       </span>
                     </td>
-                    <td>{new Date(report.createdAt).toLocaleString("en-IN")}</td>
+
                     <td>
-                      <button
-                        type="button"
-                        className="danger small"
-                        disabled={actionLoading}
-                        onClick={() => handleDeleteReport(report)}
-                      >
-                        Delete
-                      </button>
+                      <div className="admin-visible-tags">
+                        {report.showSummary && <span>Summary</span>}
+                        {report.showConsultation && <span>Consult</span>}
+                        {report.showBirthChart && <span>Chart</span>}
+                        {report.showPlanets && <span>Planets</span>}
+                        {report.showHouses && <span>Houses</span>}
+                        {report.showNavamsa && <span>Navamsa</span>}
+                        {report.showParashara && <span>Parāśara</span>}
+                        {report.showDasha && <span>Dasha</span>}
+                        {report.showDosha && <span>Dosha</span>}
+                        {report.showPdf && <span>PDF</span>}
+                      </div>
+                    </td>
+
+                    <td>{new Date(report.createdAt).toLocaleString("en-IN")}</td>
+
+                    <td>
+                      <div className="admin-row-actions">
+                        <button
+                          type="button"
+                          className="small"
+                          disabled={actionLoading}
+                          onClick={() => openAccessEditor(report)}
+                        >
+                          Manage Access
+                        </button>
+
+                        <button
+                          type="button"
+                          className="danger small"
+                          disabled={actionLoading}
+                          onClick={() => handleDeleteReport(report)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -255,6 +400,76 @@ function AdminKundaliReportsPage() {
           </button>
         </div>
       </section>
+
+      {selectedReport && accessDraft && (
+        <section className="kkc-admin-access-panel">
+          <div className="kkc-admin-access-card">
+            <div className="kkc-admin-head">
+              <div>
+                <p className="report-section-kicker">Section Approval</p>
+                <h2>{selectedReport.fullName}</h2>
+                <p>Order ID: {selectedReport.orderId}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedReport(null);
+                  setAccessDraft(null);
+                }}
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="approval-presets">
+              <button type="button" onClick={applyBasicApproval}>
+                Basic
+              </button>
+
+              <button type="button" onClick={applyStandardApproval}>
+                Standard
+              </button>
+
+              <button type="button" onClick={applyFullApproval}>
+                Full
+              </button>
+            </div>
+
+            <div className="approval-checkbox-grid">
+              {accessFields.map((field) => (
+                <label key={field.key}>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(accessDraft[field.key])}
+                    onChange={(event) =>
+                      setAccessDraft((current) =>
+                        current
+                          ? {
+                              ...current,
+                              [field.key]: event.target.checked,
+                            }
+                          : current
+                      )
+                    }
+                  />
+
+                  <span>{field.label}</span>
+                </label>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="save-access-btn"
+              onClick={saveAccess}
+              disabled={actionLoading}
+            >
+              {actionLoading ? "Saving..." : "Save Access"}
+            </button>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

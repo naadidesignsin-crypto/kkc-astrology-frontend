@@ -1,5 +1,4 @@
 import type {
-  KundaliStatus,
   KundaliDashaResponse,
   KundaliDoshaResponse,
   KundaliGenerateRequest,
@@ -12,7 +11,7 @@ import type {
 } from "../types/kundali";
 
 const API_BASE_URL =
-  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8080";
+  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8081";
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${url}`, {
@@ -99,76 +98,23 @@ export async function downloadKundaliPdf(reportId: number) {
 export async function getHouses(
   reportId: number
 ): Promise<KundaliHouseResponse> {
-  const response = await fetch(
-    `${API_BASE_URL}/api/kundali/reports/${reportId}/houses`
+  return request<KundaliHouseResponse>(
+    `/api/kundali/reports/${reportId}/houses`
   );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Unable to fetch house interpretations");
-  }
-
-  return response.json();
 }
 
 export async function getNavamsa(
   reportId: number
 ): Promise<KundaliNavamsaResponse> {
-  const response = await fetch(
-    `${API_BASE_URL}/api/kundali/reports/${reportId}/navamsa`
+  return request<KundaliNavamsaResponse>(
+    `/api/kundali/reports/${reportId}/navamsa`
   );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Unable to fetch Navamsa details");
-  }
-
-  return response.json();
 }
 
 export async function getParashara(
   reportId: number
 ): Promise<KundaliParasharaReportResponse> {
-  const response = await fetch(
-    `${API_BASE_URL}/api/kundali/reports/${reportId}/parashara`
+  return request<KundaliParasharaReportResponse>(
+    `/api/kundali/reports/${reportId}/parashara`
   );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Unable to fetch Parashara interpretation");
-  }
-
-  return response.json();
 }
-
-export type AdminKundaliReportListItem = {
-  id: number;
-  fullName: string;
-  gender: string | null;
-  dateOfBirth: string;
-  timeOfBirth: string;
-  birthPlace: string;
-  provider: string | null;
-  status: KundaliStatus;
-  ascendant: string | null;
-  rashi: string | null;
-  nakshatra: string | null;
-  currentDasha: string | null;
-  createdAt: string;
-};
-
-export type AdminKundaliReportPageResponse = {
-  content: AdminKundaliReportListItem[];
-  page: number;
-  size: number;
-  totalElements: number;
-  totalPages: number;
-};
-
-export type AdminDeleteKundaliReportResponse = {
-  success: boolean;
-  message: string;
-  reportId: number | null;
-  deletedSections: number;
-  deletedReports: number;
-};

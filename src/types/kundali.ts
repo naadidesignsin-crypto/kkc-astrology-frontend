@@ -1,6 +1,20 @@
 export type KundaliStatus = "PENDING" | "SUCCESS" | "FAILED";
 
+export type KundaliReportAccess = {
+  showSummary: boolean;
+  showConsultation: boolean;
+  showBirthChart: boolean;
+  showPlanets: boolean;
+  showHouses: boolean;
+  showNavamsa: boolean;
+  showParashara: boolean;
+  showDasha: boolean;
+  showDosha: boolean;
+  showPdf: boolean;
+};
+
 export interface KundaliGenerateRequest {
+  orderId: string;
   fullName: string;
   gender: string;
   dateOfBirth: string;
@@ -12,16 +26,18 @@ export interface KundaliGenerateRequest {
   language: string;
 }
 
-export interface KundaliGenerateResponse {
+export interface KundaliGenerateResponse extends KundaliReportAccess {
   id: number;
+  orderId: string;
   fullName: string;
   status: KundaliStatus;
   provider: string;
   errorMessage?: string | null;
 }
 
-export interface KundaliSummaryResponse {
+export interface KundaliSummaryResponse extends KundaliReportAccess {
   id: number;
+  orderId: string;
   fullName: string;
   gender: string;
   dateOfBirth: string;
@@ -36,7 +52,6 @@ export interface KundaliSummaryResponse {
   nakshatra?: string | null;
   nakshatraLord?: string | null;
   charan?: string | null;
-
   tithi?: string | null;
   yoga?: string | null;
   karan?: string | null;
@@ -154,20 +169,17 @@ export type KundaliParasharaReportResponse = {
   reportId: number;
   sectionType: string;
   status: string;
-
   lagna: string | null;
   rashi: string | null;
   nakshatra: string | null;
   currentDasha: string | null;
   navamsaAscendant: string | null;
-
   sections: ParasharaSectionResponse[];
 };
 
-
-
-export type AdminKundaliReportListItem = {
+export type AdminKundaliReportListItem = KundaliReportAccess & {
   id: number;
+  orderId: string;
   fullName: string;
   gender: string | null;
   dateOfBirth: string;
@@ -197,3 +209,5 @@ export type AdminDeleteKundaliReportResponse = {
   deletedSections: number;
   deletedReports: number;
 };
+
+export type AdminKundaliReportApprovalRequest = KundaliReportAccess;
