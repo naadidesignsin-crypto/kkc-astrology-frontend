@@ -1,4 +1,5 @@
 import type {
+  KundaliStatus,
   KundaliDashaResponse,
   KundaliDoshaResponse,
   KundaliGenerateRequest,
