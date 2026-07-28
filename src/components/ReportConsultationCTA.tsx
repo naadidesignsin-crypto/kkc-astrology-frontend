@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+
+import { createConsultationRequest, getLatestConsultationRequest } from "../services/kundaliConsultationApi";
+import type { KundaliConsultationResponse } from "../types/kundaliConsultation";
 import type { KundaliSummaryResponse } from "../types/kundali";
 
 type ReportConsultationCTAProps = {
@@ -7,32 +11,116 @@ type ReportConsultationCTAProps = {
   description?: string;
 };
 
-const whatsappNumber =
-  import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919700051668";
-
 function ReportConsultationCTA({
   summary,
   sectionName,
   title = "Need expert interpretation?",
-  description = "Share this section with KKC for a clear astrology consultation and practical guidance.",
+  description = "KKC will use the saved Order ID and backend birth details to prepare the WhatsApp consultation message.",
 }: ReportConsultationCTAProps) {
-  const message = encodeURIComponent(
-    `Namaste KKC, I want consultation for ${sectionName} in Kundali report ID ${summary.id}. Name: ${summary.fullName}. Birth place: ${summary.birthPlace}.`
-  );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [latestMessage, setLatestMessage] =
+    useState<KundaliConsultationResponse | null>(null);
+  const [showMessage, setShowMessage] = useState(false);
 
-  const consultationUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadLatestMessage() {
+      if (!summary.orderId) {
+        return;
+      }
+
+      try {
+        const response = await getLatestConsultationRequest(summary.orderId);
+
+        if (!cancelled) {
+          setLatestMessage(response);
+        }
+      } catch {
+        if (!cancelled) {
+          setLatestMessage(null);
+        }
+      }
+    }
+
+    void loadLatestMessage();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [summary.orderId]);
+
+  async function handleConsultationClick() {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await createConsultationRequest(
+        summary.orderId,
+        sectionName
+      );
+
+      setLatestMessage(response);
+      window.open(response.whatsappUrl, "_blank", "noopener,noreferrer");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to create consultation WhatsApp message."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section className="report-consultation-cta">
       <div>
         <p className="report-section-kicker">Consultation Support</p>
+
         <h4>{title}</h4>
+
         <p>{description}</p>
+
+        <small>
+          Order ID: <strong>{summary.orderId || "-"}</strong>
+        </small>
+
+        {latestMessage && (
+          <small>
+            Last saved consultation message: #{latestMessage.consultationId}
+          </small>
+        )}
+
+        {error && <small className="kkc-form-error">{error}</small>}
       </div>
 
-      <a href={consultationUrl} target="_blank" rel="noreferrer">
-        Consult on WhatsApp
-      </a>
+      <div className="report-consultation-actions">
+        <button
+          type="button"
+          onClick={handleConsultationClick}
+          disabled={loading || !summary.orderId}
+        >
+          {loading ? "Preparing Message..." : "Send Details on WhatsApp"}
+        </button>
+
+        {latestMessage && (
+          <button
+            type="button"
+            className="report-consultation-secondary"
+            onClick={() => setShowMessage((current) => !current)}
+          >
+            {showMessage ? "Hide Last Message" : "View Last Message"}
+          </button>
+        )}
+      </div>
+
+      {showMessage && latestMessage && (
+        <pre className="report-consultation-message">
+          {latestMessage.whatsappMessage}
+        </pre>
+      )}
     </section>
   );
 }

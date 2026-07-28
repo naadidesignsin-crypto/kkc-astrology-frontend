@@ -3905,3 +3905,65 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================================
+   BACKEND-SAVED WHATSAPP CONSULTATION MESSAGE UI
+   Append this block to src/styles/kkc/05-report.css
+===================================================== */
+
+.report-consultation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.report-consultation-cta button,
+.report-consultation-actions button,
+.report-consultation-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0 18px;
+  background: #ffffff;
+  color: #050505;
+  font-family: var(--kkc-sans);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.report-consultation-cta button:hover,
+.report-consultation-actions button:hover,
+.report-consultation-secondary:hover {
+  background: transparent;
+  color: #ffffff;
+}
+
+.report-consultation-cta button:disabled,
+.report-consultation-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.report-consultation-message {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-height: 360px;
+  margin: 18px 0 0;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.84);
+  padding: 18px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
