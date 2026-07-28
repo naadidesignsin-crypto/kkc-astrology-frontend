@@ -160,3 +160,148 @@ body {
   font-weight: 800;
   letter-spacing: 0.14em;
 }
+
+/* =====================================================
+   INITIAL KKC SPLASH LOADER
+   Black and white loader shown before React mounts.
+===================================================== */
+
+#kkc-initial-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.09),
+      transparent 36%
+    ),
+    #020202;
+  transition:
+    opacity 650ms ease,
+    visibility 650ms ease;
+}
+
+#kkc-initial-loader.kkc-initial-loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.kkc-initial-loader-card {
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  text-align: center;
+  animation: kkc-loader-rise 900ms ease both;
+}
+
+.kkc-initial-loader-card img {
+  width: clamp(190px, 23vw, 300px);
+  height: clamp(190px, 23vw, 300px);
+  object-fit: contain;
+  border-radius: 999px;
+  filter:
+    grayscale(1)
+    brightness(1.32)
+    contrast(1.2)
+    drop-shadow(0 0 26px rgba(255, 255, 255, 0.34))
+    drop-shadow(0 0 90px rgba(255, 255, 255, 0.13));
+  animation: kkc-loader-pulse 1.8s ease-in-out infinite;
+}
+
+.kkc-initial-loader-card p {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-display, Georgia, serif);
+  font-size: clamp(1.15rem, 3vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: 0.045em;
+}
+
+.kkc-initial-loader-card span {
+  color: rgba(255, 255, 255, 0.62);
+  font-family: var(--kkc-sans, system-ui, sans-serif);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@keyframes kkc-loader-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes kkc-loader-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.94;
+  }
+
+  50% {
+    transform: scale(1.045);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .kkc-initial-loader-card {
+    gap: 14px;
+  }
+
+  .kkc-initial-loader-card img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .kkc-initial-loader-card p {
+    font-size: 1.08rem;
+  }
+
+  .kkc-initial-loader-card span {
+    font-size: 0.7rem;
+  }
+}
+
+/* =====================================================
+   FOOTER CONSULTATION BUTTON FIX
+===================================================== */
+
+.kkc-footer .kkc-footer-btn,
+.kkc-footer .kkc-white-btn,
+.kkc-footer .kkc-btn-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  width: fit-content;
+  min-width: 210px;
+  border: 1px solid #ffffff;
+  border-radius: 999px;
+  padding: 0 24px;
+  background: #ffffff;
+  color: #050505 !important;
+  font-family: var(--kkc-sans);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.kkc-footer .kkc-footer-btn:hover,
+.kkc-footer .kkc-white-btn:hover,
+.kkc-footer .kkc-btn-white:hover {
+  background: transparent;
+  color: #ffffff !important;
+}

@@ -56,6 +56,7 @@
 }
 
 .kkc-admin-form input,
+.kkc-admin-toolbar input,
 .kkc-admin-toolbar select {
   min-height: 50px;
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -70,7 +71,10 @@
 .kkc-admin-form button,
 .kkc-admin-actions button,
 .kkc-admin-pagination button,
-.kkc-admin-table button {
+.kkc-admin-toolbar button,
+.kkc-admin-table button,
+.kkc-admin-access-card > button,
+.save-access-btn {
   min-height: 44px;
   border: 1px solid #ffcf7a;
   border-radius: 999px;
@@ -87,7 +91,9 @@
 .kkc-admin-form button:disabled,
 .kkc-admin-actions button:disabled,
 .kkc-admin-pagination button:disabled,
-.kkc-admin-table button:disabled {
+.kkc-admin-toolbar button:disabled,
+.kkc-admin-table button:disabled,
+.save-access-btn:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -126,14 +132,21 @@
   margin: 28px 0;
 }
 
+.kkc-admin-toolbar-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 180px auto auto auto;
+  align-items: end;
+}
+
 .kkc-admin-toolbar label {
-  min-width: 220px;
+  min-width: 0;
 }
 
 .kkc-admin-toolbar strong {
   color: #ffcf7a;
   font-size: 0.9rem;
   font-weight: 900;
+  align-self: center;
 }
 
 .kkc-admin-table-wrap {
@@ -144,7 +157,7 @@
 
 .kkc-admin-table {
   width: 100%;
-  min-width: 1080px;
+  min-width: 1180px;
   border-collapse: collapse;
 }
 
@@ -178,7 +191,8 @@
   font-size: 0.78rem;
 }
 
-.admin-status {
+.admin-status,
+.admin-access-badge {
   display: inline-flex !important;
   width: fit-content;
   border-radius: 999px;
@@ -203,6 +217,47 @@
   color: #ffcf7a !important;
 }
 
+.admin-access-badge.basic {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.admin-access-badge.standard {
+  background: rgba(255, 207, 122, 0.14);
+  color: #ffcf7a !important;
+}
+
+.admin-access-badge.full {
+  background: rgba(76, 255, 159, 0.14);
+  color: #95ffc6 !important;
+}
+
+.admin-access-badge.custom {
+  background: rgba(140, 180, 255, 0.14);
+  color: #b8ceff !important;
+}
+
+.admin-visible-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-visible-tags span {
+  display: inline-flex !important;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: rgba(255, 207, 122, 0.12);
+  color: #ffcf7a !important;
+  font-size: 0.66rem !important;
+  font-weight: 900;
+}
+
+.admin-row-actions {
+  display: grid;
+  gap: 8px;
+}
+
 .kkc-admin-pagination {
   display: flex;
   justify-content: center;
@@ -214,30 +269,6 @@
 .kkc-admin-pagination span {
   color: rgba(255, 255, 255, 0.62);
   font-weight: 800;
-}
-
-@media (max-width: 760px) {
-  .kkc-admin-page {
-    padding: 28px 14px;
-  }
-
-  .kkc-admin-login-card,
-  .kkc-admin-reports-card {
-    padding: 22px;
-    border-radius: 22px;
-  }
-
-  .kkc-admin-head,
-  .kkc-admin-toolbar,
-  .kkc-admin-pagination {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .kkc-admin-actions button,
-  .kkc-admin-pagination button {
-    width: 100%;
-  }
 }
 
 .kkc-admin-access-panel {
@@ -278,8 +309,7 @@
   margin: 22px 0;
 }
 
-.approval-presets button,
-.save-access-btn {
+.approval-presets button {
   min-height: 42px;
   border: 1px solid #ffcf7a;
   border-radius: 999px;
@@ -291,6 +321,13 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.admin-approval-note {
+  border: 1px solid rgba(255, 207, 122, 0.2);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(255, 207, 122, 0.08);
 }
 
 .approval-checkbox-grid {
@@ -318,28 +355,117 @@
   accent-color: #ffcf7a;
 }
 
-.admin-visible-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.kkc-order-search-card,
+.kkc-order-save-card {
+  display: grid;
+  gap: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  padding: 28px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+    #101010;
+  color: #ffffff;
 }
 
-.admin-visible-tags span {
-  display: inline-flex !important;
-  border-radius: 999px;
-  padding: 5px 9px;
-  background: rgba(255, 207, 122, 0.12);
-  color: #ffcf7a !important;
-  font-size: 0.66rem !important;
-  font-weight: 900;
+.kkc-order-search-card {
+  grid-template-columns: 1.2fr 1fr auto;
+  align-items: end;
 }
 
-.admin-row-actions {
+.kkc-order-search-card h2,
+.kkc-order-save-card h3 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.kkc-order-search-card label {
   display: grid;
   gap: 8px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-@media (max-width: 640px) {
+.kkc-order-search-card input {
+  min-height: 52px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  padding: 0 16px;
+  background: #050505;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.kkc-order-search-card button,
+.kkc-order-save-card button {
+  min-height: 52px;
+  border: 1px solid #ffcf7a;
+  border-radius: 999px;
+  padding: 0 22px;
+  background: #ffcf7a;
+  color: #050505;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.kkc-order-search-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.kkc-order-save-card {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.kkc-order-save-card small {
+  color: #ffcf7a;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .kkc-admin-toolbar-grid,
+  .kkc-order-search-card,
+  .kkc-order-save-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .kkc-admin-page {
+    padding: 28px 14px;
+  }
+
+  .kkc-admin-login-card,
+  .kkc-admin-reports-card,
+  .kkc-admin-access-card {
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .kkc-admin-head,
+  .kkc-admin-toolbar,
+  .kkc-admin-pagination {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-admin-actions button,
+  .kkc-admin-pagination button,
+  .kkc-admin-toolbar button {
+    width: 100%;
+  }
+
   .approval-checkbox-grid {
     grid-template-columns: 1fr;
   }

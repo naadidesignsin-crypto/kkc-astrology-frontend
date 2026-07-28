@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 import kkcLogo from "../assets/Logo.png";
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
-import PlanetOrbit from "../components/PlanetOrbit"
+import PlanetOrbit from "../components/PlanetOrbit";
 
 const whatsappNumber =
-  import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919999999999";
+  import.meta.env.VITE_KKC_WHATSAPP_NUMBER || "919700051668";
 
 const whatsappMessage = encodeURIComponent(
   "Namaste KKC, I want to book an astrology consultation."
@@ -15,88 +15,117 @@ const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
 const services = [
   {
-    title: "Astrology Consultation",
-    description:
-      "Personalized predictions and remedies based on your birth chart.",
-    icon: "◎",
-    link: whatsappUrl,
-    external: true,
-  },
-  {
     title: "Kundali Generation",
     description:
-      "Generate Lagna, Rashi, Nakshatra, planetary positions, Dasha and Dosha details.",
+      "Generate a private KKC Order ID with basic birth details. Advanced report sections unlock only after admin approval.",
     icon: "☉",
     link: "/kundali",
     external: false,
+    cta: "Generate Kundali",
   },
   {
-    title: "Online Consultation",
+    title: "Astrology Consultation",
     description:
-      "Connect with our experts from anywhere through online consultation.",
-    icon: "▣",
+      "Receive guided consultation based on birth details, planetary positions, timing and life direction.",
+    icon: "◎",
     link: whatsappUrl,
     external: true,
+    cta: "Book Consultation",
   },
   {
-    title: "Learn Astrology",
+    title: "Devotional Events",
     description:
-      "Deepen your understanding of Vedic astrology and spiritual timing.",
-    icon: "▤",
+      "Participate in spiritual gatherings, devotional activities and KKC community events.",
+    icon: "◌",
     link: whatsappUrl,
     external: true,
+    cta: "Ask on WhatsApp",
+  },
+  {
+    title: "Spiritual Guidance",
+    description:
+      "Get practical guidance rooted in Vedic wisdom, conscious living and inner discipline.",
+    icon: "✦",
+    link: whatsappUrl,
+    external: true,
+    cta: "Get Guidance",
+  },
+];
+
+const kundaliSteps = [
+  {
+    number: "01",
+    title: "Enter Birth Details",
+    description:
+      "Submit name, gender, date, time and birth place with accurate location.",
+  },
+  {
+    number: "02",
+    title: "Get KKC Order ID",
+    description:
+      "The system generates a unique Order ID for reopening the report later.",
+  },
+  {
+    number: "03",
+    title: "Admin Reviews Access",
+    description:
+      "Admin checks the report request and approves the required report sections.",
+  },
+  {
+    number: "04",
+    title: "Approved Tabs Unlock",
+    description:
+      "Only approved tabs like planets, houses, Dasha, Dosha or PDF become visible.",
   },
 ];
 
 const whyChoose = [
   {
-    title: "Authentic Guidance",
+    title: "Vedic-Based Guidance",
     description:
-      "Rooted in ancient Vedic knowledge and spiritual practices.",
+      "Consultation flow is structured around birth details, planetary timing and traditional reading methods.",
     icon: "♙",
   },
   {
-    title: "Trusted Expertise",
+    title: "Private Report Access",
     description:
-      "Guidance focused on clarity, timing, and practical life direction.",
+      "Every generated Kundali gets a unique Order ID. Users can reopen only their own approved report.",
     icon: "♢",
   },
   {
-    title: "Personalized Solutions",
+    title: "Clear Approval Flow",
     description:
-      "Readings and remedies based on your unique birth details.",
+      "Detailed sections are not exposed automatically. Admin controls what is visible to the user.",
     icon: "☆",
   },
   {
-    title: "Spiritual Transformation",
+    title: "Practical Direction",
     description:
-      "Supporting a balanced, conscious, and purposeful life.",
+      "The focus is not just information, but clear guidance for decisions, timing and personal clarity.",
     icon: "♡",
   },
 ];
 
-const testimonials = [
-  {
-    name: "Anitha Reddy",
-    text: "KKC guidance helped me understand my current life phase with clarity.",
-  },
-  {
-    name: "Ramesh Kumar",
-    text: "The consultation gave practical direction for important decisions.",
-  },
-  {
-    name: "Divya Sharma",
-    text: "The astrology explanation was clear, structured, and meaningful.",
-  },
+const guidanceAreas = [
+  "Birth Chart Reading",
+  "Planetary Positions",
+  "House Analysis",
+  "Navamsa / D9",
+  "Vimshottari Dasha",
+  "Mangal Dosha",
+  "Parāśara Reading",
+  "PDF Report Access",
 ];
 
 function LandingPage() {
   return (
     <main className="kkc-landing">
-    <BlackWhiteCosmicBackground />
+      <BlackWhiteCosmicBackground />
+
       <header className="kkc-header">
         <Link to="/" className="kkc-brand" aria-label="KKC Home">
           <img src={kkcLogo} alt="KKC Logo" />
+
           <span>
             <strong>KKC</strong>
             <small>Kundalini Kriya Chaitanyam</small>
@@ -107,61 +136,125 @@ function LandingPage() {
           <a href="#home">Home</a>
           <a href="#about">About Us</a>
           <a href="#services">Services</a>
-          <a href="#learn">Learn</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#blog">Blog</a>
+          <a href="#kundali-flow">Kundali</a>
+          <a href="#guidance">Guidance</a>
           <a href="#contact">Contact</a>
         </nav>
 
-        <a className="kkc-outline-btn" href={whatsappUrl} target="_blank">
+        <a
+          className="kkc-outline-btn"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
           Book Consultation
         </a>
       </header>
 
-      <section className="kkc-hero" id="home">
+      <section className="kkc-hero kkc-hero-premium" id="home">
         <div className="kkc-hero-content">
-          <p className="kkc-eyebrow">Align with the cosmic intelligence</p>
+          <p className="kkc-eyebrow">
+            Vedic Astrology • Kundali Reports • Consultation
+          </p>
 
           <h1>Kundalini Kriya Chaitanyam</h1>
 
           <p>
-            Ancient wisdom. Accurate guidance. Transforming lives through Vedic
-            astrology and spiritual clarity.
+            Generate your Kundali with a private KKC Order ID and receive
+            guided astrology consultation based on approved report sections.
           </p>
 
           <div className="kkc-hero-actions">
-            <a className="kkc-primary-btn" href={whatsappUrl} target="_blank">
-              Book Consultation
-            </a>
-
-            <Link className="kkc-play-btn" to="/kundali">
-              <span>▶</span>
+            <Link className="kkc-primary-btn" to="/kundali">
               Generate Kundali
             </Link>
+
+            <a
+              className="kkc-play-btn"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>✦</span>
+              Book Consultation
+            </a>
+          </div>
+
+          <div className="kkc-hero-trust-row">
+            <span>Private Order ID access</span>
+            <span>Admin-approved report tabs</span>
+            <span>Consultation-ready flow</span>
           </div>
         </div>
+
         <div className="kkc-hero-visual">
+          <div className="kkc-hero-om-glass" aria-hidden="true">
+            <span>ॐ</span>
+          </div>
+
           <PlanetOrbit />
         </div>
       </section>
 
       <section className="kkc-services" id="services">
-        <SectionHeading eyebrow="What we offer" title="Our Services" dark={false} />
+        <SectionHeading
+          eyebrow="What KKC offers"
+          title="Astrology and spiritual services"
+          dark={false}
+        />
 
         <div className="kkc-service-grid">
           {services.map((service) => (
-            <article className="kkc-service-card" key={service.title}>
+            <article
+              className="kkc-service-card kkc-service-card-premium"
+              key={service.title}
+            >
               <span className="kkc-service-icon">{service.icon}</span>
+
               <h3>{service.title}</h3>
+
               <p>{service.description}</p>
 
               {service.external ? (
-                <a href={service.link} target="_blank">
-                  Learn More →
+                <a href={service.link} target="_blank" rel="noreferrer">
+                  {service.cta} →
                 </a>
               ) : (
-                <Link to={service.link}>Generate Now →</Link>
+                <Link to={service.link}>{service.cta} →</Link>
               )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="kkc-kundali-flow" id="kundali-flow">
+        <div className="kkc-kundali-flow-copy">
+          <p className="kkc-eyebrow">KKC Order ID Flow</p>
+
+          <h2>Generate once. Reopen by Order ID. Unlock after approval.</h2>
+
+          <p>
+            Kundali reports are not exposed openly. Every user gets a generated
+            Order ID. Admin approval controls which sections become visible.
+          </p>
+
+          <div className="kkc-kundali-flow-actions">
+            <Link className="kkc-white-btn" to="/kundali">
+              Generate Kundali
+            </Link>
+
+            <Link className="kkc-outline-btn" to="/kundali">
+              Search Existing Report
+            </Link>
+          </div>
+        </div>
+
+        <div className="kkc-kundali-step-grid">
+          {kundaliSteps.map((step) => (
+            <article className="kkc-kundali-step-card" key={step.number}>
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
             </article>
           ))}
         </div>
@@ -170,15 +263,17 @@ function LandingPage() {
       <section className="kkc-about" id="about">
         <div className="kkc-about-content">
           <p className="kkc-eyebrow">About Us</p>
+
           <h2>Guided by Wisdom, Driven by Purpose</h2>
+
           <p>
             Kundalini Kriya Chaitanyam is a spiritual and astrological platform
-            dedicated to guiding individuals towards mindful and purposeful life
-            through ancient Vedic sciences.
+            focused on Vedic sciences, conscious guidance and practical clarity
+            for life decisions.
           </p>
 
           <a className="kkc-white-btn" href="#services">
-            Know More
+            Explore Services
           </a>
         </div>
 
@@ -190,10 +285,10 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="kkc-why" id="learn">
+      <section className="kkc-why" id="guidance">
         <SectionHeading
           eyebrow="Why choose KKC"
-          title="Experience. Authenticity. Trust."
+          title="Clear process. Private access. Practical guidance."
           dark
         />
 
@@ -208,27 +303,49 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="kkc-testimonials" id="blog">
-        <SectionHeading
-          eyebrow="Testimonials"
-          title="Voices of Transformation"
-          dark={false}
-        />
+      <section className="kkc-guidance-strip">
+        <div>
+          <p className="kkc-eyebrow">Report Sections</p>
+          <h2>Approved Kundali sections can include</h2>
+        </div>
 
-        <div className="kkc-testimonial-grid">
-          {testimonials.map((testimonial) => (
-            <article className="kkc-testimonial-card" key={testimonial.name}>
-              <span>“</span>
-              <p>{testimonial.text}</p>
-              <strong>— {testimonial.name}</strong>
-            </article>
+        <div className="kkc-guidance-tags">
+          {guidanceAreas.map((area) => (
+            <span key={area}>{area}</span>
           ))}
+        </div>
+      </section>
+
+      <section className="kkc-consultation-band">
+        <div>
+          <p className="kkc-eyebrow">Need personal guidance?</p>
+          <h2>Book a KKC astrology consultation</h2>
+          <p>
+            Share your Order ID or birth details and get a guided explanation
+            through consultation.
+          </p>
+        </div>
+
+        <div className="kkc-consultation-actions">
+          <a
+            className="kkc-white-btn"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Book on WhatsApp
+          </a>
+
+          <Link className="kkc-outline-btn" to="/kundali">
+            Generate Kundali First
+          </Link>
         </div>
       </section>
 
       <footer className="kkc-footer" id="contact">
         <div className="kkc-footer-brand">
           <img src={kkcLogo} alt="KKC Logo" />
+
           <p>
             Empowering lives with the wisdom of Vedic sciences and conscious
             spiritual guidance.
@@ -246,10 +363,16 @@ function LandingPage() {
 
         <div>
           <h4>Our Services</h4>
-          <a href={whatsappUrl} target="_blank">Astrology Consultation</a>
+          <a href={whatsappUrl} target="_blank" rel="noreferrer">
+            Astrology Consultation
+          </a>
           <Link to="/kundali">Kundali Generation</Link>
-          <a href={whatsappUrl} target="_blank">Online Consultation</a>
-          <a href={whatsappUrl} target="_blank">Learn Astrology</a>
+          <a href={whatsappUrl} target="_blank" rel="noreferrer">
+            Online Consultation
+          </a>
+          <a href={whatsappUrl} target="_blank" rel="noreferrer">
+            Spiritual Guidance
+          </a>
         </div>
 
         <div>
@@ -257,7 +380,13 @@ function LandingPage() {
           <p>+91 XXXXXXXXXX</p>
           <p>info@kkc.org</p>
           <p>India</p>
-          <a className="kkc-footer-btn" href={whatsappUrl} target="_blank">
+
+          <a
+            className="kkc-footer-btn"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             Book Consultation
           </a>
         </div>
