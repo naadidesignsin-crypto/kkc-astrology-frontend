@@ -6,7 +6,6 @@ import kkcLogo from "../assets/Logo.png";
 import {
   downloadKundaliPdf,
   generateKundali,
-  generateSection,
   getDasha,
   getDosha,
   getHouses,
@@ -53,7 +52,6 @@ type ReportTabId =
   | "consultation";
 
 const emptyForm: KundaliForm = {
-  orderId: "",
   fullName: "",
   gender: "",
   dateOfBirth: "",
@@ -106,7 +104,6 @@ function KundaliPage() {
   const locationBoxRef = useRef<HTMLDivElement | null>(null);
 
   const isFormValid =
-    form.orderId.trim().length >= 3 &&
     form.fullName.trim().length >= 2 &&
     form.gender.trim().length > 0 &&
     form.dateOfBirth.trim().length > 0 &&
@@ -238,7 +235,7 @@ function KundaliPage() {
 
     if (!isFormValid) {
       setError(
-        "Enter Order ID, name, gender, birth date, birth time, and select birth place from the list."
+        "Enter name, gender, birth date, birth time, and select birth place from the list."
       );
       return;
     }
@@ -259,7 +256,6 @@ function KundaliPage() {
 
       const payload: KundaliGenerateRequest = {
         ...form,
-        orderId: form.orderId.trim(),
         fullName: form.fullName.trim(),
         gender: form.gender.trim(),
         birthPlace: selectedLocation?.birthPlace || form.birthPlace,
@@ -269,7 +265,7 @@ function KundaliPage() {
         language: "en",
       };
 
-      setStage("Creating basic Kundali report");
+      setStage("Generating basic Kundali report");
       const generated = await generateKundali(payload);
 
       if (generated.status !== "SUCCESS") {
@@ -278,74 +274,73 @@ function KundaliPage() {
 
       const reportId = generated.id;
 
-      setStage("Loading approved report access");
+      setStage("Loading generated Order ID and approved access");
       const summaryData = await getSummary(reportId);
 
       setSummary(summaryData);
-      setActiveReportTab(summaryData.showSummary !== false ? "summary" : "consultation");
+      setActiveReportTab(
+        summaryData.showSummary !== false ? "summary" : "consultation"
+      );
 
-      const needsPlanetSection =
-        Boolean(summaryData.showBirthChart) ||
-        Boolean(summaryData.showPlanets) ||
-        Boolean(summaryData.showHouses) ||
-        Boolean(summaryData.showNavamsa) ||
-        Boolean(summaryData.showParashara);
+      setStage("Loading approved report sections");
 
-      if (needsPlanetSection) {
-        setStage("Mapping approved planetary positions");
-        await generateSection(reportId, "PLANETARY_POSITIONS");
+      const sectionRequests: Promise<void>[] = [];
 
-        const planetData = await getPlanets(reportId);
-        setPlanets(planetData);
+      if (
+        summaryData.showBirthChart ||
+        summaryData.showPlanets ||
+        summaryData.showHouses ||
+        summaryData.showNavamsa ||
+        summaryData.showParashara
+      ) {
+        sectionRequests.push(
+          getPlanets(reportId).then((planetData) => {
+            setPlanets(planetData);
+          })
+        );
       }
 
-      if (Boolean(summaryData.showDasha) || Boolean(summaryData.showParashara)) {
-        setStage("Preparing approved Dasha analysis");
-        await generateSection(reportId, "DASHA");
-
-        if (Boolean(summaryData.showDasha)) {
-          const dashaData = await getDasha(reportId);
-          setDasha(dashaData);
-        }
+      if (summaryData.showDasha || summaryData.showParashara) {
+        sectionRequests.push(
+          getDasha(reportId).then((dashaData) => {
+            setDasha(dashaData);
+          })
+        );
       }
 
-      if (Boolean(summaryData.showDosha)) {
-        setStage("Preparing approved Dosha analysis");
-        await generateSection(reportId, "DOSHA");
-
-        const doshaData = await getDosha(reportId);
-        setDosha(doshaData);
+      if (summaryData.showDosha) {
+        sectionRequests.push(
+          getDosha(reportId).then((doshaData) => {
+            setDosha(doshaData);
+          })
+        );
       }
 
-      setStage("Building approved report sections");
-
-      const advancedRequests: Promise<void>[] = [];
-
-      if (Boolean(summaryData.showHouses)) {
-        advancedRequests.push(
+      if (summaryData.showHouses) {
+        sectionRequests.push(
           getHouses(reportId).then((houseData) => {
             setHouses(houseData);
           })
         );
       }
 
-      if (Boolean(summaryData.showNavamsa)) {
-        advancedRequests.push(
+      if (summaryData.showNavamsa) {
+        sectionRequests.push(
           getNavamsa(reportId).then((navamsaData) => {
             setNavamsa(navamsaData);
           })
         );
       }
 
-      if (Boolean(summaryData.showParashara)) {
-        advancedRequests.push(
+      if (summaryData.showParashara) {
+        sectionRequests.push(
           getParashara(reportId).then((parasharaData) => {
             setParashara(parasharaData);
           })
         );
       }
 
-      await Promise.all(advancedRequests);
+      await Promise.all(sectionRequests);
     } catch (err) {
       setError(
         err instanceof Error
@@ -398,9 +393,9 @@ function KundaliPage() {
           <h1>Generate your Vedic birth chart</h1>
 
           <p>
-            Enter your Order ID and birth details. Basic birth details and
-            consultation are visible immediately. Detailed tabs are shown only
-            after admin approval.
+            Enter birth details to generate a KKC Order ID. Basic birth details
+            and consultation are visible immediately. Detailed tabs are shown
+            only after admin approval.
           </p>
         </div>
 
@@ -410,16 +405,6 @@ function KundaliPage() {
           onSubmit={handleSubmit}
         >
           <h2>Birth Details</h2>
-
-          <label>
-            Order ID
-            <input
-              value={form.orderId}
-              onChange={(event) => updateField("orderId", event.target.value)}
-              placeholder="Enter Order ID"
-              required
-            />
-          </label>
 
           <label>
             Full Name
@@ -531,8 +516,7 @@ function KundaliPage() {
 
           {!isFormValid && (
             <small className="kkc-form-helper">
-              Complete Order ID, birth details and select birth place from the
-              list.
+              Complete birth details and select birth place from the list.
             </small>
           )}
         </form>
@@ -544,9 +528,10 @@ function KundaliPage() {
             <p className="kkc-eyebrow">Kundali Report</p>
             <h2>Your generated report will appear here</h2>
             <p>
-              Basic birth details are visible after generation. Detailed tabs
-              like Parāśara, Dasha, Dosha, Navamsa, planets and PDF are shown
-              only after admin approval.
+              Backend will generate a KKC Order ID. Basic birth details are
+              visible after generation. Detailed tabs like Parāśara, Dasha,
+              Dosha, Navamsa, planets and PDF are shown only after admin
+              approval.
             </p>
           </div>
         )}
@@ -881,9 +866,7 @@ function ReportTabs({
       <section className="kkc-report-navigation">
         <div className="kkc-report-navigation-copy">
           <span>Explore Report</span>
-          <p>
-            Only admin-approved sections are visible for this Order ID.
-          </p>
+          <p>Only admin-approved sections are visible for this Order ID.</p>
         </div>
 
         <div className="kkc-tabs" role="tablist" aria-label="Kundali report tabs">
@@ -1479,7 +1462,12 @@ function ConsultationTab({ summary }: { summary: KundaliSummaryResponse }) {
         remedies, Dasha guidance, marriage matching, or life direction.
       </p>
 
-      <a className="kkc-primary-btn" href={consultationUrl} target="_blank" rel="noreferrer">
+      <a
+        className="kkc-primary-btn"
+        href={consultationUrl}
+        target="_blank"
+        rel="noreferrer"
+      >
         Consult on WhatsApp
       </a>
     </article>
