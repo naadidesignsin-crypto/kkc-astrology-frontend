@@ -45,9 +45,13 @@ export function getSummary(reportId: number): Promise<KundaliSummaryResponse> {
   );
 }
 
-export function getSummaryByOrderId(orderId: string): Promise<KundaliSummaryResponse> {
+export function getReportByOrderId(
+  orderId: string
+): Promise<KundaliSummaryResponse> {
+  const cleanOrderId = orderId.trim().toUpperCase();
+
   return request<KundaliSummaryResponse>(
-    `/api/kundali/orders/${encodeURIComponent(orderId)}/summary`
+    `/api/kundali/orders/${encodeURIComponent(cleanOrderId)}/summary`
   );
 }
 
@@ -66,30 +70,6 @@ export function getDasha(reportId: number): Promise<KundaliDashaResponse> {
 export function getDosha(reportId: number): Promise<KundaliDoshaResponse> {
   return request<KundaliDoshaResponse>(
     `/api/kundali/reports/${reportId}/dosha`
-  );
-}
-
-export async function getHouses(
-  reportId: number
-): Promise<KundaliHouseResponse> {
-  return request<KundaliHouseResponse>(
-    `/api/kundali/reports/${reportId}/houses`
-  );
-}
-
-export async function getNavamsa(
-  reportId: number
-): Promise<KundaliNavamsaResponse> {
-  return request<KundaliNavamsaResponse>(
-    `/api/kundali/reports/${reportId}/navamsa`
-  );
-}
-
-export async function getParashara(
-  reportId: number
-): Promise<KundaliParasharaReportResponse> {
-  return request<KundaliParasharaReportResponse>(
-    `/api/kundali/reports/${reportId}/parashara`
   );
 }
 
@@ -114,4 +94,28 @@ export async function downloadKundaliPdf(reportId: number) {
   link.remove();
 
   window.URL.revokeObjectURL(url);
+}
+
+export async function getHouses(
+  reportId: number
+): Promise<KundaliHouseResponse> {
+  return request<KundaliHouseResponse>(
+    `/api/kundali/reports/${reportId}/houses`
+  );
+}
+
+export async function getNavamsa(
+  reportId: number
+): Promise<KundaliNavamsaResponse> {
+  return request<KundaliNavamsaResponse>(
+    `/api/kundali/reports/${reportId}/navamsa`
+  );
+}
+
+export async function getParashara(
+  reportId: number
+): Promise<KundaliParasharaReportResponse> {
+  return request<KundaliParasharaReportResponse>(
+    `/api/kundali/reports/${reportId}/parashara`
+  );
 }

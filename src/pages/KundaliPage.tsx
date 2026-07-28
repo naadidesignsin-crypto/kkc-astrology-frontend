@@ -12,6 +12,7 @@ import {
   getNavamsa,
   getParashara,
   getPlanets,
+  getReportByOrderId,
   getSummary,
 } from "../services/kundaliApi";
 import { searchLocations } from "../services/locationApi";
@@ -74,6 +75,7 @@ const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
 function KundaliPage() {
   const [form, setForm] = useState<KundaliForm>(emptyForm);
+  const [orderSearch, setOrderSearch] = useState("");
 
   const [locationQuery, setLocationQuery] = useState("");
   const [selectedLocation, setSelectedLocation] =
@@ -188,6 +190,78 @@ function KundaliPage() {
     }));
   }
 
+  function resetLoadedReport() {
+    setSummary(null);
+    setPlanets(null);
+    setDasha(null);
+    setDosha(null);
+    setHouses(null);
+    setNavamsa(null);
+    setParashara(null);
+    setActiveReportTab("summary");
+  }
+
+  async function loadApprovedSections(summaryData: KundaliSummaryResponse) {
+    const reportId = summaryData.id;
+    const sectionRequests: Promise<void>[] = [];
+
+    if (
+      summaryData.showBirthChart ||
+      summaryData.showPlanets ||
+      summaryData.showHouses ||
+      summaryData.showNavamsa ||
+      summaryData.showParashara
+    ) {
+      sectionRequests.push(
+        getPlanets(reportId).then((planetData) => {
+          setPlanets(planetData);
+        })
+      );
+    }
+
+    if (summaryData.showDasha || summaryData.showParashara) {
+      sectionRequests.push(
+        getDasha(reportId).then((dashaData) => {
+          setDasha(dashaData);
+        })
+      );
+    }
+
+    if (summaryData.showDosha) {
+      sectionRequests.push(
+        getDosha(reportId).then((doshaData) => {
+          setDosha(doshaData);
+        })
+      );
+    }
+
+    if (summaryData.showHouses) {
+      sectionRequests.push(
+        getHouses(reportId).then((houseData) => {
+          setHouses(houseData);
+        })
+      );
+    }
+
+    if (summaryData.showNavamsa) {
+      sectionRequests.push(
+        getNavamsa(reportId).then((navamsaData) => {
+          setNavamsa(navamsaData);
+        })
+      );
+    }
+
+    if (summaryData.showParashara) {
+      sectionRequests.push(
+        getParashara(reportId).then((parasharaData) => {
+          setParashara(parasharaData);
+        })
+      );
+    }
+
+    await Promise.all(sectionRequests);
+  }
+
   function handleLocationInput(value: string) {
     setLocationQuery(value);
     setSelectedLocation(null);
@@ -230,6 +304,41 @@ function KundaliPage() {
     pickerInput.showPicker?.();
   }
 
+  async function handleOrderSearch(event: FormEvent) {
+    event.preventDefault();
+
+    if (orderSearch.trim().length < 5) {
+      setError("Enter a valid KKC Order ID.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setStage("Searching report by Order ID");
+      setError("");
+      resetLoadedReport();
+
+      const summaryData = await getReportByOrderId(orderSearch);
+
+      setSummary(summaryData);
+      setActiveReportTab(
+        summaryData.showSummary !== false ? "summary" : "consultation"
+      );
+
+      setStage("Loading approved report sections");
+      await loadApprovedSections(summaryData);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unable to find report for this Order ID."
+      );
+    } finally {
+      setLoading(false);
+      setStage("");
+    }
+  }
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
@@ -244,15 +353,7 @@ function KundaliPage() {
       setLoading(true);
       setStage("Reading birth details");
       setError("");
-
-      setSummary(null);
-      setPlanets(null);
-      setDasha(null);
-      setDosha(null);
-      setHouses(null);
-      setNavamsa(null);
-      setParashara(null);
-      setActiveReportTab("summary");
+      resetLoadedReport();
 
       const payload: KundaliGenerateRequest = {
         ...form,
@@ -278,69 +379,13 @@ function KundaliPage() {
       const summaryData = await getSummary(reportId);
 
       setSummary(summaryData);
+      setOrderSearch(summaryData.orderId || "");
       setActiveReportTab(
         summaryData.showSummary !== false ? "summary" : "consultation"
       );
 
       setStage("Loading approved report sections");
-
-      const sectionRequests: Promise<void>[] = [];
-
-      if (
-        summaryData.showBirthChart ||
-        summaryData.showPlanets ||
-        summaryData.showHouses ||
-        summaryData.showNavamsa ||
-        summaryData.showParashara
-      ) {
-        sectionRequests.push(
-          getPlanets(reportId).then((planetData) => {
-            setPlanets(planetData);
-          })
-        );
-      }
-
-      if (summaryData.showDasha || summaryData.showParashara) {
-        sectionRequests.push(
-          getDasha(reportId).then((dashaData) => {
-            setDasha(dashaData);
-          })
-        );
-      }
-
-      if (summaryData.showDosha) {
-        sectionRequests.push(
-          getDosha(reportId).then((doshaData) => {
-            setDosha(doshaData);
-          })
-        );
-      }
-
-      if (summaryData.showHouses) {
-        sectionRequests.push(
-          getHouses(reportId).then((houseData) => {
-            setHouses(houseData);
-          })
-        );
-      }
-
-      if (summaryData.showNavamsa) {
-        sectionRequests.push(
-          getNavamsa(reportId).then((navamsaData) => {
-            setNavamsa(navamsaData);
-          })
-        );
-      }
-
-      if (summaryData.showParashara) {
-        sectionRequests.push(
-          getParashara(reportId).then((parasharaData) => {
-            setParashara(parasharaData);
-          })
-        );
-      }
-
-      await Promise.all(sectionRequests);
+      await loadApprovedSections(summaryData);
     } catch (err) {
       setError(
         err instanceof Error
@@ -393,133 +438,164 @@ function KundaliPage() {
           <h1>Generate your Vedic birth chart</h1>
 
           <p>
-            Enter birth details to generate a KKC Order ID. Basic birth details
-            and consultation are visible immediately. Detailed tabs are shown
-            only after admin approval.
+            Generate a private KKC Order ID using birth details, or search an
+            existing approved report using the exact Order ID.
           </p>
         </div>
 
-        <form
-          className="kkc-kundali-form"
-          id="kundali-form"
-          onSubmit={handleSubmit}
+        <div
+          className="kkc-kundali-form-stack"
+          style={{ display: "grid", gap: "18px" }}
         >
-          <h2>Birth Details</h2>
-
-          <label>
-            Full Name
-            <input
-              value={form.fullName}
-              onChange={(event) => updateField("fullName", event.target.value)}
-              placeholder="Enter full name"
-              required
-            />
-          </label>
-
-          <DarkSelect
-            label="Gender"
-            value={form.gender}
-            placeholder="Select gender"
-            options={[
-              { label: "Male", value: "Male" },
-              { label: "Female", value: "Female" },
-            ]}
-            onChange={(value) => updateField("gender", value)}
-          />
-
-          <div className="kkc-kundali-form-row">
-            <DarkDatePicker
-              label="Date of Birth"
-              value={form.dateOfBirth}
-              placeholder="Select date"
-              onChange={(value) => updateField("dateOfBirth", value)}
-            />
-
-            <label>
-              Time of Birth
-              <input
-                type="time"
-                value={form.timeOfBirth}
-                onClick={(event) => openNativePicker(event.currentTarget)}
-                onChange={(event) =>
-                  updateField("timeOfBirth", event.target.value)
-                }
-                required
-              />
-            </label>
-          </div>
-
-          <div
-            className={
-              showLocationResults ? "kkc-location-box open" : "kkc-location-box"
-            }
-            ref={locationBoxRef}
+          <form
+            className="kkc-kundali-form"
+            onSubmit={handleOrderSearch}
           >
+            <p className="kkc-eyebrow">Find Existing Report</p>
+            <h2>Search by Order ID</h2>
+
             <label>
-              Birth Place
+              Order ID
               <input
-                value={locationQuery}
-                onChange={(event) => handleLocationInput(event.target.value)}
-                onFocus={() => {
-                  if (!selectedLocation && locationQuery.trim().length >= 3) {
-                    setShowLocationResults(true);
-                  }
-                }}
-                placeholder="Type city / village / birth place"
+                value={orderSearch}
+                onChange={(event) => setOrderSearch(event.target.value)}
+                placeholder="Enter KKC Order ID"
                 autoComplete="off"
+              />
+            </label>
+
+            <button type="submit" disabled={loading || orderSearch.trim().length < 5}>
+              Search Report
+            </button>
+
+            <small className="kkc-form-helper">
+              Only the user with the exact Order ID can reopen approved report
+              sections. There is no public report list.
+            </small>
+          </form>
+
+          <form
+            className="kkc-kundali-form"
+            id="kundali-form"
+            onSubmit={handleSubmit}
+          >
+            <h2>Birth Details</h2>
+
+            <label>
+              Full Name
+              <input
+                value={form.fullName}
+                onChange={(event) => updateField("fullName", event.target.value)}
+                placeholder="Enter full name"
                 required
               />
             </label>
 
-            {locationLoading && (
-              <p className="kkc-location-status">Searching location...</p>
+            <DarkSelect
+              label="Gender"
+              value={form.gender}
+              placeholder="Select gender"
+              options={[
+                { label: "Male", value: "Male" },
+                { label: "Female", value: "Female" },
+              ]}
+              onChange={(value) => updateField("gender", value)}
+            />
+
+            <div className="kkc-kundali-form-row">
+              <DarkDatePicker
+                label="Date of Birth"
+                value={form.dateOfBirth}
+                placeholder="Select date"
+                onChange={(value) => updateField("dateOfBirth", value)}
+              />
+
+              <label>
+                Time of Birth
+                <input
+                  type="time"
+                  value={form.timeOfBirth}
+                  onClick={(event) => openNativePicker(event.currentTarget)}
+                  onChange={(event) =>
+                    updateField("timeOfBirth", event.target.value)
+                  }
+                  required
+                />
+              </label>
+            </div>
+
+            <div
+              className={
+                showLocationResults ? "kkc-location-box open" : "kkc-location-box"
+              }
+              ref={locationBoxRef}
+            >
+              <label>
+                Birth Place
+                <input
+                  value={locationQuery}
+                  onChange={(event) => handleLocationInput(event.target.value)}
+                  onFocus={() => {
+                    if (!selectedLocation && locationQuery.trim().length >= 3) {
+                      setShowLocationResults(true);
+                    }
+                  }}
+                  placeholder="Type city / village / birth place"
+                  autoComplete="off"
+                  required
+                />
+              </label>
+
+              {locationLoading && (
+                <p className="kkc-location-status">Searching location...</p>
+              )}
+
+              {showLocationResults && (
+                <div className="kkc-location-results">
+                  {locationError && <p>{locationError}</p>}
+
+                  {!locationError &&
+                    !locationLoading &&
+                    locationResults.length === 0 && (
+                      <p>No location found. Type a more specific place name.</p>
+                    )}
+
+                  {!locationError &&
+                    locationResults.map((location) => (
+                      <button
+                        type="button"
+                        key={location.id}
+                        onClick={() => selectLocation(location)}
+                      >
+                        <strong>{location.birthPlace}</strong>
+                        <span>{location.displayName}</span>
+                      </button>
+                    ))}
+                </div>
+              )}
+
+              {selectedLocation && (
+                <div className="kkc-selected-location">
+                  <strong>Selected Birth Place</strong>
+                  <span>{selectedLocation.birthPlace}</span>
+                  <small>Latitude, longitude and timezone auto-filled.</small>
+                </div>
+              )}
+            </div>
+
+            {error && <p className="kkc-form-error">{error}</p>}
+
+            <button type="submit" disabled={loading || !isFormValid}>
+              {loading ? stage || "Generating..." : "Generate Kundali"}
+            </button>
+
+            {!isFormValid && (
+              <small className="kkc-form-helper">
+                Complete birth details and select birth place from the list.
+              </small>
             )}
-
-            {showLocationResults && (
-              <div className="kkc-location-results">
-                {locationError && <p>{locationError}</p>}
-
-                {!locationError &&
-                  !locationLoading &&
-                  locationResults.length === 0 && (
-                    <p>No location found. Type a more specific place name.</p>
-                  )}
-
-                {!locationError &&
-                  locationResults.map((location) => (
-                    <button
-                      type="button"
-                      key={location.id}
-                      onClick={() => selectLocation(location)}
-                    >
-                      <strong>{location.birthPlace}</strong>
-                      <span>{location.displayName}</span>
-                    </button>
-                  ))}
-              </div>
-            )}
-
-            {selectedLocation && (
-              <div className="kkc-selected-location">
-                <strong>Selected Birth Place</strong>
-                <span>{selectedLocation.birthPlace}</span>
-                <small>Latitude, longitude and timezone auto-filled.</small>
-              </div>
-            )}
-          </div>
-
-          {error && <p className="kkc-form-error">{error}</p>}
-
-          <button type="submit" disabled={loading || !isFormValid}>
-            {loading ? stage || "Generating..." : "Generate Kundali"}
-          </button>
-
-          {!isFormValid && (
-            <small className="kkc-form-helper">
-              Complete birth details and select birth place from the list.
-            </small>
-          )}
-        </form>
+          </form>
+        </div>
       </section>
 
       <section className="kkc-kundali-report" id="kundali-report">
@@ -528,7 +604,7 @@ function KundaliPage() {
             <p className="kkc-eyebrow">Kundali Report</p>
             <h2>Your generated report will appear here</h2>
             <p>
-              Backend will generate a KKC Order ID. Basic birth details are
+              Backend generates a private KKC Order ID. Basic birth details are
               visible after generation. Detailed tabs like Parāśara, Dasha,
               Dosha, Navamsa, planets and PDF are shown only after admin
               approval.
