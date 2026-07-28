@@ -14,7 +14,6 @@ export type KundaliReportAccess = {
 };
 
 export interface KundaliGenerateRequest {
-  orderId: string;
   fullName: string;
   gender: string;
   dateOfBirth: string;
@@ -45,7 +44,6 @@ export interface KundaliSummaryResponse extends KundaliReportAccess {
   birthPlace: string;
   provider: string;
   status: KundaliStatus;
-
   ascendant?: string | null;
   rashi?: string | null;
   signLord?: string | null;
@@ -58,7 +56,6 @@ export interface KundaliSummaryResponse extends KundaliReportAccess {
   masa?: string | null;
   sunrise?: string | null;
   sunset?: string | null;
-
   errorMessage?: string | null;
 }
 

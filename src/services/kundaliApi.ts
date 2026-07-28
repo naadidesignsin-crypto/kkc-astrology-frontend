@@ -39,18 +39,15 @@ export function generateKundali(
   });
 }
 
-export function generateSection(
-  reportId: number,
-  sectionType: "PLANETARY_POSITIONS" | "DASHA" | "DOSHA"
-) {
-  return request(`/api/kundali/reports/${reportId}/sections/${sectionType}/generate`, {
-    method: "POST",
-  });
-}
-
 export function getSummary(reportId: number): Promise<KundaliSummaryResponse> {
   return request<KundaliSummaryResponse>(
     `/api/kundali/reports/${reportId}/summary`
+  );
+}
+
+export function getSummaryByOrderId(orderId: string): Promise<KundaliSummaryResponse> {
+  return request<KundaliSummaryResponse>(
+    `/api/kundali/orders/${encodeURIComponent(orderId)}/summary`
   );
 }
 
@@ -70,29 +67,6 @@ export function getDosha(reportId: number): Promise<KundaliDoshaResponse> {
   return request<KundaliDoshaResponse>(
     `/api/kundali/reports/${reportId}/dosha`
   );
-}
-
-export async function downloadKundaliPdf(reportId: number) {
-  const response = await fetch(
-    `${API_BASE_URL}/api/kundali/reports/${reportId}/pdf`
-  );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Unable to download Kundali PDF");
-  }
-
-  const blob = await response.blob();
-  const url = window.URL.createObjectURL(blob);
-
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `kkc-kundali-report-${reportId}.pdf`;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  window.URL.revokeObjectURL(url);
 }
 
 export async function getHouses(
@@ -117,4 +91,27 @@ export async function getParashara(
   return request<KundaliParasharaReportResponse>(
     `/api/kundali/reports/${reportId}/parashara`
   );
+}
+
+export async function downloadKundaliPdf(reportId: number) {
+  const response = await fetch(
+    `${API_BASE_URL}/api/kundali/reports/${reportId}/pdf`
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Unable to download Kundali PDF");
+  }
+
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `kkc-kundali-report-${reportId}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  window.URL.revokeObjectURL(url);
 }
