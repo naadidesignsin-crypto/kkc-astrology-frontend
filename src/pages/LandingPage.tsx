@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 
 import kkcLogo from "../assets/Logo.png";
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
+import DailyPanchangCard from "../components/DailyPanchangCard";
+import DailyRasiPhalalu from "../components/DailyRasiPhalalu";
 import PlanetOrbit from "../components/PlanetOrbit";
 
 const services = [
@@ -68,15 +70,15 @@ const kundaliSteps = [
 
 const whyChoose = [
   {
-    title: "Vedic-Based Guidance",
+    title: "Daily Panchangam",
     description:
-      "Consultation flow is structured around birth details, planetary timing and traditional reading methods.",
+      "South Andhra and Telangana style daily Panchangam for useful daily timing.",
     icon: "♙",
   },
   {
-    title: "Private Report Access",
+    title: "Daily Rasi Phalalu",
     description:
-      "Every generated Kundali gets a unique Order ID. Users can reopen only their own approved report.",
+      "Users can select each of the 12 Rasis and view daily updates for the chosen date.",
     icon: "♢",
   },
   {
@@ -94,6 +96,8 @@ const whyChoose = [
 ];
 
 const guidanceAreas = [
+  "Daily Panchangam",
+  "Daily Rasi Phalalu",
   "Birth Chart Reading",
   "Planetary Positions",
   "House Analysis",
@@ -112,7 +116,6 @@ function LandingPage() {
       <header className="kkc-header">
         <Link to="/" className="kkc-brand" aria-label="KKC Home">
           <img src={kkcLogo} alt="KKC Logo" />
-
           <span>
             <strong>KKC</strong>
             <small>Kundalini Kriya Chaitanyam</small>
@@ -121,6 +124,8 @@ function LandingPage() {
 
         <nav className="kkc-nav" aria-label="Landing navigation">
           <a href="#home">Home</a>
+          <a href="#daily-panchang">Panchangam</a>
+          <a href="#daily-rasi">Rasi</a>
           <a href="#about">About Us</a>
           <a href="#services">Services</a>
           <a href="#kundali-flow">Kundali</a>
@@ -136,31 +141,32 @@ function LandingPage() {
       <section className="kkc-hero kkc-hero-premium" id="home">
         <div className="kkc-hero-content">
           <p className="kkc-eyebrow">
-            Vedic Astrology • Kundali Reports • Consultation
+            Vedic Astrology • Panchangam • Rasi Reports
           </p>
 
           <h1>Kundalini Kriya Chaitanyam</h1>
 
           <p>
-            Generate your Kundali with a private KKC Order ID. Consultation
-            requests are sent using your Order ID and birth details.
+            View Daily Panchangam for Andhra Pradesh and Telangana, check daily
+            Rasi updates, and generate your Kundali with a private KKC Order ID
+            for consultation.
           </p>
 
           <div className="kkc-hero-actions">
-            <Link className="kkc-primary-btn" to="/kundali">
-              Generate Kundali
-            </Link>
+            <a className="kkc-primary-btn" href="#daily-panchang">
+              View Daily Panchangam
+            </a>
 
-            <Link className="kkc-play-btn" to="/kundali">
+            <a className="kkc-play-btn" href="#daily-rasi">
               <span>✦</span>
-              Generate Order ID for Consultation
-            </Link>
+              Check Daily Rasi
+            </a>
           </div>
 
           <div className="kkc-hero-trust-row">
+            <span>South Andhra & Telangana Panchangam</span>
+            <span>12 Rasis daily updates</span>
             <span>Private Order ID access</span>
-            <span>Consultation uses report data</span>
-            <span>Admin-approved report tabs</span>
           </div>
         </div>
 
@@ -172,6 +178,10 @@ function LandingPage() {
           <PlanetOrbit />
         </div>
       </section>
+
+      <DailyPanchangCard />
+
+      <DailyRasiPhalalu />
 
       <section className="kkc-services" id="services">
         <SectionHeading
@@ -187,7 +197,6 @@ function LandingPage() {
               key={service.title}
             >
               <span className="kkc-service-icon">{service.icon}</span>
-
               <h3>{service.title}</h3>
 
               <p>{service.description}</p>
@@ -203,7 +212,6 @@ function LandingPage() {
           <p className="kkc-eyebrow">KKC Order ID Flow</p>
 
           <h2>Generate Order ID first. Use report data for consultation.</h2>
-
           <p>
             KKC consultation is connected to the generated Kundali report. The
             user first generates an Order ID, then consultation messages include
@@ -214,7 +222,6 @@ function LandingPage() {
             <Link className="kkc-white-btn" to="/kundali">
               Generate Kundali
             </Link>
-
             <Link className="kkc-outline-btn" to="/kundali">
               Search Existing Report
             </Link>
@@ -240,10 +247,9 @@ function LandingPage() {
 
           <p>
             Kundalini Kriya Chaitanyam is a spiritual and astrological platform
-            focused on Vedic sciences, conscious guidance and practical clarity
-            for life decisions.
+            focused on Vedic sciences, Panchangam, conscious guidance and
+            practical clarity for life decisions.
           </p>
-
           <a className="kkc-white-btn" href="#services">
             Explore Services
           </a>
@@ -260,10 +266,9 @@ function LandingPage() {
       <section className="kkc-why" id="guidance">
         <SectionHeading
           eyebrow="Why choose KKC"
-          title="Clear process. Private access. Order-based consultation."
+          title="Daily Panchangam. Rasi updates. Order-based consultation."
           dark
         />
-
         <div className="kkc-why-grid">
           {whyChoose.map((item) => (
             <article className="kkc-why-card" key={item.title}>
@@ -277,8 +282,8 @@ function LandingPage() {
 
       <section className="kkc-guidance-strip">
         <div>
-          <p className="kkc-eyebrow">Report Sections</p>
-          <h2>Approved Kundali sections can include</h2>
+          <p className="kkc-eyebrow">Available Sections</p>
+          <h2>KKC astrology sections can include</h2>
         </div>
 
         <div className="kkc-guidance-tags">
@@ -297,7 +302,6 @@ function LandingPage() {
             Generate a Kundali first or search an existing report.
           </p>
         </div>
-
         <div className="kkc-consultation-actions">
           <Link className="kkc-white-btn" to="/kundali">
             Generate Order ID
@@ -312,7 +316,6 @@ function LandingPage() {
       <footer className="kkc-footer" id="contact">
         <div className="kkc-footer-brand">
           <img src={kkcLogo} alt="KKC Logo" />
-
           <p>
             Empowering lives with the wisdom of Vedic sciences and conscious
             spiritual guidance.
@@ -322,17 +325,19 @@ function LandingPage() {
         <div>
           <h4>Quick Links</h4>
           <a href="#home">Home</a>
+          <a href="#daily-panchang">Panchangam</a>
+          <a href="#daily-rasi">Daily Rasi</a>
           <a href="#about">About Us</a>
           <a href="#services">Services</a>
           <Link to="/kundali">Kundali</Link>
           <a href="#contact">Contact Us</a>
         </div>
-
         <div>
           <h4>Our Services</h4>
+          <a href="#daily-panchang">Daily Panchangam</a>
+          <a href="#daily-rasi">Daily Rasi Phalalu</a>
           <Link to="/kundali">Astrology Consultation</Link>
           <Link to="/kundali">Kundali Generation</Link>
-          <Link to="/kundali">Online Consultation</Link>
           <Link to="/kundali">Spiritual Guidance</Link>
         </div>
 
@@ -341,7 +346,6 @@ function LandingPage() {
           <p>+91 7981041123</p>
           <p>info@kkc.org</p>
           <p>India</p>
-
           <Link className="kkc-footer-btn" to="/kundali">
             Generate Order ID
           </Link>
