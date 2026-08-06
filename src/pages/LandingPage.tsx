@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import kkcLogo from "../assets/Logo.png";
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
+import DailyPanchangCard from "../components/DailyPanchangCard";
 import PlanetOrbit from "../components/PlanetOrbit";
 
 const services = [
@@ -94,6 +95,7 @@ const whyChoose = [
 ];
 
 const guidanceAreas = [
+  "Daily Panchangam",
   "Birth Chart Reading",
   "Planetary Positions",
   "House Analysis",
@@ -121,6 +123,7 @@ function LandingPage() {
 
         <nav className="kkc-nav" aria-label="Landing navigation">
           <a href="#home">Home</a>
+          <a href="#daily-panchang">Panchangam</a>
           <a href="#about">About Us</a>
           <a href="#services">Services</a>
           <a href="#kundali-flow">Kundali</a>
@@ -136,31 +139,32 @@ function LandingPage() {
       <section className="kkc-hero kkc-hero-premium" id="home">
         <div className="kkc-hero-content">
           <p className="kkc-eyebrow">
-            Vedic Astrology • Kundali Reports • Consultation
+            Vedic Astrology • Panchangam • Kundali Reports
           </p>
 
           <h1>Kundalini Kriya Chaitanyam</h1>
 
           <p>
-            Generate your Kundali with a private KKC Order ID. Consultation
-            requests are sent using your Order ID and birth details.
+            View Daily Panchangam for Andhra Pradesh and Telangana, generate
+            your Kundali with a private KKC Order ID, and use saved birth details
+            for consultation.
           </p>
 
           <div className="kkc-hero-actions">
-            <Link className="kkc-primary-btn" to="/kundali">
-              Generate Kundali
-            </Link>
+            <a className="kkc-primary-btn" href="#daily-panchang">
+              View Daily Panchangam
+            </a>
 
             <Link className="kkc-play-btn" to="/kundali">
               <span>✦</span>
-              Generate Order ID for Consultation
+              Generate Order ID
             </Link>
           </div>
 
           <div className="kkc-hero-trust-row">
+            <span>South Andhra & Telangana Panchangam</span>
             <span>Private Order ID access</span>
             <span>Consultation uses report data</span>
-            <span>Admin-approved report tabs</span>
           </div>
         </div>
 
@@ -172,6 +176,8 @@ function LandingPage() {
           <PlanetOrbit />
         </div>
       </section>
+
+      <DailyPanchangCard />
 
       <section className="kkc-services" id="services">
         <SectionHeading
@@ -240,8 +246,8 @@ function LandingPage() {
 
           <p>
             Kundalini Kriya Chaitanyam is a spiritual and astrological platform
-            focused on Vedic sciences, conscious guidance and practical clarity
-            for life decisions.
+            focused on Vedic sciences, Panchangam, conscious guidance and
+            practical clarity for life decisions.
           </p>
 
           <a className="kkc-white-btn" href="#services">
@@ -260,7 +266,7 @@ function LandingPage() {
       <section className="kkc-why" id="guidance">
         <SectionHeading
           eyebrow="Why choose KKC"
-          title="Clear process. Private access. Order-based consultation."
+          title="Daily Panchangam. Private access. Order-based consultation."
           dark
         />
 
@@ -277,8 +283,8 @@ function LandingPage() {
 
       <section className="kkc-guidance-strip">
         <div>
-          <p className="kkc-eyebrow">Report Sections</p>
-          <h2>Approved Kundali sections can include</h2>
+          <p className="kkc-eyebrow">Available Sections</p>
+          <h2>KKC astrology sections can include</h2>
         </div>
 
         <div className="kkc-guidance-tags">
@@ -322,6 +328,7 @@ function LandingPage() {
         <div>
           <h4>Quick Links</h4>
           <a href="#home">Home</a>
+          <a href="#daily-panchang">Panchangam</a>
           <a href="#about">About Us</a>
           <a href="#services">Services</a>
           <Link to="/kundali">Kundali</Link>
@@ -330,6 +337,7 @@ function LandingPage() {
 
         <div>
           <h4>Our Services</h4>
+          <a href="#daily-panchang">Daily Panchangam</a>
           <Link to="/kundali">Astrology Consultation</Link>
           <Link to="/kundali">Kundali Generation</Link>
           <Link to="/kundali">Online Consultation</Link>

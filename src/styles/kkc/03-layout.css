@@ -1253,3 +1253,809 @@
     font-size: 4rem;
   }
 }
+
+/* =====================================================
+   DAILY PANCHANGAM HOMEPAGE SECTION
+===================================================== */
+
+.kkc-daily-panchang {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: 34px;
+  width: min(var(--kkc-container), calc(100% - 32px));
+  margin: 0 auto;
+  padding: 86px 0 96px;
+}
+
+.kkc-daily-panchang::before {
+  content: "";
+  position: absolute;
+  inset: 42px -24px 46px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 42px;
+  background:
+    radial-gradient(circle at 10% 8%, rgba(255, 255, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 88% 86%, rgba(255, 255, 255, 0.07), transparent 34%),
+    rgba(255, 255, 255, 0.025);
+}
+
+.kkc-daily-panchang-copy h2 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.6rem, 4.8vw, 5rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.kkc-daily-panchang-copy p:not(.kkc-eyebrow) {
+  max-width: 560px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1rem;
+  line-height: 1.76;
+}
+
+.kkc-panchang-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.kkc-panchang-controls label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.kkc-panchang-controls input,
+.kkc-panchang-controls select {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.065);
+  color: #ffffff;
+  outline: none;
+}
+
+.kkc-panchang-controls select option {
+  background: #090909;
+  color: #ffffff;
+}
+
+.kkc-panchang-card {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 34px;
+  padding: 28px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035));
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(12px);
+}
+
+.kkc-panchang-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.kkc-panchang-card-head h3 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.kkc-panchang-card-head span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.kkc-panchang-card-head > strong {
+  display: inline-grid;
+  place-items: center;
+  min-width: 96px;
+  height: 96px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.kkc-panchang-status,
+.kkc-panchang-error {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.kkc-panchang-error strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.kkc-panchang-error p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.6;
+}
+
+.kkc-panchang-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.kkc-panchang-grid.main {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kkc-panchang-grid.timings {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kkc-panchang-item {
+  min-height: 92px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.kkc-panchang-item span {
+  display: block;
+  margin-bottom: 9px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.kkc-panchang-item strong {
+  color: #ffffff;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.kkc-panchang-timing-panel {
+  margin-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 22px;
+}
+
+.kkc-panchang-timing-panel h4 {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: 1.08rem;
+}
+
+.kkc-panchang-footer-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.kkc-panchang-footer-note span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+@media (max-width: 980px) {
+  .kkc-daily-panchang {
+    grid-template-columns: 1fr;
+    padding: 74px 0 84px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kkc-panchang-controls,
+  .kkc-panchang-grid.main,
+  .kkc-panchang-grid.timings {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-panchang-card {
+    padding: 22px;
+  }
+
+  .kkc-panchang-card-head {
+    display: grid;
+  }
+
+  .kkc-panchang-card-head > strong {
+    min-width: 78px;
+    height: 78px;
+    font-size: 1.08rem;
+  }
+}
+
+/* =====================================================
+   DAILY PANCHANGAM - BLACK PROFESSIONAL DESIGN
+===================================================== */
+
+.kkc-daily-panchang {
+  position: relative;
+  padding: 96px 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.08), transparent 32%),
+    radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.045), transparent 34%),
+    #020202;
+  color: #ffffff;
+}
+
+.kkc-daily-panchang-shell {
+  width: min(var(--kkc-container), calc(100% - 32px));
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 38px;
+  padding: clamp(22px, 4vw, 42px);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 34px 120px rgba(0, 0, 0, 0.46);
+  overflow: hidden;
+}
+
+.kkc-panchang-top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: center;
+}
+
+.kkc-panchang-calendar-card {
+  display: grid;
+  place-items: center;
+  width: 132px;
+  min-height: 150px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.13), transparent 62%),
+    rgba(255, 255, 255, 0.055);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 70px rgba(0, 0, 0, 0.35);
+}
+
+.kkc-panchang-calendar-card span {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.kkc-panchang-calendar-card strong {
+  color: #ffffff;
+  font-family: var(--kkc-display);
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 0.95;
+}
+
+.kkc-panchang-calendar-card small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.kkc-panchang-title h2 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.4rem, 4.8vw, 5.2rem);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+.kkc-panchang-title p:not(.kkc-eyebrow) {
+  max-width: 680px;
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.kkc-panchang-controls {
+  display: grid;
+  gap: 14px;
+}
+
+.kkc-panchang-controls label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kkc-panchang-controls input,
+.kkc-panchang-controls select {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 0 18px;
+  background: rgba(0, 0, 0, 0.36);
+  color: #ffffff;
+  outline: none;
+}
+
+.kkc-panchang-controls input:focus,
+.kkc-panchang-controls select:focus {
+  border-color: rgba(255, 255, 255, 0.56);
+}
+
+.kkc-panchang-controls select option {
+  background: #111111;
+  color: #ffffff;
+}
+
+.kkc-panchang-location-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 32px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 0;
+}
+
+.kkc-panchang-location-strip span,
+.kkc-panchang-location-strip small {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+}
+
+.kkc-panchang-location-strip strong {
+  color: #ffffff;
+  font-size: 0.94rem;
+  font-weight: 900;
+}
+
+.kkc-panchang-board {
+  display: grid;
+  grid-template-columns: 1.18fr 1fr;
+  gap: 18px;
+}
+
+.kkc-panchang-panel {
+  min-height: 260px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  padding: 24px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025));
+}
+
+.kkc-panchang-panel.primary {
+  grid-row: span 2;
+}
+
+.kkc-panchang-panel.warning {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+}
+
+.kkc-panchang-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.kkc-panchang-panel-head span {
+  color: rgba(255, 255, 255, 0.28);
+  font-family: var(--kkc-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.kkc-panchang-panel-head h3 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  text-align: right;
+}
+
+.kkc-panchang-row {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.75fr) minmax(0, 1fr);
+  gap: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+  padding: 12px 0;
+}
+
+.kkc-panchang-row:last-child {
+  border-bottom: 0;
+}
+
+.kkc-panchang-row span {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.kkc-panchang-row strong {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.kkc-panchang-state-card {
+  display: grid;
+  place-items: center;
+  min-height: 140px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.76);
+  font-weight: 850;
+}
+
+.kkc-panchang-state-card.error {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+@media (max-width: 1080px) {
+  .kkc-panchang-top {
+    grid-template-columns: auto 1fr;
+  }
+
+  .kkc-panchang-controls {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kkc-panchang-board {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-panchang-panel.primary {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .kkc-daily-panchang {
+    padding: 72px 0;
+  }
+
+  .kkc-daily-panchang-shell {
+    border-radius: 28px;
+  }
+
+  .kkc-panchang-top {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-panchang-calendar-card {
+    width: 118px;
+    min-height: 134px;
+  }
+
+  .kkc-panchang-calendar-card strong {
+    font-size: 3.4rem;
+  }
+
+  .kkc-panchang-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-panchang-location-strip {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .kkc-panchang-panel {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .kkc-panchang-panel-head h3 {
+    font-size: 1.55rem;
+  }
+
+  .kkc-panchang-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
+
+/* =====================================================
+   DAILY PANCHANGAM V2 - CLEAN HOMEPAGE PREVIEW
+===================================================== */
+
+.kkc-daily-panchang-v2 {
+  position: relative;
+  padding: 72px 0 84px;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.08), transparent 30%),
+    #020202;
+  color: #ffffff;
+}
+
+.kkc-daily-panchang-v2-card {
+  width: min(var(--kkc-container), calc(100% - 32px));
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 34px;
+  padding: clamp(22px, 4vw, 38px);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.42);
+}
+
+.kkc-panchang-v2-left {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 26px;
+  align-items: center;
+}
+
+.kkc-panchang-v2-calendar {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 128px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.14), transparent 62%),
+    rgba(255, 255, 255, 0.055);
+}
+
+.kkc-panchang-v2-calendar span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.kkc-panchang-v2-calendar strong {
+  color: #ffffff;
+  font-family: var(--kkc-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+.kkc-panchang-v2-calendar small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.kkc-panchang-v2-left h2 {
+  max-width: 760px;
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.4rem, 4.6vw, 4.8rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.kkc-panchang-v2-left p:not(.kkc-eyebrow) {
+  max-width: 760px;
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.kkc-panchang-v2-controls {
+  display: grid;
+  grid-template-columns: 240px minmax(240px, 360px);
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.kkc-panchang-v2-controls label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kkc-panchang-v2-controls input,
+.kkc-panchang-v2-controls select {
+  min-height: 46px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: rgba(0, 0, 0, 0.38);
+  color: #ffffff;
+  outline: none;
+}
+
+.kkc-panchang-v2-controls input:focus,
+.kkc-panchang-v2-controls select:focus {
+  border-color: rgba(255, 255, 255, 0.54);
+}
+
+.kkc-panchang-v2-controls select option {
+  background: #111111;
+  color: #ffffff;
+}
+
+.kkc-panchang-v2-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.kkc-panchang-v2-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.kkc-panchang-v2-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.kkc-panchang-v2-mini-card {
+  min-height: 255px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 20px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.024));
+}
+
+.kkc-panchang-v2-mini-card h3 {
+  margin: 0 0 16px;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.kkc-panchang-v2-row {
+  display: grid;
+  gap: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+  padding: 10px 0;
+}
+
+.kkc-panchang-v2-row:last-child {
+  border-bottom: 0;
+}
+
+.kkc-panchang-v2-row span {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.74rem;
+  font-weight: 850;
+}
+
+.kkc-panchang-v2-row strong {
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 850;
+  line-height: 1.4;
+}
+
+.kkc-panchang-v2-state {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 24px;
+  margin-top: 24px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.76);
+  font-weight: 850;
+}
+
+.kkc-panchang-v2-state.error {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+@media (max-width: 1080px) {
+  .kkc-panchang-v2-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .kkc-daily-panchang-v2 {
+    padding: 56px 0 66px;
+  }
+
+  .kkc-daily-panchang-v2-card {
+    border-radius: 26px;
+  }
+
+  .kkc-panchang-v2-left {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-panchang-v2-calendar {
+    width: 104px;
+    height: 118px;
+  }
+
+  .kkc-panchang-v2-calendar strong {
+    font-size: 3.1rem;
+  }
+
+  .kkc-panchang-v2-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-panchang-v2-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-panchang-v2-mini-card {
+    min-height: auto;
+  }
+}
