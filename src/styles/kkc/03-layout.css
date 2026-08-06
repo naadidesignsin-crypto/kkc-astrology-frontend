@@ -2059,3 +2059,660 @@
     min-height: auto;
   }
 }
+
+/* =====================================================
+   DAILY RASI PHALALU - CLEAN HOMEPAGE SECTION
+===================================================== */
+
+.kkc-daily-rasi {
+  position: relative;
+  padding: 78px 0 92px;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(255, 255, 255, 0.07), transparent 32%),
+    #020202;
+  color: #ffffff;
+}
+
+.kkc-daily-rasi-card {
+  width: min(var(--kkc-container), calc(100% - 32px));
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 34px;
+  padding: clamp(22px, 4vw, 38px);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.42);
+}
+
+.kkc-daily-rasi-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 28px;
+  align-items: start;
+}
+
+.kkc-daily-rasi-head h2 {
+  max-width: 760px;
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.4rem, 4.6vw, 4.8rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.kkc-daily-rasi-head p:not(.kkc-eyebrow) {
+  max-width: 760px;
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.kkc-rasi-controls {
+  display: grid;
+  gap: 14px;
+}
+
+.kkc-rasi-controls label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kkc-rasi-controls input,
+.kkc-rasi-controls select {
+  min-height: 46px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: rgba(0, 0, 0, 0.38);
+  color: #ffffff;
+  outline: none;
+}
+
+.kkc-rasi-controls input:focus,
+.kkc-rasi-controls select:focus {
+  border-color: rgba(255, 255, 255, 0.54);
+}
+
+.kkc-rasi-controls select option {
+  background: #111111;
+  color: #ffffff;
+}
+
+.kkc-rasi-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.kkc-rasi-meta-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.kkc-rasi-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(380px, 0.82fr);
+  gap: 18px;
+}
+
+.kkc-rasi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.kkc-rasi-chip {
+  display: grid;
+  gap: 5px;
+  min-height: 118px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 16px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.022));
+  color: #ffffff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.kkc-rasi-chip:hover,
+.kkc-rasi-chip.active {
+  border-color: rgba(255, 255, 255, 0.48);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+}
+
+.kkc-rasi-chip span {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.kkc-rasi-chip strong {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.kkc-rasi-chip small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.kkc-rasi-result-card {
+  min-height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 26px;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.08), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.024));
+}
+
+.kkc-rasi-result-title {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.kkc-rasi-result-title > span {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-size: 1.7rem;
+}
+
+.kkc-rasi-result-title h3 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.kkc-rasi-result-title small {
+  display: inline-flex;
+  margin-top: 7px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.kkc-rasi-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.kkc-rasi-detail {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.kkc-rasi-detail.large {
+  margin: 12px 0;
+}
+
+.kkc-rasi-detail span {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kkc-rasi-detail p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.58;
+}
+
+.kkc-rasi-note {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.kkc-rasi-state {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 850;
+}
+
+.kkc-rasi-state.error {
+  color: #ffffff;
+}
+
+@media (max-width: 1080px) {
+  .kkc-daily-rasi-head,
+  .kkc-rasi-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-rasi-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .kkc-daily-rasi {
+    padding: 56px 0 66px;
+  }
+
+  .kkc-daily-rasi-card {
+    border-radius: 26px;
+  }
+
+  .kkc-rasi-controls,
+  .kkc-rasi-grid,
+  .kkc-rasi-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-rasi-chip {
+    min-height: auto;
+  }
+}
+
+/* =====================================================
+   DAILY RASI PHALALU - CLEAN READABLE VERSION
+===================================================== */
+
+.kkc-daily-rasi-clean {
+  position: relative;
+  padding: 76px 0;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.06), transparent 30%),
+    #020202;
+  color: #ffffff;
+}
+
+.kkc-daily-rasi-clean-card {
+  width: min(var(--kkc-container), calc(100% - 32px));
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 34px;
+  padding: clamp(22px, 4vw, 38px);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.42);
+}
+
+.kkc-rasi-clean-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 32px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+
+.kkc-rasi-clean-head h2 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(2.4rem, 4.4vw, 4.7rem);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.kkc-rasi-clean-head p:not(.kkc-eyebrow) {
+  max-width: 720px;
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.7;
+}
+
+.kkc-rasi-clean-controls {
+  display: grid;
+  gap: 14px;
+}
+
+.kkc-rasi-clean-controls label {
+  display: grid;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kkc-rasi-clean-controls input,
+.kkc-rasi-clean-controls select {
+  min-height: 46px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: rgba(0, 0, 0, 0.38);
+  color: #ffffff;
+  outline: none;
+}
+
+.kkc-rasi-clean-controls select option {
+  background: #111111;
+  color: #ffffff;
+}
+
+.kkc-rasi-clean-body {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.86fr) minmax(0, 1.14fr);
+  gap: 20px;
+}
+
+.kkc-rasi-clean-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-content: start;
+}
+
+.kkc-rasi-clean-tile {
+  min-height: 104px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.kkc-rasi-clean-tile:hover,
+.kkc-rasi-clean-tile.active {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.kkc-rasi-clean-tile span {
+  display: inline-flex;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.1rem;
+}
+
+.kkc-rasi-clean-tile strong {
+  display: block;
+  color: #ffffff;
+  font-size: 0.96rem;
+  font-weight: 850;
+}
+
+.kkc-rasi-clean-tile small {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.kkc-rasi-clean-result {
+  min-height: 620px;
+  max-height: 720px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 26px;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.09), transparent 32%),
+    rgba(255, 255, 255, 0.045);
+}
+
+.kkc-rasi-clean-result::-webkit-scrollbar {
+  width: 6px;
+}
+
+.kkc-rasi-clean-result::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.kkc-rasi-clean-result-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.kkc-rasi-clean-result-head > span {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 1.5rem;
+}
+
+.kkc-rasi-clean-result-head h3 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.kkc-rasi-clean-result-head small {
+  display: block;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.58);
+  font-weight: 750;
+}
+
+.kkc-rasi-clean-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.kkc-rasi-clean-info,
+.kkc-rasi-clean-mini {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.kkc-rasi-clean-info span,
+.kkc-rasi-clean-mini span {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.kkc-rasi-clean-info strong,
+.kkc-rasi-clean-mini strong {
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 850;
+  line-height: 1.48;
+  white-space: pre-line;
+}
+
+.kkc-rasi-clean-prediction {
+  margin-bottom: 18px;
+}
+
+.kkc-rasi-clean-prediction h4 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+
+.kkc-rasi-clean-prediction p {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+
+.kkc-rasi-clean-sections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.kkc-rasi-clean-state {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.74);
+  font-weight: 850;
+}
+
+.kkc-rasi-clean-state.error {
+  color: #ffffff;
+}
+
+@media (max-width: 1080px) {
+  .kkc-rasi-clean-head,
+  .kkc-rasi-clean-body {
+    grid-template-columns: 1fr;
+  }
+
+  .kkc-rasi-clean-result {
+    min-height: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .kkc-daily-rasi-clean {
+    padding: 56px 0;
+  }
+
+  .kkc-daily-rasi-clean-card {
+    border-radius: 26px;
+  }
+
+  .kkc-rasi-clean-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kkc-rasi-clean-summary,
+  .kkc-rasi-clean-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* RASI PERIOD TABS */
+
+.kkc-rasi-period-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+
+.kkc-rasi-period-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.kkc-rasi-period-tab:hover,
+.kkc-rasi-period-tab.active {
+  border-color: #ffffff;
+  background: #ffffff;
+  color: #050505;
+}
+
+/* RASI TABLE FORM POLISH */
+
+.kkc-rasi-clean-sections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.kkc-rasi-clean-mini {
+  min-height: 108px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.kkc-rasi-clean-mini span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.kkc-rasi-clean-mini strong {
+  display: block;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 850;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+@media (max-width: 920px) {
+  .kkc-rasi-clean-sections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .kkc-rasi-clean-sections {
+    grid-template-columns: 1fr;
+  }
+}
