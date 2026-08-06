@@ -18,91 +18,24 @@ type ParsedRasiSection = {
   remedy: string;
 };
 
+type PlanetInfluence = {
+  planet: string;
+  description: string;
+};
+
 const rasiList = [
-  {
-    key: "mesha",
-    telugu: "మేషం",
-    english: "Mesha",
-    zodiac: "Aries",
-    symbol: "♈",
-  },
-  {
-    key: "vrishabha",
-    telugu: "వృషభం",
-    english: "Vrishabha",
-    zodiac: "Taurus",
-    symbol: "♉",
-  },
-  {
-    key: "mithuna",
-    telugu: "మిథునం",
-    english: "Mithuna",
-    zodiac: "Gemini",
-    symbol: "♊",
-  },
-  {
-    key: "karkataka",
-    telugu: "కర్కాటకం",
-    english: "Karkataka",
-    zodiac: "Cancer",
-    symbol: "♋",
-  },
-  {
-    key: "simha",
-    telugu: "సింహం",
-    english: "Simha",
-    zodiac: "Leo",
-    symbol: "♌",
-  },
-  {
-    key: "kanya",
-    telugu: "కన్య",
-    english: "Kanya",
-    zodiac: "Virgo",
-    symbol: "♍",
-  },
-  {
-    key: "tula",
-    telugu: "తుల",
-    english: "Tula",
-    zodiac: "Libra",
-    symbol: "♎",
-  },
-  {
-    key: "vrischika",
-    telugu: "వృశ్చికం",
-    english: "Vrischika",
-    zodiac: "Scorpio",
-    symbol: "♏",
-  },
-  {
-    key: "dhanu",
-    telugu: "ధనుస్సు",
-    english: "Dhanu",
-    zodiac: "Sagittarius",
-    symbol: "♐",
-  },
-  {
-    key: "makara",
-    telugu: "మకరం",
-    english: "Makara",
-    zodiac: "Capricorn",
-    symbol: "♑",
-  },
-  {
-    key: "kumbha",
-    telugu: "కుంభం",
-    english: "Kumbha",
-    zodiac: "Aquarius",
-    symbol: "♒",
-  },
-  {
-    key: "meena",
-    telugu: "మీనం",
-    english: "Meena",
-    zodiac: "Pisces",
-    symbol: "♓",
-  },
+  { key: "mesha", telugu: "మేషం", english: "Mesha", zodiac: "Aries", symbol: "♈" },
+  { key: "vrishabha", telugu: "వృషభం", english: "Vrishabha", zodiac: "Taurus", symbol: "♉" },
+  { key: "mithuna", telugu: "మిథునం", english: "Mithuna", zodiac: "Gemini", symbol: "♊" },
+  { key: "karkataka", telugu: "కర్కాటకం", english: "Karkataka", zodiac: "Cancer", symbol: "♋" },
+  { key: "simha", telugu: "సింహం", english: "Simha", zodiac: "Leo", symbol: "♌" },
+  { key: "kanya", telugu: "కన్య", english: "Kanya", zodiac: "Virgo", symbol: "♍" },
+  { key: "tula", telugu: "తుల", english: "Tula", zodiac: "Libra", symbol: "♎" },
+  { key: "vrischika", telugu: "వృశ్చికం", english: "Vrischika", zodiac: "Scorpio", symbol: "♏" },
+  { key: "dhanu", telugu: "ధనుస్సు", english: "Dhanu", zodiac: "Sagittarius", symbol: "♐" },
+  { key: "makara", telugu: "మకరం", english: "Makara", zodiac: "Capricorn", symbol: "♑" },
+  { key: "kumbha", telugu: "కుంభం", english: "Kumbha", zodiac: "Aquarius", symbol: "♒" },
+  { key: "meena", telugu: "మీనం", english: "Meena", zodiac: "Pisces", symbol: "♓" },
 ];
 
 const rasiPlaces = [
@@ -120,10 +53,31 @@ const periodLabels: Record<RasiPeriod, string> = {
 };
 
 const inlineLabels = [
+  "Career & Business",
+  "Career and Business",
+  "Business",
   "Career",
+  "Profession",
+  "Work",
+  "Job",
+  "Finance & Wealth",
+  "Finance and Wealth",
+  "Money & Finance",
+  "Money and Finance",
   "Finance",
+  "Money",
+  "Wealth",
+  "Income",
+  "Health & Wellness",
+  "Health and Wellness",
   "Health",
+  "Family & Relationships",
+  "Family and Relationships",
   "Family",
+  "Relationships",
+  "Relationship",
+  "Love & Relationship",
+  "Love and Relationship",
   "Love",
   "Lucky Color",
   "Lucky Colour",
@@ -131,6 +85,20 @@ const inlineLabels = [
   "Lucky Number",
   "Lucky Direction",
   "Remedy",
+  "Remedies",
+  "Suggestion",
+];
+
+const planetLabels = [
+  "Sun",
+  "Moon",
+  "Mars",
+  "Mercury",
+  "Jupiter",
+  "Venus",
+  "Saturn",
+  "Rahu",
+  "Ketu",
 ];
 
 function getTodayLocalDate() {
@@ -140,6 +108,10 @@ function getTodayLocalDate() {
   const day = `${now.getDate()}`.padStart(2, "0");
 
   return `${year}-${month}-${day}`;
+}
+
+function escapeRegex(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function cleanDisplayText(value?: string | number | null) {
@@ -185,31 +157,79 @@ function cleanDisplayText(value?: string | number | null) {
   return clean;
 }
 
-function normalizeLabel(label: string): keyof ParsedRasiSection {
-  const clean = label.toLowerCase().replace(/\s+/g, "");
+function removeHoroscopePrefix(value: string) {
+  return value
+    .replace(
+      /^(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}\s+[A-Za-z]+\s+Horoscope\s*:\s*/i,
+      ""
+    )
+    .replace(
+      /^[A-Za-z]+\s+Horoscope\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}\s*:\s*/i,
+      ""
+    )
+    .replace(/^[A-Za-z]+\s+Horoscope\s*\([^)]+\)\s*:\s*/i, "")
+    .replace(/^[A-Za-z]+\s+Horoscope\s*:\s*/i, "")
+    .replace(/^(Daily|Weekly|Monthly)\s+Prediction\s*:\s*/i, "")
+    .trim();
+}
 
-  if (clean.includes("career")) return "career";
-  if (clean.includes("finance")) return "finance";
-  if (clean.includes("health")) return "health";
-  if (clean.includes("family")) return "family";
+function normalizeLabel(label: string): keyof ParsedRasiSection {
+  const clean = label.toLowerCase().replace(/[^a-z]/g, "");
+
+  if (
+    clean.includes("career") ||
+    clean.includes("business") ||
+    clean.includes("profession") ||
+    clean.includes("work") ||
+    clean.includes("job")
+  ) {
+    return "career";
+  }
+
+  if (
+    clean.includes("finance") ||
+    clean.includes("money") ||
+    clean.includes("wealth") ||
+    clean.includes("income")
+  ) {
+    return "finance";
+  }
+
+  if (clean.includes("health") || clean.includes("wellness")) return "health";
+
   if (clean.includes("love")) return "love";
+
+  if (clean.includes("family") || clean.includes("relationship")) {
+    return "family";
+  }
+
   if (clean.includes("luckycolor") || clean.includes("luckycolour")) {
     return "luckyColor";
   }
+
   if (clean.includes("luckynumber")) return "luckyNumber";
   if (clean.includes("luckydirection")) return "luckyDirection";
-  if (clean.includes("remedy")) return "remedy";
+
+  if (
+    clean.includes("remedy") ||
+    clean.includes("remedies") ||
+    clean.includes("suggestion")
+  ) {
+    return "remedy";
+  }
 
   return "overview";
 }
 
-function parseInlinePrediction(section?: DailyRasiSection | null): ParsedRasiSection {
+function parseInlinePrediction(
+  section?: DailyRasiSection | null
+): ParsedRasiSection {
   const overviewSource = cleanDisplayText(
     section?.overview || section?.rawSummary || ""
   );
 
   const result: ParsedRasiSection = {
-    overview: overviewSource,
+    overview: removeHoroscopePrefix(overviewSource),
     career: cleanDisplayText(section?.career),
     finance: cleanDisplayText(section?.finance),
     health: cleanDisplayText(section?.health),
@@ -221,10 +241,10 @@ function parseInlinePrediction(section?: DailyRasiSection | null): ParsedRasiSec
     remedy: cleanDisplayText(section?.remedy),
   };
 
+  const sortedLabels = [...inlineLabels].sort((a, b) => b.length - a.length);
+
   const labelPattern = new RegExp(
-    `(${inlineLabels
-      .map((label) => label.replace(/\s+/g, "\\s+"))
-      .join("|")})\\s*:`,
+    `(${sortedLabels.map(escapeRegex).join("|")})\\s*:`,
     "gi"
   );
 
@@ -234,7 +254,9 @@ function parseInlinePrediction(section?: DailyRasiSection | null): ParsedRasiSec
     return result;
   }
 
-  result.overview = overviewSource.slice(0, matches[0].index).trim();
+  result.overview = removeHoroscopePrefix(
+    overviewSource.slice(0, matches[0].index).trim()
+  );
 
   matches.forEach((match, index) => {
     const field = normalizeLabel(match[1]);
@@ -261,6 +283,60 @@ function parseInlinePrediction(section?: DailyRasiSection | null): ParsedRasiSec
   });
 
   return result;
+}
+
+function parsePlanetInfluences(value?: string | null): {
+  overview: string;
+  influences: PlanetInfluence[];
+} {
+  const clean = cleanDisplayText(value);
+
+  if (!clean) {
+    return {
+      overview: "",
+      influences: [],
+    };
+  }
+
+  const labelPattern = new RegExp(`(${planetLabels.join("|")})\\s*:`, "gi");
+  const matches = [...clean.matchAll(labelPattern)];
+
+  if (matches.length === 0) {
+    return {
+      overview: removeHoroscopePrefix(clean),
+      influences: [],
+    };
+  }
+
+  const overview = removeHoroscopePrefix(clean.slice(0, matches[0].index).trim());
+
+  const influences: PlanetInfluence[] = matches.map((match, index) => {
+    const planet = match[1];
+    const valueStart = (match.index || 0) + match[0].length;
+    const valueEnd =
+      index + 1 < matches.length
+        ? matches[index + 1].index || clean.length
+        : clean.length;
+
+    const description = clean
+      .slice(valueStart, valueEnd)
+      .replace(/\bDaily\b$/i, "")
+      .replace(/\bWeekly\b$/i, "")
+      .replace(/\bMonthly\b$/i, "")
+      .replace(/^[\s,.;:-]+/, "")
+      .replace(/[\s,.;:-]+$/, "")
+      .trim();
+
+    return {
+      planet,
+      description,
+    };
+  });
+
+  return {
+    overview,
+    influences,
+  };
 }
 
 function getParagraphs(value?: string | null, maxParagraphs = 4) {
@@ -334,7 +410,15 @@ function DailyRasiPhalalu() {
 
   const activeSection = getSection(rasiData, selectedPeriod);
   const parsedSection = parseInlinePrediction(activeSection);
-  const overviewParagraphs = getParagraphs(parsedSection.overview, 4);
+
+  const planetWisePrediction = parsePlanetInfluences(
+    parsedSection.overview || activeSection?.rawSummary
+  );
+
+  const overviewParagraphs = getParagraphs(
+    planetWisePrediction.overview || parsedSection.overview,
+    4
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -506,6 +590,24 @@ function DailyRasiPhalalu() {
                     </p>
                   )}
                 </div>
+
+                {planetWisePrediction.influences.length > 0 && (
+                  <div className="kkc-rasi-planet-influence">
+                    <h4>Planetary Influence</h4>
+
+                    <div className="kkc-rasi-planet-grid">
+                      {planetWisePrediction.influences.map((item) => (
+                        <article
+                          className="kkc-rasi-planet-card"
+                          key={`${selectedRasi}-${selectedPeriod}-${item.planet}`}
+                        >
+                          <span>{item.planet}</span>
+                          <p>{item.description || "-"}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="kkc-rasi-clean-sections">
                   <MiniPrediction label="Career" value={parsedSection.career} />
