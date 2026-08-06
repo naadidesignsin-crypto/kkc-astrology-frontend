@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { getDailyPanchang } from "../services/panchangApi";
 import type { DailyPanchangResponse } from "../types/panchang";
@@ -57,13 +58,18 @@ function DailyPanchangCard() {
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
 
     async function loadDailyPanchang() {
       try {
         setLoading(true);
         setError("");
 
-        const response = await getDailyPanchang(selectedDate, selectedPlace);
+        const response = await getDailyPanchang(
+          selectedDate,
+          selectedPlace,
+          controller.signal
+        );
 
         if (!cancelled) {
           setPanchang(response);
@@ -88,6 +94,7 @@ function DailyPanchangCard() {
 
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, [selectedDate, selectedPlace]);
 
@@ -143,6 +150,10 @@ function DailyPanchangCard() {
           <span>{calendar.weekday}</span>
           <span>{panchang?.place || "Hyderabad, Telangana"}</span>
           <span>AP & Telangana Style</span>
+        </div>
+
+        <div className="kkc-panchang-v2-full-action">
+          <Link to="/panchangam">View Full Panchangam →</Link>
         </div>
 
         {loading && (
