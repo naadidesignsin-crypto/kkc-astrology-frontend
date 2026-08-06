@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { getDailyRasi } from "../services/rasiApi";
 import type { DailyRasiResponse, DailyRasiSection } from "../types/rasi";
+import { openWhatsAppShare } from "../utils/whatsappShare";
 
 type RasiPeriod = "daily" | "weekly" | "monthly";
 
@@ -196,9 +197,13 @@ function normalizeLabel(label: string): keyof ParsedRasiSection {
     return "finance";
   }
 
-  if (clean.includes("health") || clean.includes("wellness")) return "health";
+  if (clean.includes("health") || clean.includes("wellness")) {
+    return "health";
+  }
 
-  if (clean.includes("love")) return "love";
+  if (clean.includes("love")) {
+    return "love";
+  }
 
   if (clean.includes("family") || clean.includes("relationship")) {
     return "family";
@@ -208,8 +213,13 @@ function normalizeLabel(label: string): keyof ParsedRasiSection {
     return "luckyColor";
   }
 
-  if (clean.includes("luckynumber")) return "luckyNumber";
-  if (clean.includes("luckydirection")) return "luckyDirection";
+  if (clean.includes("luckynumber")) {
+    return "luckyNumber";
+  }
+
+  if (clean.includes("luckydirection")) {
+    return "luckyDirection";
+  }
 
   if (
     clean.includes("remedy") ||
@@ -461,6 +471,54 @@ function DailyRasiPhalalu({ fullPage = false }: { fullPage?: boolean }) {
     };
   }, [selectedDate, selectedPlace, selectedRasi]);
 
+  function shareRasiOnWhatsApp() {
+    if (!rasiData) {
+      return;
+    }
+
+    const message = `
+KKC ${periodLabels[selectedPeriod]} Rasi Phalalu
+
+Date: ${rasiData.date}
+Place: ${rasiData.place}
+Rasi: ${rasiData.displayName || `${selectedRasiMeta.telugu} / ${selectedRasiMeta.english}`}
+
+Overview:
+${parsedSection.overview || rasiData.overview || rasiData.prediction || "-"}
+
+Career:
+${parsedSection.career || rasiData.career || "-"}
+
+Finance:
+${parsedSection.finance || rasiData.finance || "-"}
+
+Health:
+${parsedSection.health || rasiData.health || "-"}
+
+Family:
+${parsedSection.family || rasiData.family || "-"}
+
+Love:
+${parsedSection.love || rasiData.love || "-"}
+
+Lucky Color:
+${parsedSection.luckyColor || rasiData.luckyColor || "-"}
+
+Lucky Number:
+${parsedSection.luckyNumber || rasiData.luckyNumber || "-"}
+
+Lucky Direction:
+${parsedSection.luckyDirection || rasiData.luckyDirection || "-"}
+
+Remedy:
+${parsedSection.remedy || rasiData.remedy || "-"}
+
+- Kundalini Kriya Chaitanyam
+`.trim();
+
+    openWhatsAppShare(message);
+  }
+
   return (
     <section className="kkc-daily-rasi-clean" id="daily-rasi">
       <div className="kkc-daily-rasi-clean-card">
@@ -539,8 +597,20 @@ function DailyRasiPhalalu({ fullPage = false }: { fullPage?: boolean }) {
                 <h3>
                   {selectedRasiMeta.telugu} / {selectedRasiMeta.english}
                 </h3>
-                <small>{selectedRasiMeta.zodiac}</small>
+                <small>
+                  {selectedRasiMeta.zodiac}
+                  {rasiData ? ` · ${periodLabels[selectedPeriod]} · ${rasiData.date}` : ""}
+                </small>
               </div>
+
+              <button
+                type="button"
+                className="kkc-rasi-share-btn"
+                onClick={shareRasiOnWhatsApp}
+                disabled={!rasiData}
+              >
+                Share on WhatsApp
+              </button>
             </div>
 
             <div className="kkc-rasi-period-tabs">

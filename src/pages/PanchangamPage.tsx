@@ -5,6 +5,7 @@ import kkcLogo from "../assets/Logo.png";
 import BlackWhiteCosmicBackground from "../components/BlackWhiteCosmicBackground";
 import { getDailyPanchang } from "../services/panchangApi";
 import type { DailyPanchangResponse } from "../types/panchang";
+import { openWhatsAppShare } from "../utils/whatsappShare";
 
 const panchangPlaces = [
   { label: "Hyderabad, Telangana", value: "hyderabad" },
@@ -144,6 +145,47 @@ function PanchangamPage() {
     }
   }
 
+  function sharePanchangamOnWhatsApp() {
+    if (!panchang) {
+      return;
+    }
+
+    const message = `
+  KKC Daily Panchangam
+
+  Date: ${panchang.date}
+  Place: ${panchang.place}
+
+  Varam: ${panchang.varam || "-"}
+  Tithi: ${panchang.tithi || "-"}
+  Nakshatram: ${panchang.nakshatram || "-"}
+  Yogam: ${panchang.yogam || "-"}
+  Karanam: ${panchang.karanam || "-"}
+  Paksham: ${panchang.paksham || "-"}
+  Masam: ${panchang.masam || "-"}
+  Samvatsaram: ${panchang.samvatsaram || "-"}
+  Ayanam: ${panchang.ayanam || "-"}
+  Ritu: ${panchang.ritu || "-"}
+
+  Sunrise: ${panchang.sunrise || "-"}
+  Sunset: ${panchang.sunset || "-"}
+  Moonrise: ${panchang.moonrise || "-"}
+  Moonset: ${panchang.moonset || "-"}
+
+  Rahu Kalam: ${panchang.rahuKalam || "-"}
+  Yamagandam: ${panchang.yamagandam || "-"}
+  Gulika Kalam: ${panchang.gulikaKalam || "-"}
+  Durmuhurtham: ${panchang.durmuhurtham || "-"}
+  Varjyam: ${panchang.varjyam || "-"}
+  Amrita Kalam: ${panchang.amritaKalam || "-"}
+  Abhijit Muhurtham: ${panchang.abhijitMuhurtham || "-"}
+
+  - Kundalini Kriya Chaitanyam
+  `.trim();
+
+    openWhatsAppShare(message);
+  }
+
   function shareOnWhatsApp() {
     if (!panchang) {
       return;
@@ -231,12 +273,12 @@ function PanchangamPage() {
 
         <div className="kkc-panchangam-actions">
           <button type="button" onClick={copyPanchangam} disabled={!panchang}>
-            Copy Panchangam
-          </button>
+              Copy Panchangam
+            </button>
 
-          <button type="button" onClick={shareOnWhatsApp} disabled={!panchang}>
-            Share on WhatsApp
-          </button>
+            <button type="button" onClick={sharePanchangamOnWhatsApp} disabled={!panchang}>
+              Share on WhatsApp
+            </button>
         </div>
       </section>
 
