@@ -1,7 +1,7 @@
 import type { LocationSearchResponse } from "../types/location";
 
 const API_BASE_URL =
-  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8081";
+  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8080";
 
 export async function searchLocations(
   query: string,
