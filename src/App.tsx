@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import KundaliPage from "./pages/KundaliPage";
 import PanchangamPage from "./pages/PanchangamPage";
+import RasiPhalaluPage from "./pages/RasiPhalaluPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminKundaliReportsPage from "./pages/AdminKundaliReportsPage";
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/kundali" element={<KundaliPage />} />
         <Route path="/panchangam" element={<PanchangamPage />} />
+        <Route path="/rasi-phalalu" element={<RasiPhalaluPage />} />
 
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route

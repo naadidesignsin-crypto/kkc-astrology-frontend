@@ -3100,3 +3100,94 @@
     width: 100%;
   }
 }
+
+/* =====================================================
+   FULL RASI PHALALU PAGE
+===================================================== */
+
+.kkc-rasi-page {
+  min-height: 100vh;
+  background: #020202;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+.kkc-rasi-page-header {
+  position: relative;
+  z-index: 10;
+}
+
+.kkc-rasi-page-hero {
+  position: relative;
+  z-index: 2;
+  width: min(var(--kkc-container), calc(100% - 32px));
+  margin: 0 auto;
+  padding: 96px 0 18px;
+}
+
+.kkc-rasi-page-hero h1 {
+  max-width: 980px;
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--kkc-serif);
+  font-size: clamp(3rem, 6vw, 6.8rem);
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+
+.kkc-rasi-page-hero p:not(.kkc-eyebrow) {
+  max-width: 820px;
+  margin: 20px 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.kkc-rasi-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.kkc-rasi-full-action {
+  margin-top: 18px;
+}
+
+.kkc-rasi-full-action a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: 1px solid #ffffff;
+  border-radius: 999px;
+  padding: 0 18px;
+  background: #ffffff;
+  color: #050505;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.kkc-rasi-full-action a:hover {
+  background: transparent;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .kkc-rasi-page-hero {
+    padding-top: 72px;
+  }
+
+  .kkc-rasi-page-hero h1 {
+    font-size: clamp(2.8rem, 14vw, 4.6rem);
+  }
+
+  .kkc-rasi-page-actions .kkc-white-btn,
+  .kkc-rasi-page-actions .kkc-outline-btn,
+  .kkc-rasi-full-action a {
+    width: 100%;
+  }
+}

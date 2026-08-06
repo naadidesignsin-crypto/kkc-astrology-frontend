@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { getDailyRasi } from "../services/rasiApi";
 import type { DailyRasiResponse, DailyRasiSection } from "../types/rasi";
@@ -394,7 +395,7 @@ function getSection(data: DailyRasiResponse | null, period: RasiPeriod) {
   } satisfies DailyRasiSection;
 }
 
-function DailyRasiPhalalu() {
+function DailyRasiPhalalu({ fullPage = false }: { fullPage?: boolean }) {
   const [selectedDate, setSelectedDate] = useState(getTodayLocalDate());
   const [selectedPlace, setSelectedPlace] = useState("hyderabad");
   const [selectedRasi, setSelectedRasi] = useState("mesha");
@@ -473,6 +474,12 @@ function DailyRasiPhalalu() {
               Select a Rasi and view clean Daily, Weekly and Monthly prediction
               details for the selected date and place.
             </p>
+
+            {!fullPage && (
+              <div className="kkc-rasi-full-action">
+                <Link to="/rasi-phalalu">View Full Rasi Phalalu →</Link>
+              </div>
+            )}
           </div>
 
           <div className="kkc-rasi-clean-controls">
