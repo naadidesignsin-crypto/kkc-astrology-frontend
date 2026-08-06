@@ -7,7 +7,7 @@ import type {
 } from "../types/kundali";
 
 const API_BASE_URL =
-  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8081";
+  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8080";
 
 const ADMIN_AUTH_KEY = "kkc_admin_basic_auth";
 

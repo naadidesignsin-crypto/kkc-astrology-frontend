@@ -4,7 +4,7 @@ import type {
 } from "../types/kundaliConsultation";
 
 const API_BASE_URL =
-  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8081";
+  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8080";
 
 async function requestJson<T>(url: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${url}`, {

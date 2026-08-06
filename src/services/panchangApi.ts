@@ -1,7 +1,7 @@
 import type { DailyPanchangResponse } from "../types/panchang";
 
 const API_BASE_URL =
-  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8081";
+  import.meta.env.VITE_KKC_BACKEND_URL || "http://localhost:8080";
 
 async function request<T>(url: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${url}`, { signal });
