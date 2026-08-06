@@ -65,17 +65,26 @@ function buildShareText(panchang: DailyPanchangResponse) {
     `Nakshatram: ${panchang.nakshatram || "-"}`,
     `Yogam: ${panchang.yogam || "-"}`,
     `Karanam: ${panchang.karanam || "-"}`,
-    `Masam: ${panchang.masam || "-"}`,
     `Paksham: ${panchang.paksham || "-"}`,
+    `Masam: ${panchang.masam || "-"}`,
+    `Samvatsaram: ${panchang.samvatsaram || "-"}`,
+    `Ayanam: ${panchang.ayanam || "-"}`,
+    `Ritu: ${panchang.ritu || "-"}`,
+    "",
+    `Sunrise: ${panchang.sunrise || "-"}`,
+    `Sunset: ${panchang.sunset || "-"}`,
+    `Moonrise: ${panchang.moonrise || "-"}`,
+    `Moonset: ${panchang.moonset || "-"}`,
     "",
     `Rahu Kalam: ${panchang.rahuKalam || "-"}`,
     `Yamagandam: ${panchang.yamagandam || "-"}`,
     `Gulika Kalam: ${panchang.gulikaKalam || "-"}`,
     `Durmuhurtham: ${panchang.durmuhurtham || "-"}`,
     `Varjyam: ${panchang.varjyam || "-"}`,
+    `Amrita Kalam: ${panchang.amritaKalam || "-"}`,
+    `Abhijit Muhurtham: ${panchang.abhijitMuhurtham || "-"}`,
     "",
-    `Sunrise: ${panchang.sunrise || "-"}`,
-    `Sunset: ${panchang.sunset || "-"}`,
+    "- Kundalini Kriya Chaitanyam",
   ].join("\n");
 }
 
@@ -150,49 +159,7 @@ function PanchangamPage() {
       return;
     }
 
-    const message = `
-  KKC Daily Panchangam
-
-  Date: ${panchang.date}
-  Place: ${panchang.place}
-
-  Varam: ${panchang.varam || "-"}
-  Tithi: ${panchang.tithi || "-"}
-  Nakshatram: ${panchang.nakshatram || "-"}
-  Yogam: ${panchang.yogam || "-"}
-  Karanam: ${panchang.karanam || "-"}
-  Paksham: ${panchang.paksham || "-"}
-  Masam: ${panchang.masam || "-"}
-  Samvatsaram: ${panchang.samvatsaram || "-"}
-  Ayanam: ${panchang.ayanam || "-"}
-  Ritu: ${panchang.ritu || "-"}
-
-  Sunrise: ${panchang.sunrise || "-"}
-  Sunset: ${panchang.sunset || "-"}
-  Moonrise: ${panchang.moonrise || "-"}
-  Moonset: ${panchang.moonset || "-"}
-
-  Rahu Kalam: ${panchang.rahuKalam || "-"}
-  Yamagandam: ${panchang.yamagandam || "-"}
-  Gulika Kalam: ${panchang.gulikaKalam || "-"}
-  Durmuhurtham: ${panchang.durmuhurtham || "-"}
-  Varjyam: ${panchang.varjyam || "-"}
-  Amrita Kalam: ${panchang.amritaKalam || "-"}
-  Abhijit Muhurtham: ${panchang.abhijitMuhurtham || "-"}
-
-  - Kundalini Kriya Chaitanyam
-  `.trim();
-
-    openWhatsAppShare(message);
-  }
-
-  function shareOnWhatsApp() {
-    if (!panchang) {
-      return;
-    }
-
-    const message = encodeURIComponent(buildShareText(panchang));
-    window.open(`https://wa.me/?text=${message}`, "_blank", "noopener,noreferrer");
+    openWhatsAppShare(buildShareText(panchang));
   }
 
   return (
@@ -213,6 +180,7 @@ function PanchangamPage() {
           <Link to="/">Home</Link>
           <a href="#panchang-main">Panchangam</a>
           <a href="#panchang-timings">Timings</a>
+          <Link to="/rasi-phalalu">Rasi Phalalu</Link>
           <Link to="/kundali">Kundali</Link>
         </nav>
 
@@ -241,6 +209,7 @@ function PanchangamPage() {
 
           <div className="kkc-panchangam-meta-row">
             <span>{calendar.weekday}</span>
+            <span>{calendar.full}</span>
             <span>{panchang?.place || "Hyderabad, Telangana"}</span>
             <span>Telugu / English Format</span>
           </div>
@@ -273,12 +242,16 @@ function PanchangamPage() {
 
         <div className="kkc-panchangam-actions">
           <button type="button" onClick={copyPanchangam} disabled={!panchang}>
-              Copy Panchangam
-            </button>
+            Copy Panchangam
+          </button>
 
-            <button type="button" onClick={sharePanchangamOnWhatsApp} disabled={!panchang}>
-              Share on WhatsApp
-            </button>
+          <button
+            type="button"
+            onClick={sharePanchangamOnWhatsApp}
+            disabled={!panchang}
+          >
+            Share on WhatsApp
+          </button>
         </div>
       </section>
 
